@@ -27,7 +27,7 @@ export default function ContentPage6() {
                 <div className="text-normal text-black mt-[36px]">
                     <Trans i18nKey="page6.no-paragraph2">
                         Click for your{" "}
-                        <a href="#">order status.</a>
+                        <a href="/#">order status.</a>
                     </Trans>
                 </div>
             </div>

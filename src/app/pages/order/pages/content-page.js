@@ -34,16 +34,16 @@ const ContentPage = props => {
                 let __products = res.data.store_items;
                 let __materials = res.data.material_items;
             
-                __materials.map((item, index) => {
-                    Object.keys(__newPrice).map((key) => {
+                __materials.forEach((item, index) => {
+                    Object.keys(__newPrice).forEach((key) => {
                         if(key === item.id) {
                             __materials[index].price = __newPrice[key];
                         }
                     })
                 });
             
-                __products.map((item, index) => {
-                    Object.keys(__newPrice).map((key) => {
+                __products.forEach((item, index) => {
+                    Object.keys(__newPrice).forEach((key) => {
                         if(key === item.id) {
                             __products[index].price = __newPrice[key];
                         }
@@ -59,6 +59,7 @@ const ContentPage = props => {
             .finally(() => {
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initial]);
 
     const onChangeHandle = () => {

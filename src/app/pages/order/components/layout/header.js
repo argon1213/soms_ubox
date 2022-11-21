@@ -10,6 +10,7 @@ const Header = (props) => {
     const [language, setLanguage] = useState()
     useEffect(() => {
         setLanguage(i18n.language);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onChangeLanguage = (lang) => {

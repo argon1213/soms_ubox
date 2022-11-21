@@ -117,6 +117,7 @@ export default function ContentPage4(props) {
                 wechatID: "",
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initial]);
 
     const onNextHandler = () => {

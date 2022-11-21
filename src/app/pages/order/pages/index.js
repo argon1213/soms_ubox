@@ -46,16 +46,16 @@ export default function Home() {
           let __products = products;
 
           // Update the price
-          materials.map((item, index) => {
-              Object.keys(__newPrice).map((key) => {
+          materials.forEach((item, index) => {
+              Object.keys(__newPrice).forEach((key) => {
                   if(key === item.id) {
                       __materials[index].price = __newPrice[key];
                   }
               })
           });
 
-          products.map((item, index) => {
-              Object.keys(__newPrice).map((key) => {
+          products.forEach((item, index) => {
+              Object.keys(__newPrice).forEach((key) => {
                   if(key === item.id) {
                       __products[index].price = __newPrice[key];
                   }
@@ -66,16 +66,16 @@ export default function Home() {
           setMaterials(__materials);
 
           let __cartInfo = cartInfo;
-          __cartInfo.stores.map((item, index) => {
-              item && Object.keys(__newPrice).map((key) => {
+          __cartInfo.stores.forEach((item, index) => {
+              item && Object.keys(__newPrice).forEach((key) => {
                   if(key === item.id) {
                       __cartInfo.stores[index].price = __newPrice[key];
                   }
               })
           });
 
-          __cartInfo.materials.map((item, index) => {
-              item && Object.keys(__newPrice).map((key) => {
+          __cartInfo.materials.forEach((item, index) => {
+              item && Object.keys(__newPrice).forEach((key) => {
                   if(key === item.id) {
                       __cartInfo.materials[index].price = __newPrice[key];
                   }
@@ -124,11 +124,11 @@ export default function Home() {
       __storage_month = value;
     }
 
-    Object.keys(__stores).map((iter, index) => {
+    Object.keys(__stores).forEach((iter, index) => {
       __stores_total = __stores_total + (Number.parseFloat(__stores[iter].price).valueOf() * __stores[iter].count);
     });
 
-    Object.keys(__materials).map((iter, index) => {
+    Object.keys(__materials).forEach((iter, index) => {
       __material_total = __material_total + (Number.parseFloat(__materials[iter].price).valueOf() * __materials[iter].count);
     });
     let __cartInfo = {...cartInfo, payment_type: 3, storage_month: __storage_month, stores: __stores, stores_total: __stores_total, materials: __materials, materials_total: __material_total, total: (__stores_total * __storage_month + __material_total)};

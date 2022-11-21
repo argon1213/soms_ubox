@@ -17,7 +17,7 @@ export default function CartPage(props) {
             </div>
             <div>
                 {
-                    props.carts && props.carts.stores && Object.keys(props.carts.stores).map((iter, index) => {
+                    props.carts && props.carts.stores && Object.keys(props.carts.stores).forEach((iter, index) => {
                         const item = props.carts.stores[iter];
                         if (item.count === 0)
                             return;
@@ -48,7 +48,7 @@ export default function CartPage(props) {
                 </div>
                 <div>
                 {
-                    props.carts && props.carts.materials && Object.keys(props.carts.materials).map((iter, index) => {
+                    props.carts && props.carts.materials && Object.keys(props.carts.materials).forEach((iter, index) => {
                         const item = props.carts.materials[iter];
                         if (item.count === 0)
                             return;

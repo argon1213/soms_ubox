@@ -31,7 +31,7 @@ export default function ContentPage1(props) {
 
     const onNextHandler = () => {
         let flag = false;
-        props.selectedItems && Object.keys(props.selectedItems).map((iter, index) => {
+        props.selectedItems && Object.keys(props.selectedItems).forEach((iter, index) => {
             if (props.selectedItems[iter] && props.selectedItems[iter].count && props.selectedItems[iter].count > 0) {
                 flag = true;
             }
@@ -88,6 +88,7 @@ export default function ContentPage1(props) {
         if(localStorage.getItem("ubox-storage-duration")) {
         }
         setDuration(props.storage_month);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     // useEffect(() => {

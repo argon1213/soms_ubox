@@ -86,6 +86,7 @@ export default function ContentPage3(props) {
                 });
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initial]);
 
     useEffect(() => {

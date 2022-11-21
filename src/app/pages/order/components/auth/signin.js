@@ -14,6 +14,7 @@ const SignIn = (props) => {
     useEffect(() => {
         let __stuff_info = stuffInfo;
         setEmail(__stuff_info.email);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const onSignInFunc = () => {

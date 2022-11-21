@@ -30,6 +30,7 @@ const SignUp = (props) => {
             let __userInfo = accountInfo;
             setUserInfo(__userInfo);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initial])
 
     const onSignUpFunc = () => {
