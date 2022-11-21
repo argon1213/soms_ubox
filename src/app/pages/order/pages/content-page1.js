@@ -10,7 +10,6 @@ export default function ContentPage1(props) {
     const { onChangeStep, onNotification } = props;
     const [open, setOpen] = useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
-    // const [products, setProducts] = useState(props.items);
     const { t, i18n } = useTranslation();
 
     const handleSliderChange = (event, newValue) => {
@@ -90,10 +89,6 @@ export default function ContentPage1(props) {
         setDuration(props.storage_month);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
-
-    // useEffect(() => {
-    //     setProducts(props.items);
-    // }, [props.item])
 
     return (
         <div>

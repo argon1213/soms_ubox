@@ -27,7 +27,6 @@ export default function Home() {
 
   useEffect(() => {
     const v = JSON.parse(localStorage.getItem("ubox-is-authenticated"));
-    console.log(typeof v, v);
     if (v === 1) {
       setLoggedIn(1);
     } else {
@@ -93,7 +92,6 @@ export default function Home() {
       setCurrentStep(4);
     else
       setCurrentStep(step);
-      console.log("onchangestep: ", step);
   }
 
   const onReturnFunc = (state) => {
@@ -179,10 +177,6 @@ export default function Home() {
     //   return 3; // step=4
     return 4;
   }
-
-  useEffect(() => {
-    console.log("currentStep: " ,currentStep);
-  }, [currentStep])
 
   return (
     <div className="top-container">

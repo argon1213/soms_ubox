@@ -59,8 +59,8 @@ export default function ContentPage3(props) {
             stuffInfo.deliveryDate === undefined && setStuffInfo({
                 name: "",
                 email: "",
-                address: "",
                 contact: "",
+                address: "",
                 deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
                 deliveryTime: "09:00 - 12:00",
                 deliveryTimeIndex: 0,
@@ -78,20 +78,27 @@ export default function ContentPage3(props) {
                 __userInfo.name && setName(__userInfo.name);
                 __userInfo.email && setEmail(__userInfo.email);
                 __userInfo.contact && setContact(__userInfo.contact);
-                setStuffInfo({
+                stuffInfo.name === undefined && setStuffInfo({
                     ...stuffInfo,
                     name: __userInfo.name,
                     email: __userInfo.email,
                     contact: __userInfo.contact,
+                    address: "",
+                    deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                    deliveryTime: "09:00 - 12:00",
+                    deliveryTimeIndex: 0,
+                    ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                    ladenReturnTime: "09:00 - 12:00",
+                    ladenReturnTimeIndex: 0,
+                    tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                    tentativeTime: "09:00 - 12:00",
+                    tentativeTimeIndex: 0, 
+                    expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
                 });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initial]);
-
-    useEffect(() => {
-        console.log("stuffInfo", stuffInfo);
-    }, [stuffInfo])
 
     const onNextHandler = () => {
         // validation checking...
@@ -118,7 +125,6 @@ export default function ContentPage3(props) {
             let __contact = contact;
             let __re = /[^0-9]+/g;
             let __result = __contact.match(__re);
-            console.log(__result);
             let __length = __contact.length;
             if(__result == null && __length === 8) {
             } else {
@@ -293,7 +299,7 @@ export default function ContentPage3(props) {
                                 <Grid item xs={12} sm={6} md={6}>
                                     <DesktopDatePicker
                                         label={t("common.wd-empty-box-delivery")}
-                                        inputFormat="MM/DD/YYYY"
+                                        inputFormat="DD/MM/YYYY"
                                         value={deliveryDate}
                                         minDate={dayjs().add(2, 'day')}
                                         onChange={handleDeliveryDateChange}
@@ -325,7 +331,7 @@ export default function ContentPage3(props) {
                                 <Grid item xs={12} sm={6} md={6}>
                                     <DesktopDatePicker
                                         label={t("common.wd-laden-return-date")}
-                                        inputFormat="MM/DD/YYYY"
+                                        inputFormat="DD/MM/YYYY"
                                         value={ladenReturnDate}
                                         minDate={deliveryDate}
                                         onChange={handleLadenReturnDateChange}
@@ -357,7 +363,7 @@ export default function ContentPage3(props) {
                                 <Grid item xs={12} sm={6} md={6}>
                                     <DesktopDatePicker
                                         label={t("common.wd-tentative-retrieval-date")}
-                                        inputFormat="MM/DD/YYYY"
+                                        inputFormat="DD/MM/YYYY"
                                         value={tentativeDate}
                                         minDate={ladenReturnDate}
                                         maxDate={expirationDate}
@@ -390,7 +396,7 @@ export default function ContentPage3(props) {
                                 <Grid item xs={12} sm={6} md={6}>
                                     <DesktopDatePicker
                                         label={t("common.wd-storage-expiration-date")}
-                                        inputFormat="MM/DD/YYYY"
+                                        inputFormat="DD/MM/YYYY"
                                         readOnly
                                         value={expirationDate}
                                         onChange={handleExpirationDateChange}

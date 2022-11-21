@@ -41,7 +41,6 @@ const SignIn = (props) => {
                 localStorage.removeItem('ubox-user');
                 localStorage.setItem("ubox-is-authenticated", 0);
                 returnHandler(false);                
-                console.log(res.data);
                 setNotify({ title: 'error', message: "common.no-login-failed", visible: true, status: Math.floor(Math.random() * 100000) });
             }
         }).catch((err) => {

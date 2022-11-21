@@ -11,9 +11,7 @@ const Stepper = (props) => {
     }
 
     const onChangeStep = async (step) => {
-        console.log("step: ", step);
         const result = await props.previousActionCallback();
-        console.log("result", result);
         stepChange(min(step, result));
     }
 

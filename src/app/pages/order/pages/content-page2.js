@@ -7,11 +7,6 @@ export default function ContentPage2(props) {
     const { t, i18n } = useTranslation();
 
     const onNextHandler = () => {
-        // let flag = false;
-        // Object.keys(props.selectedItems).map((iter, index) => {
-        //     if (props.selectedItems[iter] && props.selectedItems[iter].count && props.selectedItems[iter].count > 0)
-        //         flag = true;
-        // });
         onChangeStep();
     }
 
@@ -29,7 +24,7 @@ export default function ContentPage2(props) {
                         {props.items && props.items.map((item, index) => {
                             return (
                                 <div className="row item-center align-items-center mt-[20px]" key={index}>
-                                    <div className="col-sm-3 col-6 min-w-[120px] pb-[20px]">
+                                    <div className="col-sm-3 col-6 min-w-[120px]">
                                         <Quantity value={(props.selectedItems && props.selectedItems[item.id]) ? props.selectedItems[item.id].count : 0} item={item} key={index} onChangeHandler={onChangeQuantityHandler} />
                                     </div>
                                     <div className="col-sm-9 col-6">

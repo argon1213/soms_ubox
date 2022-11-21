@@ -17,10 +17,10 @@ export default function CartPage(props) {
             </div>
             <div>
                 {
-                    props.carts && props.carts.stores && Object.keys(props.carts.stores).forEach((iter, index) => {
+                    props.carts && props.carts.stores && Object.keys(props.carts.stores).map((iter, index) => {
                         const item = props.carts.stores[iter];
                         if (item.count === 0)
-                            return;
+                            return <div key={index}></div>;
                         return (
                             <div className="flex space-between mt-[20px]" key={index}>
                                 <div>
@@ -48,20 +48,20 @@ export default function CartPage(props) {
                 </div>
                 <div>
                 {
-                    props.carts && props.carts.materials && Object.keys(props.carts.materials).forEach((iter, index) => {
+                    props.carts && props.carts.materials && Object.keys(props.carts.materials).map((iter, index) => {
                         const item = props.carts.materials[iter];
                         if (item.count === 0)
-                            return;
+                            return <div key={index}></div>;
                         return (
-                    <div className="flex space-between mt-[20px]" key={index}>
-                        <div>
-                            <div className="text-normal text-black">{item.count} x {item.name}</div>
-                            <div className="text-normal text-black">${item.price} {t("cart.no-per-box")}</div>
-                        </div>
-                        <div className="my-auto">
-                            <span className="text-normal text-black">${item.count * item.price}</span>
-                        </div>
-                    </div>
+                            <div className="flex space-between mt-[20px]" key={index}>
+                                <div>
+                                    <div className="text-normal text-black">{item.count} x {item.name}</div>
+                                    <div className="text-normal text-black">${item.price} {t("cart.no-per-box")}</div>
+                                </div>
+                                <div className="my-auto">
+                                    <span className="text-normal text-black">${item.count * item.price}</span>
+                                </div>
+                            </div>
                         )    
                     })
                 }

@@ -183,7 +183,7 @@ export default function ContentPage4(props) {
                                         <Grid item xs={12} sm={6} md={3} className="pl-[10px] mt-[10px]">
                                             <CssTextField fullWidth
                                                 required
-                                                id="standard-required"
+                                                id="studentID"
                                                 label={t("common.wd-studentID")}
                                                 variant="standard"
                                                 value={studentID}
@@ -195,7 +195,7 @@ export default function ContentPage4(props) {
                                         </Grid>
                                         <Grid item xs={12} sm={6} md={3} className="pl-[10px] mt-[10px]">
                                             <CssTextField fullWidth
-                                                id="standard-required"
+                                                id="WechatID"
                                                 label={t("common.wd-wechatID")}
                                                 variant="standard"
                                                 value={wechatID}
@@ -213,7 +213,7 @@ export default function ContentPage4(props) {
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>
                                 <CssTextField fullWidth
-                                    id="standard-required"
+                                    id="instruction"
                                     label={t("common.wd-instruction")}
                                     variant="standard"
                                     value={instructions}

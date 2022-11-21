@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { Grid, RadioGroup } from '@mui/material';
 import CustomColorRadio from "../components/customColor/radio-button";
 import CssFormControlLabel from "../components/customColor/formControlLabel";
-import CssTextField from "../components/customColor/text-field";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/payment";
@@ -26,13 +25,14 @@ export default function ContentPage5(props) {
     const getStripe = () => {
         const stripeKey = process.env.REACT_APP_STRIPE_KEY;
         const stripePromise = loadStripe(stripeKey); 
-        console.log(typeof stripeKey, stripeKey);
-
         return stripePromise;
     }
     const handleRadioChange = (event) => {
         setPaymentType(event.target.value);
-        setCartInfo(event.target.value);
+        setCartInfo({
+            ...cartInfo,
+            payment_type: event.target.value,
+        });
     };
 
     const onNextHandler = (e) => {
@@ -53,6 +53,7 @@ export default function ContentPage5(props) {
             //     })
             // }, 3000);
         }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paymentType]);
 
     const onCallbackFunc = (error, token) => {
@@ -63,13 +64,24 @@ export default function ContentPage5(props) {
             // you can pass the token and payment data to the backend to complete
             // the charge
             setIsLoading(true);
+            let __account_info_student = {};
+            if(__account_info.isStudent === 0){
+                __account_info_student = {
+                    ...__account_info,
+                    studentID: "",
+                    university: {},
+                    wechatID: "",
+                }
+            } else {
+                __account_info_student = __account_info;
+            }
             orderSubmit({
                 stripeToken: token.id,
                 carts: { ...__carts, duration: __duration, payment_type: __payment_type },
                 stuff: {
                     ...__stuff_info,
                 },
-                account: __account_info,
+                account: __account_info_student,
                 somsclient_id: __user_info.id,
             }).then((res) => {
                 localStorage.setItem("ubox-return", JSON.stringify({ orderNumber: res.data.order }));
@@ -119,33 +131,6 @@ export default function ContentPage5(props) {
                                         <Elements stripe={getStripe()}>
                                             <PaymentForm onCallbackHandler={onCallbackFunc} />
                                         </Elements>
-                                        <div className="mt-[17px]">
-                                            <CssTextField
-                                                required fullWidth
-                                                id="standard-required"
-                                                label={t("common.wd-card-number")}
-                                                defaultValue=""
-                                                variant="standard"
-                                            />
-                                        </div>
-                                        <div className="mt-[17px]">
-                                            <CssTextField
-                                                fullWidth
-                                                id="standard-required"
-                                                label={t("common.wd-expiry-date")}
-                                                defaultValue=""
-                                                variant="standard"
-                                            />
-                                        </div>
-                                        <div className="mt-[17px]">
-                                            <CssTextField
-                                                fullWidth
-                                                id="standard-required"
-                                                label="CVC"
-                                                defaultValue=""
-                                                variant="standard"
-                                            />
-                                        </div>
                                     </>
                                 )}
                                 {paymentType === '4' && (
