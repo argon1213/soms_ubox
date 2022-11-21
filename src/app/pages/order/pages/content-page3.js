@@ -1,0 +1,411 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import dayjs from 'dayjs';
+import CssTextField from '../components/customColor/text-field';
+import { createTheme, Grid, MenuItem, ThemeProvider } from '@mui/material';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+
+const timelist = [
+    {
+        value: 0,
+        label: '09:00 - 12:00',
+    },
+    {
+        value: 1,
+        label: '13:00 - 15:00',
+    },
+    {
+        value: 2,
+        label: '15:00 - 18:00',
+    },
+];
+export default function ContentPage3(props) {
+    const { onChangeStep, onNotification, stuffInfo, setStuffInfo } = props;
+    const [deliveryDate, setDeliveryDate] = useState(dayjs().add(2, 'day').format("yyyy-mm-dd"));
+    const [ladenReturnDate, setLadenReturnDate] = useState(dayjs().add(2, 'day'));
+    const [tentativeDate, setTentativeDate] = useState(dayjs().add(2, 'day'));
+    const [expirationDate, setExpirationDate] = useState(dayjs().add(2, 'day'));
+    const [deliveryTimeIndex, setDeliveryTimeIndex] = useState(0);
+    const [ladenReturnTimeIndex, setLadenReturnTimeIndex] = useState(0);
+    const [tentativeTimeIndex, setTentativeTimeIndex] = useState(0);
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [contact, setContact] = useState("");
+    const [address, setAddress] = useState("");
+    const [initial, setInitial] = useState(false);
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        setInitial(true);
+    }, []);
+
+    useEffect(() => {
+        if (initial) {
+            let __stuffInfo = stuffInfo;
+            setName(__stuffInfo.name ? __stuffInfo.name : "");
+            setEmail(__stuffInfo.email ? __stuffInfo.email : "");
+            setContact(__stuffInfo.contact ? __stuffInfo.contact : "");
+            setAddress(__stuffInfo.address ? __stuffInfo.address : "");
+            setDeliveryDate(__stuffInfo.deliveryDate ? __stuffInfo.deliveryDate : dayjs().add(2, 'day'));
+            setLadenReturnDate(__stuffInfo.ladenReturnDate ? __stuffInfo.ladenReturnDate : dayjs().add(2, 'day'));
+            setTentativeDate(__stuffInfo.tentativeDate ? __stuffInfo.tentativeDate : dayjs().add(props.storage_month, "month").add(2, 'day'));
+            setExpirationDate(__stuffInfo.expirationDate ? dayjs(__stuffInfo.ladenReturnDate).add(props.storage_month, "month") : dayjs().add(props.storage_month, "month").add(2, 'day'));
+            setDeliveryTimeIndex(__stuffInfo.deliveryTimeIndex ? __stuffInfo.deliveryTimeIndex : '0');
+            setLadenReturnTimeIndex(__stuffInfo.ladenReturnTimeIndex ? __stuffInfo.ladenReturnTimeIndex : 0);
+            setTentativeTimeIndex(__stuffInfo.tentativeTimeIndex ? __stuffInfo.tentativeTimeIndex : 0);
+
+            stuffInfo.deliveryDate === undefined && setStuffInfo({
+                name: "",
+                email: "",
+                address: "",
+                contact: "",
+                deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                deliveryTime: "09:00 - 12:00",
+                deliveryTimeIndex: 0,
+                ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                ladenReturnTime: "09:00 - 12:00",
+                ladenReturnTimeIndex: 0,
+                tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                tentativeTime: "09:00 - 12:00",
+                tentativeTimeIndex: 0, 
+                expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+            })
+
+            if(JSON.parse(localStorage.getItem("ubox-is-authenticated")) === 1){
+                const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
+                __userInfo.name && setName(__userInfo.name);
+                __userInfo.email && setEmail(__userInfo.email);
+                __userInfo.contact && setContact(__userInfo.contact);
+                setStuffInfo({
+                    ...stuffInfo,
+                    name: __userInfo.name,
+                    email: __userInfo.email,
+                    contact: __userInfo.contact,
+                });
+            }
+        }
+    }, [initial]);
+
+    useEffect(() => {
+        console.log("stuffInfo", stuffInfo);
+    }, [stuffInfo])
+
+    const onNextHandler = () => {
+        // validation checking...
+        if (name === "") {
+            onNotification({ title: 'warning', message: "common.no-input-name", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
+        if (email === "") {
+            onNotification({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        } else {
+            let __email = email;
+            let __re = /\S+@\S+\.\S+/;
+            let __result = __email.match(__re);
+            if(__result == null) {
+                onNotification({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
+        }
+        if (contact === "") {
+            onNotification({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        } else {
+            let __contact = contact;
+            let __re = /[^0-9]+/g;
+            let __result = __contact.match(__re);
+            console.log(__result);
+            let __length = __contact.length;
+            if(__result == null && __length === 8) {
+            } else {
+                onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
+        }
+        if (address === "") {
+            onNotification({ title: 'warning', message: "common.no-input-address", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
+
+        onChangeStep();
+    }
+
+    const handleDeliveryDateChange = (newValue) => {
+        let __stuffInfo = stuffInfo;
+        __stuffInfo = ({...__stuffInfo, deliveryDate: newValue.format("YYYY-MM-DD")});
+        setDeliveryDate(newValue);
+        if(newValue >= dayjs(ladenReturnDate)) {
+            setLadenReturnDate(newValue);
+            __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
+            let __expirationDate = newValue.add(props.storage_month, 'month');
+            setExpirationDate(__expirationDate);
+            __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
+        }
+        setStuffInfo(__stuffInfo);
+    };
+    const handleLadenReturnDateChange = (newValue) => {
+        let __stuffInfo = stuffInfo;
+        __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
+        setLadenReturnDate(newValue);
+        let __expirationDate = newValue.add(props.storage_month, 'month');
+        setExpirationDate(__expirationDate);
+        __stuffInfo = ({...__stuffInfo, expirationDate: __expirationDate.format("YYYY-MM-DD")});
+        if(newValue >= dayjs(tentativeDate)) {
+            setTentativeDate(newValue);
+            __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
+        }
+        setStuffInfo(__stuffInfo);
+    };
+    const handleTentativeDateChange = (newValue) => {
+        let __stuffInfo = stuffInfo;
+        __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
+        setTentativeDate(newValue);
+        if(newValue >= dayjs(expirationDate)) {
+            setExpirationDate(newValue);
+            __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
+        }
+        setStuffInfo(__stuffInfo);
+    };
+    const handleExpirationDateChange = (newValue) => {
+        setTentativeDate(newValue);
+    };
+    const handleDeliveryTimeChange = (e) => {
+        setDeliveryTimeIndex(e.target.value);
+        setStuffInfo({...stuffInfo,
+            deliveryTimeIndex: e.target.value,
+            deliveryTime: timelist[e.target.value].label
+        });
+    };
+    const handleLadenReturnTimeChange = (e) => {
+        setLadenReturnTimeIndex(e.target.value);
+        setStuffInfo({...stuffInfo,
+            ladenReturnTimeIndex: e.target.value, 
+            ladenReturnTime: timelist[e.target.value].label
+        });
+    };
+    const handleTentativeTimeChange = (e) => {
+        setTentativeTimeIndex(e.target.value);
+        setStuffInfo({...stuffInfo,
+            tentativeTimeIndex: e.target.value,
+            tentativeTime: timelist[e.target.value].label
+        });
+    };
+
+    const customColor = {
+        500: '#FFBE3D',
+        700: '#FFBE3D',
+    };
+
+    const defaultMaterialTheme = createTheme({
+        palette: {
+            primary: customColor,
+        },
+    });
+
+    return (
+        <ThemeProvider theme={defaultMaterialTheme}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <div className="content-container">
+                    <div className="content-page">
+                        <div className="text-header text-black pb-[10px]">{t("page3.qu-where-collect")}</div>
+                        <div className="text-normal text-black">{t("page3.an-where-collect")}</div>
+                        <div className="mt-[35px]">
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        required fullWidth
+                                        id="standard-required"
+                                        label={t("common.wd-name")}
+                                        variant="standard"
+                                        value={name}
+                                        onChange={(e) => { 
+                                            setName(e.target.value);
+                                        }}
+                                        onBlur={(e) => {
+                                            setStuffInfo({...stuffInfo, name: e.target.value});
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        required fullWidth
+                                        id="standard-required"
+                                        label={t("common.wd-email")}
+                                        variant="standard"
+                                        value={email}
+                                        type="email"
+                                        onChange={(e) => { 
+                                            setEmail(e.target.value);
+                                        }}
+                                        onBlur={(e) => {
+                                            setStuffInfo({...stuffInfo, email: e.target.value});
+                                            let __email = e.target.value;
+                                            let __re = /\S+@\S+\.\S+/;
+                                            let __result = __email.match(__re);
+                                            if(__result == null) {
+                                                onNotification({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                                            }
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        required fullWidth
+                                        id="standard-required"
+                                        label={t("common.wd-contact")}
+                                        variant="standard"
+                                        value={contact}
+                                        onChange={(e) => { 
+                                            setContact(e.target.value);
+                                        }}
+                                        onBlur={(e) => {
+                                            setStuffInfo({...stuffInfo, contact: (e.target.value)});
+                                            let __contact = e.target.value;
+                                            let __re = /[^0-9]+/g;
+                                            let __result = __contact.match(__re);
+                                            let __length = __contact.length;
+                                            if(__result == null && __length === 8) {
+                                            } else {
+                                                onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                                            }
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={12} md={12}>
+                                    <CssTextField
+                                        required fullWidth
+                                        id="standard-required"
+                                        label={t("common.wd-address")}
+                                        variant="standard"
+                                        value={address}
+                                        onChange={(e) => { 
+                                            setAddress(e.target.value);
+                                        }}
+                                        onBlur={(e) => {
+                                            setStuffInfo({...stuffInfo, address: e.target.value});
+                                        }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <DesktopDatePicker
+                                        label={t("common.wd-empty-box-delivery")}
+                                        inputFormat="MM/DD/YYYY"
+                                        value={deliveryDate}
+                                        minDate={dayjs().add(2, 'day')}
+                                        onChange={handleDeliveryDateChange}
+                                        renderInput={(params) => <CssTextField
+                                            required fullWidth
+                                            id="standard-required1"
+                                            label={t("common.wd-empty-box-delivery")}
+                                            variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, button: {fontSize: 16} }} />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        id="standard-select-currency1"
+                                        select fullWidth
+                                        label=""
+                                        value={deliveryTimeIndex}
+                                        onChange={handleDeliveryTimeChange}
+                                        className="mt-17"
+                                        helperText=""
+                                        variant="standard"
+                                    >
+                                        {timelist.map((option) => (
+                                            <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </CssTextField>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <DesktopDatePicker
+                                        label={t("common.wd-laden-return-date")}
+                                        inputFormat="MM/DD/YYYY"
+                                        value={ladenReturnDate}
+                                        minDate={deliveryDate}
+                                        onChange={handleLadenReturnDateChange}
+                                        renderInput={(params) => <CssTextField
+                                            label={t("common.wd-laden-return-date")}
+                                            required fullWidth
+                                            id="standard-required2"
+                                            variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        id="standard-select-currency2"
+                                        select fullWidth
+                                        label=""
+                                        value={ladenReturnTimeIndex}
+                                        onChange={handleLadenReturnTimeChange}
+                                        className="mt-17"
+                                        helperText=""
+                                        variant="standard"
+                                    >
+                                        {timelist.map((option) => (
+                                            <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </CssTextField>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <DesktopDatePicker
+                                        label={t("common.wd-tentative-retrieval-date")}
+                                        inputFormat="MM/DD/YYYY"
+                                        value={tentativeDate}
+                                        minDate={ladenReturnDate}
+                                        maxDate={expirationDate}
+                                        onChange={handleTentativeDateChange}
+                                        renderInput={(params) => <CssTextField
+                                            required fullWidth
+                                            id="standard-required3"
+                                            label={t("common.wd-tentative-retrieval-date")}
+                                            variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <CssTextField
+                                        id="standard-select-currency3"
+                                        select fullWidth
+                                        label=""
+                                        value={tentativeTimeIndex}
+                                        onChange={handleTentativeTimeChange}
+                                        className="mt-17"
+                                        helperText=""
+                                        variant="standard"
+                                    >
+                                        {timelist.map((option) => (
+                                            <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
+                                                {option.label}
+                                            </MenuItem>
+                                        ))}
+                                    </CssTextField>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={6}>
+                                    <DesktopDatePicker
+                                        label={t("common.wd-storage-expiration-date")}
+                                        inputFormat="MM/DD/YYYY"
+                                        readOnly
+                                        value={expirationDate}
+                                        onChange={handleExpirationDateChange}
+                                        renderInput={(params) => <CssTextField
+                                            required fullWidth
+                                            id="standard-required3"
+                                            label={t("common.wd-storage-expiration-date")}
+                                            variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </div>
+                    </div>
+                    <div className="flex item-center mt-[30px]"><span className="btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
+                </div>
+            </LocalizationProvider>
+        </ThemeProvider>
+    )
+}

@@ -1,0 +1,22 @@
+.sign {
+    min-width: 500px;
+    background: #fff;
+    .tab {
+        background: #fff;
+        text-align: center;
+        padding: 23px;
+        border: 1px #FFBE3D solid;
+        color: #FFBE3D;
+        width: 50%;
+    }
+    .active {
+        background: #FFBE3D;
+        color: #fff;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .sign {
+        min-width: 400px;
+    }
+}

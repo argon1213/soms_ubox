@@ -1,0 +1,43 @@
+
+.stepper {
+    width: 500px;
+    position: relative;
+    
+    .stepper-content {
+        width: 100%;
+        display: inline-flex;
+        align-content: stretch;
+        justify-content: space-between;
+        padding: 0px;
+        position: absolute;
+        top: -24px;
+    }
+        
+    .stepper-item {
+        border-radius: 50%;
+        width: 48px;
+        height: 48px;
+        cursor: pointer;
+        display: flex;
+        background-color: #8F8F8F;
+    }
+    .spliter-line-gray {
+        border-width: 0px 0px 1px 0px;
+        border-color: #8F8F8F;
+        border-style: dashed;
+    }
+    .spliter-line-yellow {
+        border-width: 1px 0px 0px 0px;
+        border-color: #FFBE3D;
+        border-style: dashed;
+    }
+    .selected {
+        background-color: #FFBE3D;
+    }
+    .stepper-item .inner-circle {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        border: 3px white solid;
+    }
+}

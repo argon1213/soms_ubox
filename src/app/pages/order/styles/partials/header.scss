@@ -1,0 +1,110 @@
+.header {
+    width: 100%;
+    background: #F5F5F5;
+    height: 120px;
+    .content {
+        height: 120px;
+        // padding: 10px 17px 10px 17px;
+        display: flex;
+        justify-content: space-between;
+        max-width: 1440px;        
+    }
+    .content-garbage {
+        height: 0px;
+    }
+    .header-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;    
+    }
+    .arrowStepper {
+        display: none;
+    }
+    .language {
+        padding: 10px 17px;
+    }
+    .link {
+        cursor: pointer;
+    }
+
+}
+.main-content {
+    display: flex;
+    max-width: 1440px;
+    padding: 38px 60px;
+    height: 100%;
+    background-color: white;
+}
+@media only screen and (max-width: 900px) {
+    .header {
+        height: 170px;
+        position: relative;
+        .header-container {
+            position: absolute;
+            top: 140px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .content-garbage {
+            height: 50px;
+            background: #fff;
+        }
+        .stepper {
+            margin-top: 25px;
+        }
+        .arrowStepper {
+            display: none;
+            .arrowLeft{
+                position: absolute;
+                background-color: #FFBE3D;
+                color: #F5F5F5;
+                border-color: #F5F5F5;
+                left: 30px;
+                // width: 48px;
+                // height: 48px;
+            }
+            .arrowRight{
+                position: absolute;
+                background-color: #FFBE3D;
+                color: #F5F5F5;
+                border-color: #F5F5F5;
+                right: 30px;
+                // width: 48px;
+                // height: 48px;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .header {
+        height: 120px;
+        margin-bottom: 50px;
+        
+        .header-container {
+            position: absolute;
+            top: 140px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        .stepper {
+            display: none;
+        }
+        .arrowStepper{
+            padding: 0 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .content-garbage {
+            height: 0px;
+            background: #fff;
+        }
+    }
+
+    .main-content {
+        display: flex;
+        padding: 30px 30px;
+        height: 100%;
+    }
+}

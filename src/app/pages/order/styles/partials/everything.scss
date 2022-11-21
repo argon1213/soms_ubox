@@ -1,0 +1,51 @@
+#everything {
+    
+    background-color:#fff;
+    font-family:$poppins;  
+
+    &.home {
+        background-size:100% auto;
+        background-repeat: no-repeat;
+        background-position:top center;
+
+        main {
+            margin: auto 0;
+        }
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width:100%;
+    height: fit-content;
+}
+
+a {
+    color:#fff;
+    text-decoration:none;
+
+    &:hover {
+        text-decoration:underline;
+    }
+}
+
+.backdrop {
+    position: absolute;
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    // background-color: #000;
+    background-color: rgba(0,0,0,0.7);
+    // opacity: 0.8;
+}
+
+.non-backdrop {
+    z-index: 1000;
+}

@@ -1,0 +1,21 @@
+
+@tailwind base;
+@tailwind components; 
+@tailwind utilities;
+
+// Modules
+@import "modules/variables";
+@import "modules/mixins";
+// Partials
+@import "partials/normalize";
+@import "partials/btn";
+@import "partials/cart-page";
+@import "partials/content-page";
+@import "partials/everything";
+@import "partials/fonts";
+@import "partials/header";
+@import "partials/modal";
+@import "partials/quantity";
+@import "partials/stepper";
+@import "partials/sign";
+

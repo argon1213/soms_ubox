@@ -3,7 +3,7 @@ import {createRoot} from 'react-dom/client'
 import axios from 'axios'
 import {Chart, registerables} from 'chart.js'
 import {QueryClient, QueryClientProvider} from 'react-query'
-import {ReactQueryDevtools} from 'react-query/devtools'
+// import {ReactQueryDevtools} from 'react-query/devtools'
 // Apps
 import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'
 /**
@@ -14,6 +14,12 @@ import {MetronicI18nProvider} from './_metronic/i18n/Metronici18n'
 import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
 import './_metronic/assets/sass/style.react.scss'
+
+import 'bootstrap/dist/css/bootstrap.css'
+import 'antd/dist/reset.css'
+import './app/pages/order/styles/global.scss'
+import './app/lib/modules/i18n'
+
 import {AppRoutes} from './app/routing/AppRoutes'
 import {AuthProvider, setupAxios} from './app/modules/auth'
 /**
@@ -40,7 +46,7 @@ if (container) {
           <AppRoutes />
         </AuthProvider>
       </MetronicI18nProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   )
 }

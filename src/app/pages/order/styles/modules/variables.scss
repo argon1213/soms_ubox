@@ -1,0 +1,37 @@
+/**
+ * modules/variables
+ * ---
+ */
+
+
+/**
+ * Typography
+ */
+
+$poppins: 'Poppins', sans-serif;
+/* 400, 700, 800 */
+
+
+/**
+ * Colors
+ */
+
+$cool-gray: #37373C;
+$cool-black: #1e1e1e;
+$orange-red: #F52A0B;
+$lite-gray: #B4B4B4;
+$gray: #969696;
+
+$main-text-color: #333;
+$blue-text:#001FFF;
+
+$primary-color: #FFBE3D;
+$secondary-color: #8F8F8F;
+/**
+ * layout
+ */
+
+$inner-max-width: 1280px;
+
+/** transitions */
+$standard: all 0.2s ease-out;

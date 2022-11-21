@@ -1,0 +1,221 @@
+/**
+ * modules/mixins
+ * ---
+ */
+
+@mixin reset-box {
+    padding: 0;
+    margin: 0;
+}
+
+@mixin clearfix {
+    &::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+
+@mixin atSmall {
+    @media (min-width: 530px) {
+        @content;
+    }
+}
+
+@mixin belowSmall {
+    @media (max-width: 529px) {
+        @content;
+    }
+}
+
+@mixin atVerySmall {
+    @media (min-width: 380px) {
+        @content;
+    }
+}
+
+@mixin belowVerySmall {
+    @media (max-width: 379px) {
+        @content;
+    }
+}
+
+@mixin atMedium {
+    @media (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin belowMedium {
+    @media (max-width: 767px) {
+        @content;
+    }
+}
+
+@mixin at1440px {
+    @media (min-width: 1440px) {
+        @content;
+    }
+}
+
+@mixin at1280px {
+    @media (min-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin at1150px {
+    @media (min-width: 1150px) {
+        @content;
+    }
+}
+
+@mixin atLarge {
+    @media (min-width: 1023px) {
+        @content;
+    }
+}
+
+@mixin belowLarge {
+    @media (max-width: 1022px) {
+        @content;
+    }
+}
+
+@mixin belowVeryLarge {
+    @media (max-width: 1419px) {
+        @content;
+    }
+}
+
+@mixin below1150px {
+    @media (max-width: 1149px) {
+        @content;
+    }
+}
+
+@mixin atMobileNav {
+    @media (max-width: 1110px) {
+        @content;
+    }
+}
+
+@mixin atVeryLarge {
+    @media (min-width: 1420px) {
+        @content;
+    }
+}
+
+@mixin atVeryVeryLarge {
+    @media (min-width: 1700px) {
+        @content;
+    }
+}
+
+@mixin atShort {
+    @media (min-height: 720px) {
+        @content;
+    }
+}
+
+@mixin atVeryShort {
+    @media (min-height: 500px) {
+        @content;
+    }
+}
+
+@mixin below620 {
+    @media (max-height: 620px) {
+        @content;
+    }
+}
+
+@mixin closeButton {
+    position:absolute;
+    top:24px;
+    right:20px;
+    width:40px;
+    height:40px;
+    cursor:pointer;
+    border-radius:40px;
+    border:2px solid #fff;
+    border-color:transparent;
+    transition: $standard;
+
+    &:after {
+        position: absolute;
+        top: 50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        content:' ';
+        width:12px;
+        height:12px;
+        background-image:url(/images/icons/X.png);
+        background-image:url(/images/icons/X.svg), linear-gradient(transparent, transparent);
+        background-repeat: none;
+        background-position:50% 50%;
+    }
+
+    &:hover {
+        opacity:0.8;
+        border-color:#fff;
+    }
+}
+
+@mixin loading {
+    position:relative;
+    width:100%;
+    height:200px;
+    transition:$standard;
+
+    &:after {
+        position:absolute;
+        content:' ';
+        width:134px;
+        height:24px;
+        top:50%;
+        left:0;
+        opacity:0.5;
+        transform:translate(0, -50%) rotate(0deg);
+        background-image:url(/images/logo.png);
+        background-image:url(/images/logo.svg), linear-gradient(transparent, transparent);
+        animation-name: loading;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes loading {
+        from {
+            opacity:0;
+            transform:translate(-50%, -50%) rotate(0deg);
+            left:0;
+        }
+
+        45% {
+            opacity:1;
+            transform:translate(-50%, -50%) rotate(1800deg);
+            left:50%;
+        }
+
+        55% {
+            opacity:1;
+            transform:translate(-50%, -50%) rotate(1800deg);
+            left:50%;
+        }
+
+        to {
+            opacity:0;
+            transform:translate(-50%, -50%) rotate(3600deg);
+            left:100%;
+        }
+    }
+}
+
+@mixin smallTitle {
+    text-transform:uppercase;
+    font-size:0.625rem;
+    color:$gray;
+    font-weight:700;
+    margin-bottom:18px;
+    padding-top:30px;
+}
