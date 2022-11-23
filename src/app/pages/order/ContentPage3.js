@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import dayjs from 'dayjs';
-import CssTextField from '../components/customColor/text-field';
+import CssTextField from '../../components/custom-components/TextField';
 import { createTheme, Grid, MenuItem, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -36,6 +36,7 @@ export default function ContentPage3(props) {
     const [address, setAddress] = useState("");
     const [initial, setInitial] = useState(false);
     const { t } = useTranslation();
+    const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
 
     useEffect(() => {
         setInitial(true);
@@ -74,16 +75,17 @@ export default function ContentPage3(props) {
             })
 
             if(JSON.parse(localStorage.getItem("ubox-is-authenticated")) === 1){
-                const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
+                // const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
                 __userInfo.name && setName(__userInfo.name);
                 __userInfo.email && setEmail(__userInfo.email);
                 __userInfo.contact && setContact(__userInfo.contact);
+                __userInfo.address1 && setAddress(__userInfo.address1);
                 stuffInfo.name === undefined && setStuffInfo({
                     ...stuffInfo,
                     name: __userInfo.name,
                     email: __userInfo.email,
                     contact: __userInfo.contact,
-                    address: "",
+                    address: __userInfo.address1,
                     deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
                     deliveryTime: "09:00 - 12:00",
                     deliveryTimeIndex: 0,
@@ -227,7 +229,7 @@ export default function ContentPage3(props) {
                                         id="standard-required"
                                         label={t("common.wd-name")}
                                         variant="standard"
-                                        value={name}
+                                        value={__userInfo.name ? __userInfo.name : name}
                                         onChange={(e) => { 
                                             setName(e.target.value);
                                         }}
@@ -242,7 +244,7 @@ export default function ContentPage3(props) {
                                         id="standard-required"
                                         label={t("common.wd-email")}
                                         variant="standard"
-                                        value={email}
+                                        value={__userInfo.email ? __userInfo.email : email}
                                         type="email"
                                         onChange={(e) => { 
                                             setEmail(e.target.value);
@@ -264,7 +266,7 @@ export default function ContentPage3(props) {
                                         id="standard-required"
                                         label={t("common.wd-contact")}
                                         variant="standard"
-                                        value={contact}
+                                        value={__userInfo.contact ? __userInfo.contact : contact}
                                         onChange={(e) => { 
                                             setContact(e.target.value);
                                         }}
@@ -290,8 +292,6 @@ export default function ContentPage3(props) {
                                         value={address}
                                         onChange={(e) => { 
                                             setAddress(e.target.value);
-                                        }}
-                                        onBlur={(e) => {
                                             setStuffInfo({...stuffInfo, address: e.target.value});
                                         }}
                                     />

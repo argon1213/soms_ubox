@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import Quantity from "../components/quantity";
+import Quantity from "../../components/quantity";
 
 export default function ContentPage2(props) {
 

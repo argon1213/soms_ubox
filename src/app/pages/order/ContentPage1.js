@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Grid, Box, Slider } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import Quantity from "../components/quantity";
-import NumberInput from '../components/quantity/NumberInput';
+import Quantity from "../../components/quantity";
+import NumberInput from '../../components/quantity/NumberInput';
 import { useTranslation } from "react-i18next";
 
 export default function ContentPage1(props) {

@@ -1,8 +1,8 @@
 import { useState, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { signup } from "../../../store/apis/auth";
-import CssTextField from "../../../pages/components/customColor/text-field";
-import { ShowNotification } from "../../../pages/components/notification";
+import CssTextField from "../../../components/custom-components/TextField";
+import { ShowNotification } from "../../../components/notification";
 
 
 type Props = {

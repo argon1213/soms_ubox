@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SignUp from "./signup";
-import SignIn from "./signin";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 import { t } from "i18next";
 
 const Sign = (props) => {

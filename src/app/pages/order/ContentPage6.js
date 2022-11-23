@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 
-export default function ContentPage6() {
+export default function ContentPage6(props) {
+    const { orderId } = props;
     const { t } = useTranslation();
     const [orderNumber, setOrderNumber] = useState("");
     const [email, setEmail] = useState("");
     useEffect(() => {
-        setOrderNumber(JSON.parse(localStorage?.getItem("ubox-return")).orderNumber);
+        setOrderNumber(orderId?.orderNumber);
         setEmail(JSON.parse(localStorage?.getItem("ubox-user")).email);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const onDoneHandler = (e) => {
         localStorage.removeItem("ubox-carts");

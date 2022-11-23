@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import Header from '../components/layout/header'
-import Stepper from '../components/stepper'
-import ContentPage from "./content-page";
-import CartPage from "./cart-page";
+import Header from '../../components/layout/Header'
+import Stepper from '../../components/stepper'
+import ContentPage from "./ContentPage";
+import CartPage from "./CartPage";
 import { Grid } from "@mui/material";
-import Sign from "../components/auth";
+import Sign from "../../components/auth";
 import { getStoragePeriodItem } from "../../store/apis/ordering";
 
 export default function Home() {
@@ -23,6 +23,7 @@ export default function Home() {
   const [accountInfo, setAccountInfo] = useState({});
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
+  const [orderId, setOrderId] = useState({});
 
 
   useEffect(() => {
@@ -170,11 +171,6 @@ export default function Home() {
       return 3; // step=4  
     if (account_info.isStudent === 1 && account_info.studentID === "")
       return 3; // step=4  
-    // const authentication_data = localStorage.getItem("ubox-is-authenticated");      
-    // if (authentication_data && authentication_data === 1)
-    //   return 4; // step=5
-    // else 
-    //   return 3; // step=4
     return 4;
   }
 
@@ -200,6 +196,8 @@ export default function Home() {
               setStuffInfo={setStuffInfo}
               accountInfo={accountInfo}
               setAccountInfo={setAccountInfo}
+              orderId={orderId}
+              setOrderId={setOrderId}
               stepChange={onChangeStep} 
               onRefreshCart={onRefreshCartHandler}
               getStoragePeriodPrice={getStoragePeriodPrice}

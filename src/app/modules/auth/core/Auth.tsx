@@ -1,10 +1,8 @@
 import {
   FC,
   useState,
-  useEffect,
   createContext,
   useContext,
-  useRef,
   Dispatch,
   SetStateAction,
 } from 'react'

@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Grid, RadioGroup } from '@mui/material';
-import CustomColorRadio from "../components/customColor/radio-button";
-import CssFormControlLabel from "../components/customColor/formControlLabel";
+import CustomColorRadio from "../../components/custom-components/RadioButton";
+import CssFormControlLabel from "../../components/custom-components/FormControlLabel";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import PaymentForm from "../components/payment";
+import PaymentForm from "../../components/payment";
 import { orderSubmit } from "../../store/apis/ordering";
-import LoadingSpinner from "../components/loading-spinner";
+import LoadingSpinner from "../../components/loading-spinner";
 
 export default function ContentPage5(props) {
-    const { onNotification, cartInfo, setCartInfo, stuffInfo, accountInfo } = props;
+    const { onNotification, cartInfo, setCartInfo, stuffInfo, accountInfo, setOrderId } = props;
     const [paymentType, setPaymentType] = useState('3');
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
@@ -44,14 +44,7 @@ export default function ContentPage5(props) {
 
     useEffect(() => {
         if(paymentType === '4' || paymentType === '5') {
-            // setTimeout(() => {
-            //     yedpayOrderSubmit({
-            //         carts: { ...__carts, duration: __duration, payment_type: paymentType },
-            //         stuff: __stuff_info,
-            //         account: __account_info,
-            //         somsclient_id: __user_info.id,
-            //     })
-            // }, 3000);
+          
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paymentType]);
@@ -84,10 +77,9 @@ export default function ContentPage5(props) {
                 account: __account_info_student,
                 somsclient_id: __user_info.id,
             }).then((res) => {
-                localStorage.setItem("ubox-return", JSON.stringify({ orderNumber: res.data.order }));
+                setOrderId({orderNumber: res.data.order});
                 if(res.data.code === "success") {
                     onNotification({ title: res.data.code, message: res.data.message, visible: true, status: Math.floor(Math.random() * 100000) });
-                    localStorage.setItem("orderState", JSON.stringify(1));
                     props.onChangeStep();
                 } else {
                     console.log("responseError", res.data);
@@ -125,24 +117,26 @@ export default function ContentPage5(props) {
                                     <CssFormControlLabel value={6} control={<CustomColorRadio />} label="Cash/ATM" />
                                 </RadioGroup>
                             </Grid>
-                            <Grid item xs={12} sm={12} md={6}>
-                                {paymentType === '3' && (
-                                    <>
-                                        <Elements stripe={getStripe()}>
-                                            <PaymentForm onCallbackHandler={onCallbackFunc} />
-                                        </Elements>
-                                    </>
-                                )}
-                                {paymentType === '4' && (
-                                    <div className="w-[100%] mt-[30px] flex item-center">
-                                        <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
-                                    </div>
-                                )}
-                                {paymentType === '5' && (
-                                    <div className="w-[100%] mt-[30px] flex item-center">
-                                        <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
-                                    </div>
-                                )}
+                            <Grid item xs={12} sm={12} md={12}>
+                                <div className="flex items-center">
+                                    {paymentType === '3' && (
+                                        <div className="h-[20px] w-[100%]">
+                                            <Elements stripe={getStripe()}>
+                                                <PaymentForm onCallbackHandler={onCallbackFunc} />
+                                            </Elements>
+                                        </div>
+                                    )}
+                                    {paymentType === '4' && (
+                                        <div className="w-[100%] mt-[30px] flex item-center">
+                                            <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
+                                        </div>
+                                    )}
+                                    {paymentType === '5' && (
+                                        <div className="w-[100%] mt-[30px] flex item-center">
+                                            <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
+                                        </div>
+                                    )}
+                                </div>
                             </Grid>
                         </Grid>
                     </div>

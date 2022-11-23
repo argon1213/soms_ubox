@@ -10,9 +10,10 @@ const Stepper = (props) => {
         else return a;
     }
 
-    const onChangeStep = async (step) => {
+    const onChangeStep = async (targetStep) => {
+        if(step === 5) return;
         const result = await props.previousActionCallback();
-        stepChange(min(step, result));
+        stepChange(min(targetStep, result));
     }
 
     const changeNextStep = () => {

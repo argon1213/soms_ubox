@@ -1,5 +1,5 @@
 import { FC } from "react";
-import Header from "../../../pages/components/layout/header";
+import Header from "../../../components/layout/Header";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import { t } from "i18next";
@@ -15,7 +15,6 @@ const Login: FC<Props> = (props) => {
     return (
       <div className="top-container">
         <Header />
-        
           <div className="w-[100%] h-[100%] flex item-center item-vcenter">
             <div className="cmodal-content flex item-center my-auto">
               <div className="sign w-[100%] auth-login">

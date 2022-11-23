@@ -1,15 +1,10 @@
 import {useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-// import dynamic from "next/dynamic";
 import { Grid, RadioGroup } from '@mui/material';
-import CustomColorRadio from '../components/customColor/radio-button';
-import CssFormControlLabel from "../components/customColor/formControlLabel";
-import CssTextField from '../components/customColor/text-field';
+import CustomColorRadio from '../../components/custom-components/RadioButton';
+import CssFormControlLabel from "../../components/custom-components/FormControlLabel";
+import CssTextField from '../../components/custom-components/TextField';
 import Select from 'react-select';
-
-// const ReactSelect = dynamic(() => import("react-select"), {
-//     ssr: false,
-// });
 
 export default function ContentPage4(props) {
     const { onChangeStep, onNotification, accountInfo, setAccountInfo } = props;

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { signup } from "../../../store/apis/auth";
-import CssTextField from "../customColor/text-field";
+import { signup } from "../../store/apis/auth";
+import CssTextField from "../custom-components/TextField";
 import { ShowNotification } from "../notification";
 
 const SignUp = (props) => {

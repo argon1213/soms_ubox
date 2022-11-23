@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState, FC} from 'react'
 
-import CssTextField from '../../../pages/components/customColor/text-field'
-import { ShowNotification } from '../../../pages/components/notification'
+import CssTextField from '../../../components/custom-components/TextField'
+import { ShowNotification } from '../../../components/notification'
 import { useTranslation } from 'react-i18next'
 import { login } from '../../../store/apis/auth'
 
@@ -83,6 +83,9 @@ const SignIn: FC<Props> = (props) => {
             onChange={(e) => { setPassword(e.target.value) }}
           />
         </div>
+      </div>
+      <div className="mb-[60px] px-[32px]">
+        <span className="text-normal-18">Forget password?</span>
       </div>
       <div className="flex item-center mt-[10px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-next")}</span></div>
     </>
