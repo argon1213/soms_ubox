@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { login } from "../../apis/auth";
+import { login } from "../../../store/apis/auth";
 import CssTextField from "../customColor/text-field";
 import { ShowNotification } from "../notification";
 

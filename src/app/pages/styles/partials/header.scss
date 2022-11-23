@@ -1,5 +1,4 @@
 .header {
-    width: 100%;
     background: #F5F5F5;
     height: 120px;
     .content {
@@ -8,9 +7,6 @@
         display: flex;
         justify-content: space-between;
         max-width: 1440px;        
-    }
-    .content-garbage {
-        height: 0px;
     }
     .header-container {
         display: flex;
@@ -37,17 +33,14 @@
 }
 @media only screen and (max-width: 900px) {
     .header {
-        height: 170px;
+        height: 120px;
+        margin-bottom: 50px;
         position: relative;
         .header-container {
             position: absolute;
             top: 140px;
             width: 100%;
             margin-top: 20px;
-        }
-        .content-garbage {
-            height: 50px;
-            background: #fff;
         }
         .stepper {
             margin-top: 25px;

@@ -5,6 +5,7 @@ import {MasterLayout} from '../../_metronic/layout/MasterLayout'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 // import {getCSSVariableValue} from '../../_metronic/assets/ts/_utils'
 // import {WithChildren} from '../../_metronic/helpers'
+import { ClientOrders } from '../pages/client/ClientOrder'
 
 
 const PrivateRoutes = () => {
@@ -17,6 +18,8 @@ const PrivateRoutes = () => {
         <Route path='auth/*' element={<Navigate to='/dashboard' />} />
         {/* Pages */}
         <Route path='dashboard' element={<DashboardWrapper />} />
+
+        <Route path='client' element={<ClientOrders />} />
         
         {/* Page Not Found */}
         <Route path='*' element={<Navigate to='/error/404' />} />

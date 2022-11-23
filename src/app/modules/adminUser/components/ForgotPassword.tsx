@@ -3,6 +3,7 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
+import {requestPassword} from '../core/_requests'
 
 const initialValues = {
   email: 'admin@demo.com',
@@ -25,19 +26,19 @@ export function ForgotPassword() {
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       setHasErrors(undefined)
-      // setTimeout(() => {
-      //   requestPassword(values.email)
-      //     .then(({data: {result}}) => {
-      //       setHasErrors(false)
-      //       setLoading(false)
-      //     })
-      //     .catch(() => {
-      //       setHasErrors(true)
-      //       setLoading(false)
-      //       setSubmitting(false)
-      //       setStatus('The login detail is incorrect')
-      //     })
-      // }, 1000)
+      setTimeout(() => {
+        requestPassword(values.email)
+          .then(({data: {result}}) => {
+            setHasErrors(false)
+            setLoading(false)
+          })
+          .catch(() => {
+            setHasErrors(true)
+            setLoading(false)
+            setSubmitting(false)
+            setStatus('The login detail is incorrect')
+          })
+      }, 1000)
     },
   })
 

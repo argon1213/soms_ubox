@@ -12,7 +12,7 @@ import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage, useAuth} from '../modules/auth'
 import {App} from '../App'
 
-import Home from '../pages/order/pages/index'
+import Home from '../pages/order/index'
 
 /**
  * Base URL of the website.

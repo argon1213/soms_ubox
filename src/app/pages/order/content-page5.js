@@ -6,7 +6,7 @@ import CssFormControlLabel from "../components/customColor/formControlLabel";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../components/payment";
-import { orderSubmit } from "../apis/ordering";
+import { orderSubmit } from "../../store/apis/ordering";
 import LoadingSpinner from "../components/loading-spinner";
 
 export default function ContentPage5(props) {

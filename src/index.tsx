@@ -17,11 +17,11 @@ import './_metronic/assets/sass/style.react.scss'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'antd/dist/reset.css'
-import './app/pages/order/styles/global.scss'
+import './app/pages/styles/global.scss'
 import './app/lib/modules/i18n'
 
 import {AppRoutes} from './app/routing/AppRoutes'
-import {AuthProvider, setupAxios} from './app/modules/auth'
+import {AuthProvider, setupAxios} from './app/modules/adminUser'
 /**
  * Creates `axios-mock-adapter` instance for provided `axios` instance, add
  * basic Metronic mocks and returns it.

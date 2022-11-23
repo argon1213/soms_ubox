@@ -15,8 +15,22 @@
     }
 }
 
+.auth-login {
+    margin-top: 150px;
+}
+
+@media screen and (max-width: 900px) {
+    .auth-login {
+        margin-top: 100px;
+    }
+}
+
 @media screen and (max-width: 575px) {
     .sign {
         min-width: 400px;
+    }
+
+    .auth-login {
+        margin-top: 50px;
     }
 }

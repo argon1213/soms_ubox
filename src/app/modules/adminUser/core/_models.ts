@@ -36,30 +36,32 @@ export interface UserEmailSettingsModel {
   }
 }
 
+export interface UserSocialNetworksModel {
+  linkedIn: string
+  facebook: string
+  twitter: string
+  instagram: string
+}
+
 export interface UserModel {
   id: number
-  id_number: number
-  name: string
+  username: string
+  password: string | undefined
   email: string
-  contact: string
-  wechat: string
-  orders: Array<number>
-  orderCount: number
-  mobile_phone_cn: string
-  mobile_phone_hk: string
-  email_verified_at: boolean
-  address1: string
-  address2: string
-  student_id: string
-  university_id: number
-  city_id: string
-  created_at: string
-  deleted_at: string
-  is_reset: boolean
-  last_login: string
-  private_notes: string
-  shipping_address1: string
-  shipping_address2: string
-  state_id: string
-  updated_at: string
+  first_name: string
+  last_name: string
+  fullname?: string
+  occupation?: string
+  companyName?: string
+  phone?: string
+  roles?: Array<number>
+  pic?: string
+  language?: 'en' | 'de' | 'es' | 'fr' | 'ja' | 'zh' | 'ru'
+  timeZone?: string
+  website?: 'https://keenthemes.com'
+  emailSettings?: UserEmailSettingsModel
+  auth?: AuthModel
+  communication?: UserCommunicationModel
+  address?: UserAddressModel
+  socialNetworks?: UserSocialNetworksModel
 }

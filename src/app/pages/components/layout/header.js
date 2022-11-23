@@ -41,20 +41,19 @@ const Header = (props) => {
                     <div className="flex pr-[20px]">
                         <div className="language my-auto flex min-w-[90px]">
                             <div>
-                                <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "38px"}} onClick={(e) => { onChangeLanguage("en")}} />
+                                <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "auto"}} onClick={(e) => { onChangeLanguage("en")}} />
                             </div>
                             <div>
-                                <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "38px"}}  onClick={(e) => { onChangeLanguage("zh")}} />
+                                <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "auto"}}  onClick={(e) => { onChangeLanguage("zh")}} />
                             </div>
                         </div>
                         {(logged === 1) && (
                             <div className="my-auto min-w-[50px] flex item-center">
-                                <img src="/images/logout.png" className="link" alt="Logout" width={26} height={26} onClick={onLogout} />
+                                <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
                             </div>
                         )}
                     </div>
                 </div>
-                <div className="content-garbage"></div>
             </div>
         </>
     );

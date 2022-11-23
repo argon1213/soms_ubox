@@ -5,7 +5,7 @@ import ContentPage from "./content-page";
 import CartPage from "./cart-page";
 import { Grid } from "@mui/material";
 import Sign from "../components/auth";
-import { getStoragePeriodItem } from "../apis/ordering";
+import { getStoragePeriodItem } from "../../store/apis/ordering";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);

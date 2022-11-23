@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getProducts } from "../apis/ordering";
+import { getProducts } from "../../store/apis/ordering";
 import { ShowNotification } from "../components/notification";
 import ContentPage1 from './content-page1';
 import ContentPage2 from './content-page2';
