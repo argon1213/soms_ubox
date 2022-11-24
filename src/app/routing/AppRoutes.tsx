@@ -22,7 +22,8 @@ import Home from '../pages/order/index'
 const {PUBLIC_URL} = process.env
 
 const AppRoutes: FC = () => {
-  const {currentUser} = useAuth()
+  const currentUser = useAuth()
+  console.log(currentUser);
   return (
     <BrowserRouter basename={PUBLIC_URL}>
       <Routes>
@@ -37,7 +38,7 @@ const AppRoutes: FC = () => {
           ) : (
             <>
               <Route path='' element={<Home />} />
-              <Route path='auth/*' element={<AuthPage />} />
+              <Route path='client/*' element={<AuthPage />} />
               <Route path='*' element={<Navigate to='' />} />
             </>
           )}

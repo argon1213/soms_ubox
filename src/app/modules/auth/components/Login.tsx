@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import Header from "../../../components/layout/Header";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
@@ -11,10 +11,16 @@ type Props = {
 
 const Login: FC<Props> = (props) => {
     const tabIndex: Number = 1;
+    const [logged, setLogged] = useState<Number>(0);
+
+    useEffect(() => {
+      let __logged: String | any = localStorage.getItem("ubox-is-authenticated");
+      setLogged(parseInt(__logged));
+    }, [])
 
     return (
       <div className="top-container">
-        <Header />
+        <Header logged={logged} />
           <div className="w-[100%] h-[100%] flex item-center item-vcenter">
             <div className="cmodal-content flex item-center my-auto">
               <div className="sign w-[100%] auth-login">

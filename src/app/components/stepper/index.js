@@ -64,7 +64,8 @@ const Stepper = (props) => {
         </div>
         <div className="arrowStepper mx-auto">
             {step !== 0 && step !== 5 && <Button shape="circle" size="large" className="arrowLeft" icon={<ArrowLeftOutlined style={{display: 'block'}} />} onClick={changeBeforeStep} />}
-            {step !== 5 && <Button shape="circle" size="large" className="arrowRight" icon={<ArrowRightOutlined style={{display: 'block'}} />} onClick={changeNextStep} />}
+            {/* {step !== 5 && <Button shape="circle" size="large" className="arrowRight" icon={<ArrowRightOutlined style={{display: 'block'}} />} onClick={changeNextStep} />} */}
+            {step !== 5 && ((step !== 4 || logged === 0) ? true : false) && <Button shape="circle" size="large" className="arrowRight" icon={<ArrowRightOutlined style={{display: 'block'}} />} onClick={changeNextStep} />}
         </div>
         </>
     );

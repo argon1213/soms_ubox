@@ -2,7 +2,7 @@ import {
   FC,
   useState,
   createContext,
-  useContext,
+  // useContext,
   Dispatch,
   SetStateAction,
 } from 'react'
@@ -29,7 +29,14 @@ const initAuthContextPropsState = {
 const AuthContext = createContext<AuthContextProps>(initAuthContextPropsState)
 
 const useAuth = () => {
-  return useContext(AuthContext)
+  // return useContext(AuthContext)
+  const user = localStorage.getItem("ubox-user");
+  user ? localStorage.setItem("ubox-is-authenticated", '1') : localStorage.setItem("ubox-is-authenticated", '0');
+  if(user) {
+    return JSON.parse(user);
+  } else {
+    return undefined;
+  }
 }
 
 const AuthProvider: FC<WithChildren> = ({children}) => {

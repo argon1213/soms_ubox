@@ -79,24 +79,44 @@ export default function ContentPage3(props) {
                 __userInfo.name && setName(__userInfo.name);
                 __userInfo.email && setEmail(__userInfo.email);
                 __userInfo.contact && setContact(__userInfo.contact);
-                __userInfo.address1 && setAddress(__userInfo.address1);
-                stuffInfo.name === undefined && setStuffInfo({
-                    ...stuffInfo,
-                    name: __userInfo.name,
-                    email: __userInfo.email,
-                    contact: __userInfo.contact,
-                    address: __userInfo.address1,
-                    deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
-                    deliveryTime: "09:00 - 12:00",
-                    deliveryTimeIndex: 0,
-                    ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
-                    ladenReturnTime: "09:00 - 12:00",
-                    ladenReturnTimeIndex: 0,
-                    tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
-                    tentativeTime: "09:00 - 12:00",
-                    tentativeTimeIndex: 0, 
-                    expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
-                });
+
+                if(stuffInfo.name === undefined) {
+                    __userInfo.address1 && setAddress(__userInfo.address1);
+                    setStuffInfo({
+                        ...stuffInfo,
+                        name: __userInfo.name,
+                        email: __userInfo.email,
+                        contact: __userInfo.contact,
+                        address: __userInfo.address1,
+                        deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                        deliveryTime: "09:00 - 12:00",
+                        deliveryTimeIndex: 0,
+                        ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                        ladenReturnTime: "09:00 - 12:00",
+                        ladenReturnTimeIndex: 0,
+                        tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                        tentativeTime: "09:00 - 12:00",
+                        tentativeTimeIndex: 0, 
+                        expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                    });
+                }
+                // stuffInfo.name === undefined && setStuffInfo({
+                //     ...stuffInfo,
+                //     name: __userInfo.name,
+                //     email: __userInfo.email,
+                //     contact: __userInfo.contact,
+                //     address: __userInfo.address1,
+                //     deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                //     deliveryTime: "09:00 - 12:00",
+                //     deliveryTimeIndex: 0,
+                //     ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                //     ladenReturnTime: "09:00 - 12:00",
+                //     ladenReturnTimeIndex: 0,
+                //     tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                //     tentativeTime: "09:00 - 12:00",
+                //     tentativeTimeIndex: 0, 
+                //     expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                // });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -230,6 +250,8 @@ export default function ContentPage3(props) {
                                         label={t("common.wd-name")}
                                         variant="standard"
                                         value={__userInfo.name ? __userInfo.name : name}
+                                        InputProps={__userInfo.name ? {readOnly: true} : {readOnly: false}}
+                                        // disabled={__userInfo.name ? true : false}
                                         onChange={(e) => { 
                                             setName(e.target.value);
                                         }}
@@ -246,6 +268,8 @@ export default function ContentPage3(props) {
                                         variant="standard"
                                         value={__userInfo.email ? __userInfo.email : email}
                                         type="email"
+                                        InputProps={__userInfo.email ? {readOnly: true} : {readOnly: false}}
+                                        // disabled={__userInfo.email ? true : false}
                                         onChange={(e) => { 
                                             setEmail(e.target.value);
                                         }}
@@ -267,6 +291,7 @@ export default function ContentPage3(props) {
                                         label={t("common.wd-contact")}
                                         variant="standard"
                                         value={__userInfo.contact ? __userInfo.contact : contact}
+                                        InputProps={__userInfo.contact ? {readOnly: true} : {readOnly: false}}
                                         onChange={(e) => { 
                                             setContact(e.target.value);
                                         }}

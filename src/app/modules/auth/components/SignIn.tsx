@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {useState, FC} from 'react'
-
 import CssTextField from '../../../components/custom-components/TextField'
 import { ShowNotification } from '../../../components/notification'
 import { useTranslation } from 'react-i18next'
@@ -12,7 +11,6 @@ type Props = {
 } 
 
 const SignIn: FC<Props> = (props) => {
-
   const { t } = useTranslation();
   const [email, setEmail] = useState<String>("");
   const [password, setPassword] = useState<String>("");
@@ -36,12 +34,15 @@ const SignIn: FC<Props> = (props) => {
         if (res.data.status === "success") {
             localStorage.setItem("ubox-user", JSON.stringify(res.data.user));
             localStorage.setItem("ubox-is-authenticated", '1');
+
+            // navigate('/client/dashboard');
+            window.location.replace('/client/dashboard');
             // returnHandler(true);
             setNotify({ title: 'error', message: "common.no-login-success", visible: true, status: Math.floor(Math.random() * 100000) });
         } else {
             localStorage.removeItem('ubox-user');
             localStorage.setItem("ubox-is-authenticated", '0');
-            // returnHandler(false);                
+            // returnHandler(false); 
             setNotify({ title: 'error', message: "common.no-login-failed", visible: true, status: Math.floor(Math.random() * 100000) });
         }
     }).catch((err) => {
@@ -84,10 +85,10 @@ const SignIn: FC<Props> = (props) => {
           />
         </div>
       </div>
-      <div className="mb-[60px] px-[32px]">
-        <span className="text-normal-18">Forget password?</span>
+      <div className="mb-[60px] pl-[32px]">
+        <span className="" style={{fontSize: "16px"}}>Forgot password?</span>
       </div>
-      <div className="flex item-center mt-[10px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-next")}</span></div>
+      <div className="flex item-center mt-[10px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-signin")}</span></div>
     </>
   )
 }

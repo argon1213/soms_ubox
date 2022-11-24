@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 const Header = (props) => {
     const { logged } = props;
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [language, setLanguage] = useState()
     useEffect(() => {
         setLanguage(i18n.language);
@@ -39,6 +39,9 @@ const Header = (props) => {
                         {props.children}
                     </div>
                     <div className="flex pr-[20px]">
+                        <div className="my-auto pr-[10px] pl-[20px]">
+                            <a href="https://www.ubox.com.hk/contact/" target="_blank" rel="noreferrer" className="text-normal-18 text-yellow contact">{t("common.wd-contact")}</a>
+                        </div>
                         <div className="language my-auto flex min-w-[90px]">
                             <div>
                                 <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "auto"}} onClick={(e) => { onChangeLanguage("en")}} />

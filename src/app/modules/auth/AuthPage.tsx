@@ -8,6 +8,7 @@ const AuthPage = () => (
       <Route path='login' element={<Login />} />
       <Route path='forgot-password' element={<ForgotPassword />} />
       <Route index element={<Navigate to="login" />} />
+      <Route path='*' element={<Navigate to="login" />} />
     </Route>
   </Routes>
 )

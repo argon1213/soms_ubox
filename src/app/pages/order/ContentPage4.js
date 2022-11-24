@@ -179,7 +179,7 @@ export default function ContentPage4(props) {
                                             <CssTextField fullWidth
                                                 required
                                                 id="studentID"
-                                                label={t("common.wd-studentID")}
+                                                label={t("common.wd-student-id")}
                                                 variant="standard"
                                                 value={studentID}
                                                 onChange={(e) => { 
@@ -191,7 +191,7 @@ export default function ContentPage4(props) {
                                         <Grid item xs={12} sm={6} md={3} className="pl-[10px] mt-[10px]">
                                             <CssTextField fullWidth
                                                 id="WechatID"
-                                                label={t("common.wd-wechatID")}
+                                                label={t("common.wd-wechat-id")}
                                                 variant="standard"
                                                 value={wechatID}
                                                 onChange={(e) => {

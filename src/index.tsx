@@ -15,7 +15,6 @@ import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/plugins.scss'
 import './_metronic/assets/sass/style.react.scss'
 
-import 'bootstrap/dist/css/bootstrap.css'
 import 'antd/dist/reset.css'
 import './app/assets/css/global.scss'
 import './app/lib/modules/i18n'
