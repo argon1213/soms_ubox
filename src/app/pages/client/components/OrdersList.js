@@ -1,19 +1,23 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useSelector } from "react-redux/es/exports";
+import { useDispatch, useSelector } from "react-redux";
 import OrderRow from "./OrderRow";
 import OrderByIcon from "./OrderByIcon";
+import { fetchOrders } from "../../../store/actions/client";
+import LoadingSpinner from "../../../components/loading-spinner";
 
 
-const OrdersList = ({className, orders}) => {
+const OrdersList = ({className}) => {
   const user = JSON.parse(localStorage.getItem("ubox-user"));
   // const user = useSelector((state) => state.client.client);
-  // const orders = useSelector((state) => state.client.orders);
+  const orders = useSelector((state) => state.client.orders);
+  const isLoading = useSelector((state)=>state.client.loading);
   const [orderByKey, setOrderByKey] = useState(0);
+  const [orderByLabel, setOrderByLabel] = useState("");
   const { t } = useTranslation();
   const [initial, setInitial] = useState(false);
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setInitial(true);
@@ -27,16 +31,30 @@ const OrdersList = ({className, orders}) => {
   }, [initial])
 
   const onOrderByHandler = () => {
+    let __key = 0;
+    let __label = "";
     switch (orderByKey) {
       case 0:
-        return setOrderByKey(1);
+        __key = 1;
+        __label = "desc";
+        break;
       case 1:
-        return setOrderByKey(2);
+        __key = 2;
+        __label = "asc";
+        break;
       case 2:
-        return setOrderByKey(0);
+        __key = 0;
+        __label = "init";
+        break;
       default:
         return "";
     }
+    setOrderByKey(__key);
+    setOrderByLabel(__label);
+    dispatch(fetchOrders({
+      client_id: user.id,
+      label: __label,
+    }));
   }
 
   return (
@@ -70,11 +88,7 @@ const OrdersList = ({className, orders}) => {
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              {orders.map((order, index) => {
-                return (
-                  <OrderRow order={order} index={index} />
-                )
-              })}
+              <OrderRow orders={orders} />
             </tbody>
             {/* end::Table body */}
           </table>
@@ -83,6 +97,7 @@ const OrdersList = ({className, orders}) => {
         {/* end::Table container */}
       </div>
       {/* begin::Body */}
+      <LoadingSpinner isLoading={isLoading} />
     </div>
   )
 }

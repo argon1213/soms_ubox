@@ -1,8 +1,6 @@
-// import Image from 'next/image'
-// import Head from "next/head";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from 'react';
-// import Link from 'next/link';
+import {Link} from "react-router-dom";
 
 const Header = (props) => {
     const { logged } = props;
@@ -54,10 +52,14 @@ const Header = (props) => {
                                         <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "auto"}}  onClick={(e) => { onChangeLanguage("zh")}} />
                                     </div>
                                 </div>
-                                {(logged === 1) && (
-                                <div className="my-auto pl-[15px] flex item-center">
-                                    <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
-                                </div>
+                                {(logged === 1) ? (
+                                    <div className="my-auto pl-[15px] flex item-center">
+                                        <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
+                                    </div>
+                                    ) : (
+                                    <div className="my-auto pl-[15px] flex item-center">
+                                        <Link to="/client" className="text-header text-yellow contact">{t("common.wd-signin")}</Link>
+                                    </div>
                                 )}
                             </div>
                         </div>

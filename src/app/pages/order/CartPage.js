@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 
 export default function CartPage(props) {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     return (
       <div className="cart-container">
         <div className="content">
@@ -24,7 +24,7 @@ export default function CartPage(props) {
                         return (
                             <div className="flex space-between mt-[20px]" key={index}>
                                 <div>
-                                    <div className="text-normal text-black">{item.count} x {item.name}</div>
+                                    <div className="text-normal text-black">{item.count} x {i18n.language === "zh" ? item.name_cn: item.name}</div>
                                     <div className="text-normal text-black">${item.price} {t("cart.no-per-box")}</div>
                                 </div>
                                 <div className="my-auto">
@@ -55,7 +55,7 @@ export default function CartPage(props) {
                         return (
                             <div className="flex space-between mt-[20px]" key={index}>
                                 <div>
-                                    <div className="text-normal text-black">{item.count} x {item.name}</div>
+                                    <div className="text-normal text-black">{item.count} x {i18n.language==="zh" ? item.name_cn:item.name}</div>
                                     <div className="text-normal text-black">${item.price} {t("cart.no-per-box")}</div>
                                 </div>
                                 <div className="my-auto">
@@ -73,7 +73,7 @@ export default function CartPage(props) {
             <div className="flex space-between">
                 <span>
                     <span className="text-header text-black">{t("common.wd-total")}</span>
-                    <span className="text-normal text-black"> ({props.carts.storage_month} months)</span>
+                    <span className="text-normal text-black"> ({props.carts.storage_month} {t("common.wd-months")})</span>
                 </span>
                 <span className="text-header text-black">${props.carts ? props.carts.total : 0}</span>
             </div>

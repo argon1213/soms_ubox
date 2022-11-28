@@ -37,11 +37,6 @@ export default function Home() {
     }
   }, []);
 
-  useEffect(() => {
-    console.log("products", products);
-    console.log("materials", materials);
-  }, [products, materials])
-
   // Fetch the price following the storage period.
   const getStoragePeriodPrice = (month) => {
     getStoragePeriodItem(month)

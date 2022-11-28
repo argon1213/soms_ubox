@@ -91,6 +91,7 @@
   "common.wd-current-password": "Current password (leave blank to leave unchange)",
   "common.wd-new-password": "New password (leave blank to leave unchange)",
   "common.wd-confirm-new-password": "Confirm new password",
+  "common.wd-forgot-password": "Forgot Password?",
   "cart.no-order-detail": "Order Details",
   "cart.no-packing-materials": "Packing Materials",
   "common.no-input-password-validate": "Current password is required",

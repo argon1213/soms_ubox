@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from 'dayjs';
 import CssTextField from "../../../components/custom-components/TextField";
 import { createTheme, Grid, MenuItem, ThemeProvider } from '@mui/material';
@@ -7,10 +8,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { updateOrderApi } from "../../../store/apis/client";
+import { updateOrder } from "../../../store/actions/client";
+import LoadingSpinner from "../../../components/loading-spinner";
 
 export const OrderDetailEdit = (props) => {
   const {order} = props;
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.client.loading);
   const [deliveryDate, setDeliveryDate] = useState();
   const [ladenReturnDate, setLadenReturnDate] = useState();
   const [tentativeDate, setTentativeDate] = useState();
@@ -59,7 +64,6 @@ export const OrderDetailEdit = (props) => {
   }, [order])
 
   const getPermitEdit = () => {
-    console.log("status", order.order_status_id);
     let __permitEdit = permitEdit;
     switch(order.order_status_id) {
       case 1:
@@ -108,26 +112,37 @@ export const OrderDetailEdit = (props) => {
     }
 
     let today = dayjs();
-    if(dayjs(tentativeDate) < today) {
+    if(dayjs(order?.checkout_date_other) < today) {
       __permitEdit = ({
         ...__permitEdit,
         permitDelivery: false,
         permitLadenReturn: false,
         permitTentative: false,
+        permitRetrieval: false,
       });
-    } else if(dayjs(ladenReturnDate) < today) {
+    } else if(dayjs(order?.checkin_date_other) < today) {
       __permitEdit = ({
         ...__permitEdit,
         permitDelivery: false,
         permitLadenReturn: false,
         permitTentative: true,
+        permitRetrieval: true,
       });
-    } else if(dayjs(deliveryDate) < today) {
+    } else if(dayjs(order?.emptyout_date_other) < today) {
       __permitEdit = ({
         ...__permitEdit,
         permitDelivery: false,
         permitLadenReturn: true,
         permitTentative: true,
+        permitRetrieval: false,
+      });
+    } else {
+      __permitEdit = ({
+        ...__permitEdit,
+        permitDelivery: false,
+        permitLadenReturn: false,
+        permitTentative: false,
+        permitRetrieval: false,
       });
     }
     setPermitEdit(__permitEdit);
@@ -257,7 +272,8 @@ export const OrderDetailEdit = (props) => {
         checkin_time_other: getTime(ladenReturnTimeIndex),
         checkout_time_other: getTime(tentativeTimeIndex),
       }
-      updateOrderApi(data);
+      dispatch(updateOrder(data));
+      // updateOrderApi(data);
     }
   }
 
@@ -451,6 +467,7 @@ export const OrderDetailEdit = (props) => {
         <div className="flex my-[30px]">
           <span onClick={setRetrievalHandler} className={permitEdit.permitRetrieval ? "btn hand" : "btn disabled-btn"}>{t("common.wd-retrieval-now")}</span>
         </div>
+        <LoadingSpinner isLoading={isLoading} />
       </LocalizationProvider>
     </ThemeProvider>
   )

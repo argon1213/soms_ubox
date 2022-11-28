@@ -28,7 +28,10 @@ const ClientLayout = () => {
         let userId = user.id;
         dispatch(fetchAccount({id: userId}));
         dispatch(fetchProducts());
-        // dispatch(fetchOrders({client_id: userId}));
+        dispatch(fetchOrders({
+          client_id: userId,
+          label: "init",
+        }));
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

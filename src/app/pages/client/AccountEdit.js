@@ -173,14 +173,14 @@ const AccountEdit = () => {
                   setContact(__contact);
                 }}
                 onBlur={(e) => {
-                  let __contact = e.target.value;
-                  let __re = /[^0-9]+/g;
-                  let __result = __contact.match(__re);
-                  let __length = __contact.length;
-                  if(__result == null && __length === 8) {
-                  } else {
-                      onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
-                  }
+                  // let __contact = e.target.value;
+                  // let __re = /[^0-9]+/g;
+                  // let __result = __contact.match(__re);
+                  // let __length = __contact.length;
+                  // if(__result == null && __length === 8) {
+                  // } else {
+                  //     onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                  // }
                 }}
               />
             </Grid>

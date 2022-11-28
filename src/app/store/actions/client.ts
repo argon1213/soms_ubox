@@ -67,6 +67,7 @@ export const fetchAccount = (params: userId) => {
 export const fetchOrders = (params: userId) => {
     return async(dispatch: Dispatch<ClientAction>) => {
         try {
+            dispatch({type: ClientActionTypes.FETCH_DATA})
             const response = fetchOrdersApi(params);
             const payloadData = (await response).data;
             dispatch({
@@ -85,6 +86,7 @@ export const fetchOrders = (params: userId) => {
 export const updateOrder = (params: updateOrder) => {
     return async(dispatch: Dispatch<ClientAction>) => {
         try {
+            dispatch({type: ClientActionTypes.FETCH_DATA})
             const response = updateOrderApi(params);
             const payloadData = (await response).data;
             dispatch({

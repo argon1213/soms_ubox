@@ -100,23 +100,6 @@ export default function ContentPage3(props) {
                         expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
                     });
                 }
-                // stuffInfo.name === undefined && setStuffInfo({
-                //     ...stuffInfo,
-                //     name: __userInfo.name,
-                //     email: __userInfo.email,
-                //     contact: __userInfo.contact,
-                //     address: __userInfo.address1,
-                //     deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
-                //     deliveryTime: "09:00 - 12:00",
-                //     deliveryTimeIndex: 0,
-                //     ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
-                //     ladenReturnTime: "09:00 - 12:00",
-                //     ladenReturnTimeIndex: 0,
-                //     tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
-                //     tentativeTime: "09:00 - 12:00",
-                //     tentativeTimeIndex: 0, 
-                //     expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
-                // });
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -251,7 +234,6 @@ export default function ContentPage3(props) {
                                         variant="standard"
                                         value={__userInfo.name ? __userInfo.name : name}
                                         InputProps={__userInfo.name ? {readOnly: true} : {readOnly: false}}
-                                        // disabled={__userInfo.name ? true : false}
                                         onChange={(e) => { 
                                             setName(e.target.value);
                                         }}
@@ -269,18 +251,17 @@ export default function ContentPage3(props) {
                                         value={__userInfo.email ? __userInfo.email : email}
                                         type="email"
                                         InputProps={__userInfo.email ? {readOnly: true} : {readOnly: false}}
-                                        // disabled={__userInfo.email ? true : false}
                                         onChange={(e) => { 
                                             setEmail(e.target.value);
                                         }}
                                         onBlur={(e) => {
                                             setStuffInfo({...stuffInfo, email: e.target.value});
-                                            let __email = e.target.value;
-                                            let __re = /\S+@\S+\.\S+/;
-                                            let __result = __email.match(__re);
-                                            if(__result == null) {
-                                                onNotification({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
-                                            }
+                                            // let __email = e.target.value;
+                                            // let __re = /\S+@\S+\.\S+/;
+                                            // let __result = __email.match(__re);
+                                            // if(__result == null) {
+                                            //     onNotification({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                                            // }
                                         }}
                                     />
                                 </Grid>
@@ -296,14 +277,14 @@ export default function ContentPage3(props) {
                                         }}
                                         onBlur={(e) => {
                                             setStuffInfo({...stuffInfo, contact: (e.target.value)});
-                                            let __contact = e.target.value;
-                                            let __re = /[^0-9]+/g;
-                                            let __result = __contact.match(__re);
-                                            let __length = __contact.length;
-                                            if(__result == null && __length === 8) {
-                                            } else {
-                                                onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
-                                            }
+                                            // let __contact = e.target.value;
+                                            // let __re = /[^0-9]+/g;
+                                            // let __result = __contact.match(__re);
+                                            // let __length = __contact.length;
+                                            // if(__result == null && __length === 8) {
+                                            // } else {
+                                            //     onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                                            // }
                                         }}
                                     />
                                 </Grid>

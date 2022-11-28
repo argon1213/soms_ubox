@@ -55,11 +55,18 @@ const SignIn: FC<Props> = (props) => {
 
     });
   }
+
+  const closeNotify = () => {
+    setNotify({
+        ...notify,
+        visible: false,
+    });
+  }
   
 
   return (
     <>
-      <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} />
+      <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
       <div className="w-[100%] pl-[32px] pr-[32px]">
         <div className="mb-[10px]">
           <CssTextField
@@ -86,7 +93,7 @@ const SignIn: FC<Props> = (props) => {
         </div>
       </div>
       <div className="mb-[60px] pl-[32px]">
-        <span className="" style={{fontSize: "16px"}}>Forgot password?</span>
+        <span className="" style={{fontSize: "16px"}}>{t("common.wd-forgot-password")}</span>
       </div>
       <div className="flex item-center mt-[10px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-signin")}</span></div>
     </>

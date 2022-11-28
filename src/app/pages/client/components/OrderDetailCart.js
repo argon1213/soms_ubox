@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 export const OrderDetailCart = (props) => {
   const {order} = props;
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <div className="content">
@@ -28,7 +28,7 @@ export const OrderDetailCart = (props) => {
                 return (
                     <div className="flex space-between mt-[20px]" key={index}>
                         <div>
-                            <div className="text-normal text-black">{item.item_qty} x {item.item.name}</div>
+                            <div className="text-normal text-black">{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
                             <div className="text-normal text-black">${item.item.price} {t("cart.no-per-box")}</div>
                         </div>
                         <div className="my-auto">
@@ -58,7 +58,7 @@ export const OrderDetailCart = (props) => {
                             return (
                                 <div className="flex space-between mt-[20px]" key={index}>
                                     <div>
-                                        <div className="text-normal text-black">{item.item_qty} x {item.item.name}</div>
+                                        <div className="text-normal text-black">{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
                                         <div className="text-normal text-black">${item.item.price} {t("cart.no-per-box")}</div>
                                     </div>
                                     <div className="my-auto">
@@ -77,7 +77,7 @@ export const OrderDetailCart = (props) => {
       <div className="flex space-between my-[20px]">
           <span>
               <span className="text-header text-black">{t("common.wd-total")}</span>
-              <span className="text-normal text-black"> ({order.storage_month ? order.storage_month : 0} months)</span>
+              <span className="text-normal text-black"> ({order.storage_month ? order.storage_month : 0} {t("common.wd-months")})</span>
           </span>
           <span className="text-header text-black">${order.total_fee ? order.total_fee : 0.00}</span>
       </div>
