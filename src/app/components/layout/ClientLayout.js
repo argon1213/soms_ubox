@@ -2,30 +2,50 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import AccountSidebar from "./AccountSidebar";
-import { Grid } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+// import { useSelector } from "react-redux/es/exports";
+import { fetchAccount, fetchProducts, fetchOrders } from "../../store/actions/client";
+import LoadingSpinner from "../loading-spinner";
 
 const ClientLayout = () => {
 
   const [logged, setLogged] = useState(0);
+  const dispatch = useDispatch();
+  const user = JSON.parse(localStorage.getItem("ubox-user"));
+  const isLoading = useSelector((state) => state.client.loading);
+  const [initial, setInitial] = useState(false);
 
   useEffect(() => {
-    let __logged = localStorage.getItem("ubox-is-authenticated");
-    setLogged(parseInt(__logged));
+    setInitial(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    if(initial) {
+      let __logged = localStorage.getItem("ubox-is-authenticated");
+      setLogged(parseInt(__logged));
+      if(__logged === '1') {
+        let userId = user.id;
+        dispatch(fetchAccount({id: userId}));
+        dispatch(fetchProducts());
+        // dispatch(fetchOrders({client_id: userId}));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial])
 
   return (
     <div className="top-container">
       <Header logged={logged} />
-      <main className="main client-content mx-auto">
-        <Grid container spacing={4}>
-          <Grid item xs={12} sm={5} md={3}>
-            <AccountSidebar />
-          </Grid>
-          <Grid item xs={12} sm={7} md={9}>
-            <Outlet />
-          </Grid>
-        </Grid>
+      <main className="main main-content-clinet mx-auto flex-wrap">
+        <div className="sidebar-client">
+          <AccountSidebar />
+        </div>
+        <div className="content-client">
+          <Outlet />
+        </div>
       </main>
+      <LoadingSpinner isLoading={isLoading} />
     </div>
   )
 }

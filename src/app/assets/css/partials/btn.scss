@@ -6,10 +6,28 @@
     gap: 10px;
     background: $primary-color;
     border-radius: 5px;
-    color: #fff;
+    color: #fff !important;
     font-size: 16px;
 
     &:hover {
         background: #c08a1d;
+    }
+    &:active {
+        background: #FFBE3D !important;
+        color: #fff !important;
+    }
+    &:focus {
+        background: #FFBE3D !important;
+        color: #fff !important;
+    }
+}
+
+.disabled-btn {
+    background: #A4A4A4 !important;
+    color: #FFFFFF !important;
+    cursor: default;
+    &:hover {
+        background: #A4A4A4 !important;
+        color: #FFFFFF !important;
     }
 }

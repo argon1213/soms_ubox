@@ -15,7 +15,6 @@ export default function ContentPage1(props) {
     const handleSliderChange = (event, newValue) => {
         const value = newValue;
         setDuration(value);
-        localStorage.setItem("ubox-storage-duration", value);
     };
 
     const changeSliderStatus = (e, value) => {
@@ -25,7 +24,6 @@ export default function ContentPage1(props) {
     const handleInputChange = (newValue) => {
         const value = newValue === "" ? 1 : Number(newValue);
         setDuration(value);
-        localStorage.setItem("ubox-storage-duration", value);
     };
 
     const onNextHandler = () => {
@@ -84,8 +82,6 @@ export default function ContentPage1(props) {
     }
 
     useEffect(() => {
-        if(localStorage.getItem("ubox-storage-duration")) {
-        }
         setDuration(props.storage_month);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

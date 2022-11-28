@@ -1,7 +1,44 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import OrderRow from "./OrderRow"
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux/es/exports";
+import OrderRow from "./OrderRow";
+import OrderByIcon from "./OrderByIcon";
+
 
 const OrdersList = ({className, orders}) => {
+  const user = JSON.parse(localStorage.getItem("ubox-user"));
+  // const user = useSelector((state) => state.client.client);
+  // const orders = useSelector((state) => state.client.orders);
+  const [orderByKey, setOrderByKey] = useState(0);
+  const { t } = useTranslation();
+  const [initial, setInitial] = useState(false);
+
+
+  useEffect(() => {
+    setInitial(true);
+  }, [])
+
+  useEffect(() => {
+    if(initial) {
+      setOrderByKey(0);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initial])
+
+  const onOrderByHandler = () => {
+    switch (orderByKey) {
+      case 0:
+        return setOrderByKey(1);
+      case 1:
+        return setOrderByKey(2);
+      case 2:
+        return setOrderByKey(0);
+      default:
+        return "";
+    }
+  }
+
   return (
     <div className={`card ${className}`}>
       {/* begin::Body */}
@@ -9,18 +46,25 @@ const OrdersList = ({className, orders}) => {
         {/* begin::Table container */}
         <div className='table-responsive'>
           {/* begin::Table */}
-          <table className='table align-middle gs-7 gy-7 gx-4'>
+          <table className='table gs-7 gy-7 gx-4'>
             {/* begin::Table head */}
             <thead>
               <tr className='text-normal fw-bold fs-5 border-bottom border-gray-500'>
-                <th className='min-w-[160px]'>Order No.</th>
-                <th className='min-w-[90px]'>Status</th>
-                <th className='min-w-[170px]'>OrderDate</th>
-                <th className='min-w-[140px]'>Tentative Retrieval Date</th>
-                <th className='min-w-[120px]'>Checkout Date</th>
-                <th className='min-w-[80px]'>Total Fee</th>
-                <th className='min-w-[100px]'>Outstanding Fee</th>
-                <th className='min-w-[120px]'>QR Code</th>
+                <th className='min-w-[160px]'>
+                  <span className="hand" onClick={onOrderByHandler}>
+                    {t("common.wd-order-no")}
+                    <span className="pr-[5px]">
+                      <OrderByIcon orderByKey={orderByKey} />
+                    </span>
+                  </span>
+                </th>
+                <th className='min-w-[90px]'>{t("common.wd-status")}</th>
+                <th className='min-w-[170px]'>{t("common.wd-order-date")}</th>
+                <th className='min-w-[140px]'>{t("common.wd-tentative-retrieval-date")}</th>
+                <th className='min-w-[120px]'>{t("common.wd-checkout-date")}</th>
+                <th className='min-w-[80px]'>{t("common.wd-total-fee")}</th>
+                <th className='min-w-[100px]'>{t("common.wd-outstanding-fee")}</th>
+                <th className='min-w-[120px]'>{t("common.wd-qr-code")}</th>
               </tr>
             </thead>
             {/* end::Table head */}

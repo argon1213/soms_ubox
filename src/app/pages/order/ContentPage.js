@@ -9,7 +9,7 @@ import ContentPage5 from "./ContentPage5";
 import ContentPage6 from "./ContentPage6";
 
 const ContentPage = props => {
-    const { step, logged, stepChange, products, setProducts, materials, setMaterials, getStoragePeriodPrice, cartInfo, setCartInfo, stuffInfo, setStuffInfo, accountInfo, setAccountInfo, orderId, setOrderId } = props;
+    const { step, logged, stepChange, products, setProducts, materials, setMaterials, getStoragePeriodPrice, cartInfo, setCartInfo, stuffInfo, setStuffInfo, accountInfo, setAccountInfo, order, setOrder } = props;
     const [initial, setInitial] = useState(false);
     const [universities, setUniversities] = useState([]);
     const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
@@ -36,7 +36,7 @@ const ContentPage = props => {
             
                 __materials.forEach((item, index) => {
                     Object.keys(__newPrice).forEach((key) => {
-                        if(key === item.id) {
+                        if(parseInt(key) === item.id) {
                             __materials[index].price = __newPrice[key];
                         }
                     })
@@ -44,7 +44,7 @@ const ContentPage = props => {
             
                 __products.forEach((item, index) => {
                     Object.keys(__newPrice).forEach((key) => {
-                        if(key === item.id) {
+                        if(parseInt(key) === item.id) {
                             __products[index].price = __newPrice[key];
                         }
                     })
@@ -86,8 +86,8 @@ const ContentPage = props => {
             { step === 2 && (<ContentPage3 onNotification={showNotification} onChangeStep={onChangeHandle} storage_month={props.storage_month} stuffInfo={stuffInfo} setStuffInfo={setStuffInfo} />)}
             { step === 3 && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
             { step === 4 && (logged === 0) && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
-            { step === 4 && (logged === 1) && (<ContentPage5 onNotification={showNotification} onChangeStep={onChangeHandle} cartInfo={cartInfo} setCartInfo={setCartInfo} stuffInfo={stuffInfo} accountInfo={accountInfo} setOrderId={setOrderId} />)}
-            { step === 5 && (logged === 1) && (<ContentPage6 onNotification={showNotification} onChangeStep={onChangeHandle} orderId={orderId} />)}
+            { step === 4 && (logged === 1) && (<ContentPage5 onNotification={showNotification} onChangeStep={onChangeHandle} cartInfo={cartInfo} setCartInfo={setCartInfo} stuffInfo={stuffInfo} accountInfo={accountInfo} setOrder={setOrder} />)}
+            { step === 5 && (logged === 1) && (<ContentPage6 onNotification={showNotification} onChangeStep={onChangeHandle} order={order} />)}
         </div>
     )
 }

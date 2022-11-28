@@ -1,6 +1,13 @@
 import {UserAction, UserActionTypes} from "../types/user";
 import {Dispatch} from "redux";
 import axios from "axios";
+// import { login } from "../apis/auth";
+// import { string } from "yup";
+
+// type user =  {
+//     email: string,
+//     password: string,
+// }
 
 export const fetchUsers = () => {
     return async (dispatch: Dispatch<UserAction>) => {
@@ -18,3 +25,11 @@ export const fetchUsers = () => {
         }
     }
 }
+
+// export const signIn = (user: user ) => {
+//     return async (dispatch: Dispatch<UserAction>) => {
+//         try {
+//             const response = await login(user);
+//         }
+//     }
+// }

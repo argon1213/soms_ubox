@@ -31,12 +31,21 @@
     height: 100%;
     background-color: white;
 }
-.client-content {
+.main-content-clinet {
     display: flex;
     max-width: 1440px;
     padding: 40px 40px;
     height: 100%;
     background-color: white;
+}
+.width-logo {
+    width: 25%;
+}
+.width-link {
+    width: 25%;
+}
+.padding-link {
+    padding-right: 20px;
 }
 
 @media only screen and (max-width: 970px) {
@@ -77,8 +86,14 @@
     .main-content {
         margin-top: 50px;
     }
-    .client-content {
-
+    .width-logo {
+        width: 50%;
+    }
+    .width-link {
+        width: 50%;
+    }
+    .padding-link {
+        padding-right: 20px;
     }
 }
 
@@ -112,5 +127,19 @@
         margin-top: 50px;
         padding: 30px 30px;
         height: 100%;
+    }
+
+    .main-content-clinet {
+        padding: 30px 30px;
+    }
+
+    .width-logo {
+        width: 50%;
+    }
+    .width-link {
+        width: 50%;
+    }
+    .padding-link {
+        padding-right: 0px;
     }
 }

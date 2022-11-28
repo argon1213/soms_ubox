@@ -78,9 +78,9 @@ export default function ContentPage3(props) {
                 // const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
                 __userInfo.name && setName(__userInfo.name);
                 __userInfo.email && setEmail(__userInfo.email);
-                __userInfo.contact && setContact(__userInfo.contact);
 
                 if(stuffInfo.name === undefined) {
+                    __userInfo.contact && setContact(__userInfo.contact);
                     __userInfo.address1 && setAddress(__userInfo.address1);
                     setStuffInfo({
                         ...stuffInfo,
@@ -290,8 +290,7 @@ export default function ContentPage3(props) {
                                         id="standard-required"
                                         label={t("common.wd-contact")}
                                         variant="standard"
-                                        value={__userInfo.contact ? __userInfo.contact : contact}
-                                        InputProps={__userInfo.contact ? {readOnly: true} : {readOnly: false}}
+                                        value={contact}
                                         onChange={(e) => { 
                                             setContact(e.target.value);
                                         }}

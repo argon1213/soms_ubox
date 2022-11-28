@@ -16,16 +16,16 @@ const PrivateRoutes = () => {
   return (
     <Routes>
       <Route element={<ClientLayout />}>
-
         {/* Redirect to Dashboard after success login/registartion */}
         <Route path='client' element={<Navigate to='dashboard' />} />
         <Route path='client/login/*' element={<Navigate to='/client/dashboard'/>} />
         {/* Pages */}
         <Route path='client/dashboard' element={<ClientPortal />} />
         <Route path="client/account" element={<AccountEdit />} />
-        <Route path='client/order' element={<OrderDetail />} />
+        <Route path='client/order/:id' element={<OrderDetail />} />
         {/* Page Not Found */}
-        <Route path='*' element={<Navigate to='/error/404' />} />
+        <Route path='*' element={<Navigate to='/client/dashboard' />} />
+        {/* <Route path='*' element={<Navigate to='/error/404' />} /> */}
       </Route>
     </Routes>
   )

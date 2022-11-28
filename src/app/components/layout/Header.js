@@ -27,35 +27,43 @@ const Header = (props) => {
     return (
         <>
             <div className="header">
-                <div className="content mx-auto">
-                    <div className="pl-[20px] align-items-center">
-                        <img src="/images/ubox-logo.png" className="link" alt="uBox Logo" width={250} height={100} 
-                            onClick={(e) => {
-                                window.location.href="/";
-                            }}
-                        />
+                <div className="content mx-auto row flex justify-content-around">
+                    <div className={(props.children ? "width-logo" : "w-[50%]") + " flex align-items-center "}>
+                        <div className="pl-[20px] ">
+                            <img src="/images/ubox-logo.png" className="link" alt="uBox Logo" width={250} height={100} 
+                                onClick={(e) => {
+                                    window.location.href="/";
+                                }}
+                            />
+                        </div>
                     </div>
-                    <div className="header-container my-auto">
+                    <div className={(props.children ? "col-md-6" : "d-none") + " header-container my-auto pl-[20px] flex justify-content-center"}>
                         {props.children}
                     </div>
-                    <div className="flex pr-[20px]">
-                        <div className="my-auto pr-[10px] pl-[20px]">
-                            <a href="https://www.ubox.com.hk/contact/" target="_blank" rel="noreferrer" className="text-normal-18 text-yellow contact">{t("common.wd-contact")}</a>
+                    <div className={(props.children ? "width-link" : "w-[50%]") + " flex align-items-center justify-content-end"}>
+                        <div className="flex justify-content-end flex-wrap align-content-around padding-link">
+                            <div className="pr-[20px] pl-[20px] py-[10px] min-w-[90] flex align-items-center">
+                                <a href="https://www.ubox.com.hk/contact/" target="_blank" rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-contact")}</a>
+                            </div>
+                            <div className="flex pr-[20px]">
+                                <div className="language my-auto flex min-w-[90px]">
+                                    <div>
+                                        <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "auto"}} onClick={(e) => { onChangeLanguage("en")}} />
+                                    </div>
+                                    <div>
+                                        <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "auto"}}  onClick={(e) => { onChangeLanguage("zh")}} />
+                                    </div>
+                                </div>
+                                {(logged === 1) && (
+                                <div className="my-auto pl-[15px] flex item-center">
+                                    <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
+                                </div>
+                                )}
+                            </div>
                         </div>
-                        <div className="language my-auto flex min-w-[90px]">
-                            <div>
-                                <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "auto"}} onClick={(e) => { onChangeLanguage("en")}} />
-                            </div>
-                            <div>
-                                <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "auto"}}  onClick={(e) => { onChangeLanguage("zh")}} />
-                            </div>
-                        </div>
-                        {(logged === 1) && (
-                            <div className="my-auto min-w-[50px] flex item-center">
-                                <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
-                            </div>
-                        )}
                     </div>
+                    
+                    
                 </div>
             </div>
         </>

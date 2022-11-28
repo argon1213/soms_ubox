@@ -23,7 +23,7 @@ export default function Home() {
   const [accountInfo, setAccountInfo] = useState({});
   const [products, setProducts] = useState([]);
   const [materials, setMaterials] = useState([]);
-  const [orderId, setOrderId] = useState({});
+  const [order, setOrder] = useState({});
 
 
   useEffect(() => {
@@ -37,6 +37,11 @@ export default function Home() {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("products", products);
+    console.log("materials", materials);
+  }, [products, materials])
+
   // Fetch the price following the storage period.
   const getStoragePeriodPrice = (month) => {
     getStoragePeriodItem(month)
@@ -48,7 +53,7 @@ export default function Home() {
           // Update the price
           materials.forEach((item, index) => {
               Object.keys(__newPrice).forEach((key) => {
-                  if(key === item.id) {
+                  if(parseInt(key) === item.id) {
                       __materials[index].price = __newPrice[key];
                   }
               })
@@ -56,7 +61,7 @@ export default function Home() {
 
           products.forEach((item, index) => {
               Object.keys(__newPrice).forEach((key) => {
-                  if(key === item.id) {
+                  if(parseInt(key) === item.id) {
                       __products[index].price = __newPrice[key];
                   }
               })
@@ -68,7 +73,7 @@ export default function Home() {
           let __cartInfo = cartInfo;
           __cartInfo.stores.forEach((item, index) => {
               item && Object.keys(__newPrice).forEach((key) => {
-                  if(key === item.id) {
+                  if(parseInt(key) === item.id) {
                       __cartInfo.stores[index].price = __newPrice[key];
                   }
               })
@@ -76,7 +81,7 @@ export default function Home() {
 
           __cartInfo.materials.forEach((item, index) => {
               item && Object.keys(__newPrice).forEach((key) => {
-                  if(key === item.id) {
+                  if(parseInt(key) === item.id) {
                       __cartInfo.materials[index].price = __newPrice[key];
                   }
               })
@@ -196,8 +201,8 @@ export default function Home() {
               setStuffInfo={setStuffInfo}
               accountInfo={accountInfo}
               setAccountInfo={setAccountInfo}
-              orderId={orderId}
-              setOrderId={setOrderId}
+              order={order}
+              setOrder={setOrder}
               stepChange={onChangeStep} 
               onRefreshCart={onRefreshCartHandler}
               getStoragePeriodPrice={getStoragePeriodPrice}

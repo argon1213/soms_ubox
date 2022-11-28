@@ -38,7 +38,7 @@ const SignIn: FC<Props> = (props) => {
             // navigate('/client/dashboard');
             window.location.replace('/client/dashboard');
             // returnHandler(true);
-            setNotify({ title: 'error', message: "common.no-login-success", visible: true, status: Math.floor(Math.random() * 100000) });
+            setNotify({ title: 'success', message: "common.no-login-success", visible: true, status: Math.floor(Math.random() * 100000) });
         } else {
             localStorage.removeItem('ubox-user');
             localStorage.setItem("ubox-is-authenticated", '0');
