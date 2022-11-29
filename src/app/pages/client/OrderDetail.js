@@ -23,19 +23,21 @@ const OrderDetail = (props) => {
 
   useEffect(() => {
     setInitial(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     if(initial) {
       dispatch(fetchCurrentOrder({id: id}));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial])
 
   useEffect(() => {
     if(user.orders !== undefined) {
-        let __currentOrder = user.orders?.filter((order) => (order.id) === parseInt(id));
+        // let __currentOrder = user.orders?.filter((order) => (order.id) === parseInt(id));
         // setOrder(__currentOrder[0]);
-        let __order = __currentOrder[0];
+        // let __order = __currentOrder[0];
 
       //   let __data = {
       //     id: __order.id,

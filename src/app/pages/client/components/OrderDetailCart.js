@@ -15,36 +15,36 @@ export const OrderDetailCart = (props) => {
 
   return (
     <div className="content">
-      <div className="mb-[29px]">
-        <span className="text-header text-black">{t("cart.no-order-detail")}</span>
-      </div>
-      <div>
-          <span className="text-header text-black">{t("cart.no-storage-month")}</span>
-      </div>
-      <div>
-        {order.items?.map((item, index) => {
-            if (item.item_qty === 0) return <div key={index}></div>;
-            if(item.item_category === "box") {
-                return (
-                    <div className="flex space-between mt-[20px]" key={index}>
-                        <div>
-                            <div className="text-normal text-black">{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
-                            <div className="text-normal text-black">${item.item.price} {t("cart.no-per-box")}</div>
-                        </div>
-                        <div className="my-auto">
-                            <span className="text-normal text-black">${item.item_qty * item.item.price}</span>
-                        </div>
-                    </div>
-                ) 
-            }
-            return;
-        })}
-        <div className="space-line mt-[20px] mb-[20px]">
+        <div className="mb-[29px]">
+            <span className="text-header text-black">{t("cart.no-order-detail")}</span>
         </div>
-      </div>
+        <div>
+            <span className="text-header text-black">{t("cart.no-storage-month")}</span>
+        </div>
+        <div>
+            {order.items?.map((item, index) => {
+                if (item.item_qty === 0) return <div key={index}></div>;
+                if(item.item_category === "box") {
+                    return (
+                        <div className="flex space-between mt-[20px]" key={index}>
+                            <div>
+                                <div className="text-normal text-black" >{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
+                                <div className="text-normal text-black" >${item.item.price} {t("cart.no-per-box")}</div>
+                            </div>
+                            <div className="my-auto" >
+                                <span className="text-normal text-black">${item.item_qty * item.item.price}</span>
+                            </div>
+                        </div>
+                    )
+                }
+                return <div key={index}></div>;
+            })}
+            <div className="space-line mt-[20px] mb-[20px]">
+            </div>
+        </div>
         <div className="flex space-between my-[20px]">
             <span className="text-header text-black">{t("common.wd-subtotal")}</span>
-            <span className="text-header text-black">${order.product_total_fee ? order.product_total_fee : 0.00}</span>
+            <span className="text-header text-black">${order.product_total_fee ? order.product_total_fee : '0.00' }</span>
         </div>
         {
             order.vacuumBags !== undefined && order.vacuumBags > 0 && (
@@ -58,8 +58,8 @@ export const OrderDetailCart = (props) => {
                             return (
                                 <div className="flex space-between mt-[20px]" key={index}>
                                     <div>
-                                        <div className="text-normal text-black">{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
-                                        <div className="text-normal text-black">${item.item.price} {t("cart.no-per-box")}</div>
+                                        <div className="text-normal text-black" >{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
+                                        <div className="text-normal text-black" >${item.item.price} {t("cart.no-per-box")}</div>
                                     </div>
                                     <div className="my-auto">
                                         <span className="text-normal text-black">${item.item_qty * item.item.price}</span>
@@ -67,32 +67,32 @@ export const OrderDetailCart = (props) => {
                                 </div>
                             ) 
                         }
-                        return;
+                        return <div key={index}></div>;
                     })}
                     <div className="space-line mt-[20px] mb-[20px]">
                     </div>
                 </div>
             )
         }
-      <div className="flex space-between my-[20px]">
-          <span>
-              <span className="text-header text-black">{t("common.wd-total")}</span>
-              <span className="text-normal text-black"> ({order.storage_month ? order.storage_month : 0} {t("common.wd-months")})</span>
-          </span>
-          <span className="text-header text-black">${order.total_fee ? order.total_fee : 0.00}</span>
-      </div>
-      <div className="flex space-between my-[20px]">
-          <span>
-              <span className="text-header text-black">{t("common.wd-paid-by", {name: order.client?.name})}</span>
-          </span>
-          <span className="text-header text-black">${order.paid_fee ? order.paid_fee : 0.00}</span>
-      </div>
-      <div className="flex space-between my-[20px]">
-          <span>
-              <span className="text-header text-black">{t("common.wd-outstanding")}</span>
-          </span>
-          <span className="text-header text-black">${order.balance ? order.balance : 0.00}</span>
-      </div>
-  </div>
-  )
+        <div className="flex space-between my-[20px]">
+            <span>
+                <span className="text-header text-black">{t("common.wd-total")}</span>
+                <span className="text-normal text-black"> ({order.storage_month ? order.storage_month : 0} {t("common.wd-months")})</span>
+            </span>
+            <span className="text-header text-black">${order.total_fee ? order.total_fee : '0.00'}</span>
+        </div>
+        <div className="flex space-between my-[20px]">
+            <span>
+                <span className="text-header text-black">{t("common.wd-paid-by", {name: order.client?.name})}</span>
+            </span>
+            <span className="text-header text-black">${order.paid_fee ? order.paid_fee : '0.00'}</span>
+        </div>
+        <div className="flex space-between my-[20px]">
+            <span>
+                <span className="text-header text-black">{t("common.wd-outstanding")}</span>
+            </span>
+            <span className="text-header text-black">${order.balance ? order.balance : '0.00'}</span>
+        </div>
+    </div>
+    )
 }

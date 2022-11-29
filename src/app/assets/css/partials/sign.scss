@@ -20,6 +20,9 @@
 }
 
 @media screen and (max-width: 900px) {
+    .sign {
+        min-width: 400px;
+    }
     .auth-login {
         margin-top: 100px;
     }
@@ -27,7 +30,7 @@
 
 @media screen and (max-width: 575px) {
     .sign {
-        min-width: 400px;
+        min-width: 300px;
     }
 
     .auth-login {

@@ -27,11 +27,13 @@ const AccountEdit = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
-    setName(user.name);
-    setEmail(user.email);
-    setContact(user.contact);
-    setStudentId(user.student_id ? user.student_id : "");
-    setWechatId(user.wechat ? user.wechat : "");
+    if(user.name !== undefined) {
+      setName(user.name);
+      setEmail(user.email);
+      setContact(user.contact);
+      setStudentId(user.student_id ? user.student_id : "");
+      setWechatId(user.wechat ? user.wechat : "");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
@@ -201,6 +203,7 @@ const AccountEdit = () => {
                 fullWidth
                 id="standard-student-id"
                 label={t("common.wd-student-id")}
+                placeholder={t("common.wd-student-id")}
                 variant="standard"
                 value={studentId}
                 onChange={(e) => {
@@ -214,10 +217,15 @@ const AccountEdit = () => {
             <Grid item xs={12} sm={12} md={6} className="p-[15px]">
               <CssTextField
                 fullWidth
+                name="wechat-id"
                 id="standard-wechat-id"
                 label={t("common.wd-wechat-id")}
+                placeholder={t("common.wd-wechat-id")}
                 variant="standard"
                 value={wechatId}
+                inputProps={{
+                  autoComplete: 'off',
+               }}
                 onChange={(e) => {
                   let __wechatId = e.target.value;
                   setWechatId(__wechatId);
@@ -232,12 +240,16 @@ const AccountEdit = () => {
             <Grid item xs={12} sm={12} md={6} className="p-[15px]">
               <CssTextField
                 fullWidth
+                name="current-password"
                 id="current-password"
                 type="password"
                 label={t("common.wd-current-password")}
-                placeholder={t("common.wd-password")}
+                placeholder={t("common.wd-current-password")}
                 variant="standard"
                 value={currentPassword}
+                inputProps={{
+                  autoComplete: "new-password"
+               }}
                 onChange={(e) => {
                   let __currentPassword = e.target.value;
                   setCurrentPassword(__currentPassword);

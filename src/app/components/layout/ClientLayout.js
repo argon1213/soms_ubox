@@ -31,6 +31,8 @@ const ClientLayout = () => {
         dispatch(fetchOrders({
           client_id: userId,
           label: "init",
+          offset: 0,
+          limit: 10,
         }));
       }
     }

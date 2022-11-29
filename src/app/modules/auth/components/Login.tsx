@@ -10,13 +10,20 @@ type Props = {
 }
 
 const Login: FC<Props> = (props) => {
-    const tabIndex: Number = 1;
+    // const tabIndex: Number = 1;
     const [logged, setLogged] = useState<Number>(0);
+    const [tabIndex, setTabIndex] = useState<Number>(0);
 
     useEffect(() => {
       let __logged: String | any = localStorage.getItem("ubox-is-authenticated");
       setLogged(parseInt(__logged));
     }, [])
+
+    const onChnageTab = (index:any) => {
+      if( logged === 0) {
+          setTabIndex(index);
+      }
+    }
 
     return (
       <div className="top-container">
@@ -25,8 +32,8 @@ const Login: FC<Props> = (props) => {
             <div className="cmodal-content flex item-center my-auto">
               <div className="sign w-[100%] auth-login">
                 <div className="flex p-[32px]">
-                    <div className={`${tabIndex === 1 ? "active":"" } tab hand text-normal-18`}>{t("common.wd-signin")}</div>
-                    <div className={`${tabIndex === 0 ? "active":"" } tab hand text-normal-18`}>{t("common.wd-signup")}</div>
+                    <div className={`${tabIndex === 1 ? "active":"" } tab hand text-normal-18`} onClick={(e) => { onChnageTab(1) }} >{t("common.wd-signin")}</div>
+                    <div className={`${tabIndex === 0 ? "active":"" } tab hand text-normal-18`} onClick={(e) => { onChnageTab(0) }} >{t("common.wd-signup")}</div>
                 </div>
                 <div>
                     {tabIndex === 0 && (<SignUp />)}

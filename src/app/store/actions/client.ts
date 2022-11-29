@@ -15,7 +15,7 @@ type account = {
 type userId = {
     id: string,
 }
-type updateOrder = {
+type updateOrderInfo = {
     id: number,
     code: number,
     client_id: number,
@@ -83,7 +83,7 @@ export const fetchOrders = (params: userId) => {
     }
 }
 
-export const updateOrder = (params: updateOrder) => {
+export const updateOrder = (params: updateOrderInfo) => {
     return async(dispatch: Dispatch<ClientAction>) => {
         try {
             dispatch({type: ClientActionTypes.FETCH_DATA})

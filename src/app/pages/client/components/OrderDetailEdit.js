@@ -7,7 +7,6 @@ import { createTheme, Grid, MenuItem, ThemeProvider } from '@mui/material';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { updateOrderApi } from "../../../store/apis/client";
 import { updateOrder } from "../../../store/actions/client";
 import LoadingSpinner from "../../../components/loading-spinner";
 
@@ -132,6 +131,14 @@ export const OrderDetailEdit = (props) => {
       __permitEdit = ({
         ...__permitEdit,
         permitDelivery: false,
+        permitLadenReturn: true,
+        permitTentative: true,
+        permitRetrieval: false,
+      });
+    } else if(dayjs(order?.emptyout_date_other) > today) {
+      __permitEdit = ({
+        ...__permitEdit,
+        permitDelivery: true,
         permitLadenReturn: true,
         permitTentative: true,
         permitRetrieval: false,
@@ -273,7 +280,6 @@ export const OrderDetailEdit = (props) => {
         checkout_time_other: getTime(tentativeTimeIndex),
       }
       dispatch(updateOrder(data));
-      // updateOrderApi(data);
     }
   }
 

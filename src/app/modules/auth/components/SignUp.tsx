@@ -22,20 +22,46 @@ const SignUp: FC<Props> = (props) => {
     const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
 
     const onSignUpFunc = () => {
-        if (email === "" || email === undefined) {
-            console.log("please input email");
+        // if (email === "" || email === undefined) {
+        //     console.log("please input email");
+        //     setNotify({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
+        //     return;
+        // }
+        if (email === "") {
             setNotify({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
+        } else {
+            let __email = email;
+            let __re = /\S+@\S+\.\S+/;
+            let __result = __email.match(__re);
+            if(__result == null) {
+                setNotify({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
         }
         if (name === "") {
             console.log("please input name");
             setNotify({ title: 'warning', message: "common.no-input-name", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
+        // if (contact === "") {
+        //     console.log("please input contact");
+        //     setNotify({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
+        //     return;
+        // }
         if (contact === "") {
-            console.log("please input contact");
             setNotify({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
+        } else {
+            let __contact = contact;
+            let __re = /[^0-9]+/g;
+            let __result = __contact.match(__re);
+            let __length = __contact.length;
+            if(__result == null && __length === 8) {
+            } else {
+                setNotify({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
         }
         if (password === "") {
             console.log("please input password");
@@ -53,6 +79,7 @@ const SignUp: FC<Props> = (props) => {
                 localStorage.setItem("ubox-is-authenticated", '1');
                 // returnHandler(true);
                 setNotify({ title: 'error', message: "common.no-signup-success", visible: true, status: Math.floor(Math.random() * 100000) });
+                window.location.replace('/client/dashboard');
             } else {
                 localStorage.removeItem('ubox-user');
                 localStorage.setItem("ubox-is-authenticated", '0');
@@ -70,9 +97,16 @@ const SignUp: FC<Props> = (props) => {
         });
     }
 
+    const closeNotify = () => {
+        setNotify({
+            ...notify,
+            visible: false,
+        });
+    }
+
     return (
         <>
-            <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} />
+            <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
             <div className="w-[100%] pl-[32px] pr-[32px]">
                 <div className="mb-[10px]">
                     <CssTextField
@@ -93,6 +127,9 @@ const SignUp: FC<Props> = (props) => {
                         label={t("common.wd-password")}
                         // placeholder={t("common.wd-password")}
                         variant="standard"
+                        inputProps={{
+                            autoComplete: "new-password"
+                         }}
                         value={password}
                         onChange={(e) => { setPassword(e.target.value) }}
                     />

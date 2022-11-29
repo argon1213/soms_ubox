@@ -23,7 +23,9 @@ export const clientReducer = (state = initialState, action: ClientAction): Clien
             return {...state, loading: false, orders: action.payload}
         case ClientActionTypes.UPDATE_ORDER:
             return {...state, loading: false,
-                 client: action.payload.client, currentOrder: action.payload.order}
+                client: action.payload.client,
+                currentOrder: action.payload.currentOrder,
+                orders: action.payload.orders}
         case ClientActionTypes.GET_PRODUCTS:
             return {...state, loading: false, products: action.payload}
         case ClientActionTypes.FETCH_CURRENT_ORDER:

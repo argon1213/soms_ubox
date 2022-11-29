@@ -53,11 +53,11 @@ const Header = (props) => {
                                     </div>
                                 </div>
                                 {(logged === 1) ? (
-                                    <div className="my-auto pl-[15px] flex item-center">
+                                    <div className="my-auto pl-[15px] flex item-center min-w-[40px]">
                                         <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
                                     </div>
                                     ) : (
-                                    <div className="my-auto pl-[15px] flex item-center">
+                                    <div className="my-auto flex item-center min-w-[80px]">
                                         <Link to="/client" className="text-header text-yellow contact">{t("common.wd-signin")}</Link>
                                     </div>
                                 )}

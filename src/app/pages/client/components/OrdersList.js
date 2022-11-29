@@ -6,6 +6,7 @@ import OrderRow from "./OrderRow";
 import OrderByIcon from "./OrderByIcon";
 import { fetchOrders } from "../../../store/actions/client";
 import LoadingSpinner from "../../../components/loading-spinner";
+import { Pagination } from "antd";
 
 
 const OrdersList = ({className}) => {
@@ -14,10 +15,13 @@ const OrdersList = ({className}) => {
   const orders = useSelector((state) => state.client.orders);
   const isLoading = useSelector((state)=>state.client.loading);
   const [orderByKey, setOrderByKey] = useState(0);
-  const [orderByLabel, setOrderByLabel] = useState("");
+  const [orderByLabel, setOrderByLabel] = useState("init");
   const { t } = useTranslation();
   const [initial, setInitial] = useState(false);
   const dispatch = useDispatch();
+  const perPage = 10;
+  const [offset, setOffset] = useState(0);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     setInitial(true);
@@ -26,6 +30,7 @@ const OrdersList = ({className}) => {
   useEffect(() => {
     if(initial) {
       setOrderByKey(0);
+      setTotal(user.orderCount);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial])
@@ -47,22 +52,35 @@ const OrdersList = ({className}) => {
         __label = "init";
         break;
       default:
-        return "";
+        return "init";
     }
     setOrderByKey(__key);
     setOrderByLabel(__label);
     dispatch(fetchOrders({
       client_id: user.id,
       label: __label,
+      offset: offset,
+      limit: perPage,
+    }));
+  }
+
+  const onChangePagination = (page) => {
+    let __offset = (page - 1) * perPage;
+    setOffset(__offset);
+    dispatch(fetchOrders({
+      client_id: user.id,
+      label: orderByLabel,
+      offset: __offset,
+      limit: perPage,
     }));
   }
 
   return (
     <div className={`card ${className}`}>
       {/* begin::Body */}
-      <div className='py-3'>
+      <div>
         {/* begin::Table container */}
-        <div className='table-responsive'>
+        <div className='table-responsive min-h-[600px]'>
           {/* begin::Table */}
           <table className='table gs-7 gy-7 gx-4'>
             {/* begin::Table head */}
@@ -95,6 +113,13 @@ const OrdersList = ({className}) => {
           {/* end::Table */}
         </div>
         {/* end::Table container */}
+        {
+          (total > 10) && (
+            <div className="flex justify-content-end my-[20px] pr-[20px]">
+              <Pagination onChange={onChangePagination} defaultCurrent={1} total={total} />
+            </div>
+          )
+        }
       </div>
       {/* begin::Body */}
       <LoadingSpinner isLoading={isLoading} />
