@@ -9,10 +9,12 @@ import { useSelector } from "react-redux/es/exports";
 import { updateAccount } from "../../store/actions/client";
 import { useDispatch } from "react-redux";
 import ChangePassword from "./components/ChangePassword";
+import LoadingSpinner from "../../components/loading-spinner";
 
 const AccountEdit = () => {
   const user = useSelector((state) => state.client.client);
   const universities = useSelector((state) => state.client.products.universities);
+  const isLoading = useSelector((state) => state.client.loading);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   // const user = JSON.parse(localStorage.getItem("ubox-user"));
@@ -70,7 +72,10 @@ const AccountEdit = () => {
       student_id: studentId,
       wechat: wechatId,
     }
-    dispatch(updateAccount(data));
+    dispatch(updateAccount(data))
+      .then(() => {
+        onNotification({ title: 'success', message: "common.no-update-account-success", visible: true, status: Math.floor(Math.random() * 100000) });
+      })
     setCurrentPassword("");
     setNewPassword("");
     setConfirmPassword("");
@@ -250,6 +255,7 @@ const AccountEdit = () => {
         <span className="btn hand" onClick={submitHandler}>{t("common.wd-change")}</span>
       </div>
     </div>
+    <LoadingSpinner isLoading={isLoading} />
   </>
   )
 }

@@ -62,6 +62,8 @@
   "common.no-input-wechatID": "Please input the WeChat ID",
   "common.no-input-instructions": "Please input the instructions",
   "common.no-select-item": "Please select one item",
+  "common.no-update-account-success": "Account is updated successfully.",
+  "common.no-update-order-success": "Order is updated successfully.",
   "oder-detail.no-title": "Order {{order}} was placed on {{date}} and is currently {{orderState}}.",
   "common.wd-edit": "Edit",
   "common.wd-change": "Change",

@@ -9,12 +9,14 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { updateOrder } from "../../../store/actions/client";
 import LoadingSpinner from "../../../components/loading-spinner";
+import { ShowNotification } from "../../../components/notification";
 
 export const OrderDetailEdit = (props) => {
   const {order} = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.client.loading);
+  const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
   const [deliveryDate, setDeliveryDate] = useState();
   const [ladenReturnDate, setLadenReturnDate] = useState();
   const [tentativeDate, setTentativeDate] = useState();
@@ -155,6 +157,16 @@ export const OrderDetailEdit = (props) => {
     setPermitEdit(__permitEdit);
   }
 
+  const onNotification = ({title, message, visible, status}) => {
+    setNotify({ title, message, visible, status});
+  }
+  const closeNotify = () => {
+    setNotify({
+        ...notify,
+        visible: false,
+    });
+  }
+
   const getTimeIndex = (time) => {
     switch(time) {
         case "09:00 - 12:00":
@@ -279,7 +291,10 @@ export const OrderDetailEdit = (props) => {
         checkin_time_other: getTime(ladenReturnTimeIndex),
         checkout_time_other: getTime(tentativeTimeIndex),
       }
-      dispatch(updateOrder(data));
+      dispatch(updateOrder(data))
+        .then(() => {
+          onNotification({ title: 'success', message: "common.no-update-order-success", visible: true, status: Math.floor(Math.random() * 100000) });
+        })
     }
   }
 
@@ -474,6 +489,7 @@ export const OrderDetailEdit = (props) => {
           <span onClick={setRetrievalHandler} className={permitEdit.permitRetrieval ? "btn hand" : "btn disabled-btn"}>{t("common.wd-retrieval-now")}</span>
         </div>
         <LoadingSpinner isLoading={isLoading} />
+        <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
       </LocalizationProvider>
     </ThemeProvider>
   )

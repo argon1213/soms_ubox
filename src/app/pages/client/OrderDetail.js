@@ -129,7 +129,7 @@ const OrderDetail = (props) => {
         <div className="mx-[-15px]">
           <Grid container className="">
             <Grid item xs={12} sm={12} md={6} className="px-[15px]">
-              <OrderDetailCart order={order} />
+              <OrderDetailCart order={order} user={user} />
             </Grid>
             <Grid item xs={12} sm={12} md={6} className="px-[15px]">
               <OrderDetailEdit order={order} />

@@ -30,6 +30,7 @@ type updateOrderInfo = {
 export const updateAccount = (param: account) => {
   return async (dispatch: Dispatch<ClientAction>) => {
       try {
+          dispatch({type: ClientActionTypes.FETCH_DATA})
           const response = updateAccountApi(param);
           const payloadData = (await response).data;
           localStorage.setItem("ubox-user", JSON.stringify(payloadData));

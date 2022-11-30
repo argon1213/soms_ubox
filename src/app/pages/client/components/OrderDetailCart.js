@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 export const OrderDetailCart = (props) => {
-  const {order} = props;
+  const {order, user} = props;
   const { t, i18n } = useTranslation();
 
   return (
@@ -83,7 +83,7 @@ export const OrderDetailCart = (props) => {
         </div>
         <div className="flex space-between my-[20px]">
             <span>
-                <span className="text-header text-black">{t("common.wd-paid-by", {name: order.client?.name})}</span>
+                <span className="text-header text-black">{t("common.wd-paid-by", {name: user.name ? user.name : ""})}</span>
             </span>
             <span className="text-header text-black">${order.paid_fee ? order.paid_fee : '0.00'}</span>
         </div>
