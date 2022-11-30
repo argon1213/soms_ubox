@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { Trans, useTranslation } from "react-i18next";
 
 export default function ContentPage6(props) {
@@ -11,7 +10,10 @@ export default function ContentPage6(props) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     const onDoneHandler = (e) => {
-        // window.location.href = "/";
+        window.location.href = "/client/dashboard";
+    }
+    const onOderStatusHandler = (e) => {
+        window.location.href = "/client/dashboard/" + order.id ;
     }
     return (
         <div className="content-container thanks">
@@ -22,11 +24,11 @@ export default function ContentPage6(props) {
                 <div className="text-normal text-black mt-[36px]">
                     <Trans i18nKey="page6.no-paragraph2">
                         Click for your{" "}
-                        <Link to={"/client/order/" + order.id}>order status.</Link>
+                        <span className="hand text-blue" onClick={onOderStatusHandler}>order status.</span>
                     </Trans>
                 </div>
             </div>
-            <div className="flex item-center my-[10px]"><Link to="/client/dashboard" className="btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</Link></div>
+            <div className="flex item-center my-[10px]"><span className="btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</span></div>
         </div>
     )
 }

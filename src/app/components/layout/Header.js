@@ -19,7 +19,8 @@ const Header = (props) => {
     const onLogout = () => {
         localStorage.setItem("ubox-is-authenticated", 0);
         localStorage.removeItem('ubox-user');
-        window.location.reload();
+        // window.location.reload();
+        window.location.href = "/";
     };
 
     return (

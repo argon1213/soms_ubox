@@ -12,7 +12,7 @@ type Props = {
 const Login: FC<Props> = (props) => {
     // const tabIndex: Number = 1;
     const [logged, setLogged] = useState<Number>(0);
-    const [tabIndex, setTabIndex] = useState<Number>(0);
+    const [tabIndex, setTabIndex] = useState<Number>(1);
 
     useEffect(() => {
       let __logged: String | any = localStorage.getItem("ubox-is-authenticated");

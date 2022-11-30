@@ -8,6 +8,7 @@ import { changePasswordApi } from "../../store/apis/client";
 import { useSelector } from "react-redux/es/exports";
 import { updateAccount } from "../../store/actions/client";
 import { useDispatch } from "react-redux";
+import ChangePassword from "./components/ChangePassword";
 
 const AccountEdit = () => {
   const user = useSelector((state) => state.client.client);
@@ -223,6 +224,7 @@ const AccountEdit = () => {
                 placeholder={t("common.wd-wechat-id")}
                 variant="standard"
                 value={wechatId}
+                autoComplete='off'
                 inputProps={{
                   autoComplete: 'off',
                }}
@@ -235,61 +237,14 @@ const AccountEdit = () => {
           </Grid>
         </div>
         <div className="text-header text-black mt-[40px]">{t("common.wd-password-change")}</div>
-        <div className="mt-[15px] mx-[-15px]">
-          <Grid container className="">
-            <Grid item xs={12} sm={12} md={6} className="p-[15px]">
-              <CssTextField
-                fullWidth
-                name="current-password"
-                id="current-password"
-                type="password"
-                label={t("common.wd-current-password")}
-                placeholder={t("common.wd-current-password")}
-                variant="standard"
-                value={currentPassword}
-                inputProps={{
-                  autoComplete: "new-password"
-               }}
-                onChange={(e) => {
-                  let __currentPassword = e.target.value;
-                  setCurrentPassword(__currentPassword);
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container className="">
-            <Grid item xs={12} sm={12} md={6} className="p-[15px]">
-              <CssTextField
-                fullWidth
-                id="new-password"
-                type="password"
-                label={t("common.wd-new-password")}
-                placeholder={t("common.wd-password")}
-                variant="standard"
-                value={newPassword}
-                onChange={(e) => {
-                  let __newPassword = e.target.value;
-                  setNewPassword(__newPassword);
-                }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} className="p-[15px]">
-              <CssTextField
-                fullWidth
-                id="confirm-password"
-                type="password"
-                label={t("common.wd-confirm-new-password")}
-                placeholder={t("common.wd-password")}
-                variant="standard"
-                value={confirmPassword}
-                onChange={(e) => {
-                  let __confirmPassword = e.target.value;
-                  setConfirmPassword(__confirmPassword);
-                }}
-              />
-            </Grid>
-          </Grid>
-        </div>
+        <ChangePassword
+          currentPassword={currentPassword}
+          setCurrentPassword={setCurrentPassword}
+          newPassword={newPassword}
+          setNewPassword={setNewPassword}
+          confirmPassword={confirmPassword}
+          setConfirmPassword={setConfirmPassword}
+        />
       </div>
       <div className="flex item-center mt-[30px]">
         <span className="btn hand" onClick={submitHandler}>{t("common.wd-change")}</span>

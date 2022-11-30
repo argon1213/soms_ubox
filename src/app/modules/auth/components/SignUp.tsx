@@ -157,7 +157,7 @@ const SignUp: FC<Props> = (props) => {
                     />
                 </div>
             </div>
-            <div className="flex item-center mt-[10px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-next")}</span></div>
+            <div className="flex item-center mt-[40px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-signup")}</span></div>
         </>
     )
 }

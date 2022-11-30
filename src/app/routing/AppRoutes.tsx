@@ -9,7 +9,7 @@ import {FC} from 'react'
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {PrivateRoutes} from './PrivateRoutes'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
-import {Logout, AuthPage, useAuth} from '../modules/auth'
+import {Logout, AuthPage} from '../modules/auth'
 import {App} from '../App'
 
 import Home from '../pages/order/index'
@@ -21,8 +21,19 @@ import Home from '../pages/order/index'
  */
 const {PUBLIC_URL} = process.env
 
+const useAuth = () => {
+  const user = localStorage.getItem("ubox-user");
+  user ? localStorage.setItem("ubox-is-authenticated", '1') : localStorage.setItem("ubox-is-authenticated", '0');
+  if(user) {
+    return JSON.parse(user);
+  } else {
+    return undefined;
+  }
+}
+
 const AppRoutes: FC = () => {
-  const currentUser = useAuth()
+  const currentUser = useAuth();
+
   return (
     <BrowserRouter basename={PUBLIC_URL}>
       <Routes>
