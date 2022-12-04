@@ -1,130 +1,150 @@
-import {useState} from 'react'
-import * as Yup from 'yup'
-import clsx from 'clsx'
-import {Link} from 'react-router-dom'
-import {useFormik} from 'formik'
+import { useState, useEffect } from 'react';
+import Header from "../../../components/layout/Header";
+import CssTextField from '../../../components/custom-components/TextField';
+import { useTranslation } from 'react-i18next'
+import { ShowNotification } from '../../../components/notification';
+import { SendEmailforgotPassword, SendCodeResetPassword } from '../../../store/apis/client';
+import LoadingSpinner from '../../../components/loading-spinner';
 
-const initialValues = {
-  email: 'admin@demo.com',
-}
-
-const forgotPasswordSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
-})
 
 export function ForgotPassword() {
-  const [loading, setLoading] = useState(false)
-  const [hasErrors, setHasErrors] = useState<boolean | undefined>(undefined)
-  const formik = useFormik({
-    initialValues,
-    validationSchema: forgotPasswordSchema,
-    onSubmit: (values, {setStatus, setSubmitting}) => {
-      setLoading(true)
-      setHasErrors(undefined)
-      // setTimeout(() => {
-      //   requestPassword(values.email)
-      //     .then(({data: {result}}) => {
-      //       setHasErrors(false)
-      //       setLoading(false)
-      //     })
-      //     .catch(() => {
-      //       setHasErrors(true)
-      //       setLoading(false)
-      //       setSubmitting(false)
-      //       setStatus('The login detail is incorrect')
-      //     })
-      // }, 1000)
-    },
-  })
+  const { t } = useTranslation();
+  const [logged, setLogged] = useState<Number>(0);
+  const [email, setEmail] = useState<string>("");
+  const [code, setCode] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [resetStatus, setResetStatus] = useState<boolean>(false);
+  const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let __logged: String | any = localStorage.getItem("ubox-is-authenticated");
+    setLogged(parseInt(__logged));
+  }, [])
+
+  const closeNotify = () => {
+    setNotify({
+        ...notify,
+        visible: false,
+    });
+  }
+
+  const onSubmitEmail = () => {
+    if (email === "" || email === undefined) {
+      setNotify({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    } else {
+      let __email = email;
+      let __re = /\S+@\S+\.\S+/;
+      let __result = __email.match(__re);
+      if(__result == null) {
+          setNotify({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+          return;
+      }
+    }
+    setIsLoading(true);
+    SendEmailforgotPassword({email: email})
+      .then((res) => {
+        if(res.data.status === "success") {
+          setResetStatus(true);
+        }
+        setIsLoading(false);
+      })
+      .catch((res) => {
+        setNotify({ title: 'warning', message: "common.no-input-email-registered", visible: true, status: Math.floor(Math.random() * 100000) });
+        setIsLoading(false);
+      })
+  }
+
+  const onSubmitCode = () => {
+    if(code === "") {
+      setNotify({ title: 'warning', message: "common.wd-enter-code", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    }
+    if(password === "") {
+      setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    }
+    let __data = {
+      email: email,
+      otp: code,
+      password: password,
+    }
+    setIsLoading(true);
+    SendCodeResetPassword(__data)
+      .then((res) => {
+        setNotify({ title: 'warning', message: "common.no-success-reset-password", visible: true, status: Math.floor(Math.random() * 100000) });
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setNotify({ title: 'warning', message: "common.no-error-reset-password-code", visible: true, status: Math.floor(Math.random() * 100000) });
+        setIsLoading(false);
+      })
+  }
 
   return (
-    <form
-      className='form w-100 fv-plugins-bootstrap5 fv-plugins-framework'
-      noValidate
-      id='kt_login_password_reset_form'
-      onSubmit={formik.handleSubmit}
-    >
-      <div className='text-center mb-10'>
-        {/* begin::Title */}
-        <h1 className='text-dark fw-bolder mb-3'>Forgot Password ?</h1>
-        {/* end::Title */}
-
-        {/* begin::Link */}
-        <div className='text-gray-500 fw-semibold fs-6'>
-          Enter your email to reset your password.
-        </div>
-        {/* end::Link */}
-      </div>
-
-      {/* begin::Title */}
-      {hasErrors === true && (
-        <div className='mb-lg-15 alert alert-danger'>
-          <div className='alert-text font-weight-bold'>
-            Sorry, looks like there are some errors detected, please try again.
-          </div>
-        </div>
-      )}
-
-      {hasErrors === false && (
-        <div className='mb-10 bg-light-info p-8 rounded'>
-          <div className='text-info'>Sent password reset. Please check your email</div>
-        </div>
-      )}
-      {/* end::Title */}
-
-      {/* begin::Form group */}
-      <div className='fv-row mb-8'>
-        <label className='form-label fw-bolder text-gray-900 fs-6'>Email</label>
-        <input
-          type='email'
-          placeholder=''
-          autoComplete='off'
-          {...formik.getFieldProps('email')}
-          className={clsx(
-            'form-control bg-transparent',
-            {'is-invalid': formik.touched.email && formik.errors.email},
+    <div className="top-container">
+      <LoadingSpinner isLoading={isLoading} />
+      <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
+      <Header logged={logged} />
+      <div className="w-[100%] h-[100%] flex item-center item-vcenter">
+        <div className="cmodal-content flex item-center my-auto">
+          <div className="sign w-[100%] auth-login p-[32px]">
             {
-              'is-valid': formik.touched.email && !formik.errors.email,
+              !resetStatus && 
+              <>
+                <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
+                  {t("common.wd-enter-email")}
+                </div>
+                <div className='mt-[40px]'>
+                  <CssTextField 
+                    required fullWidth
+                    id="email"
+                    label={t("common.wd-email")}
+                    variant="standard"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value) }}
+                  />
+                </div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSubmitEmail} >{t("common.wd-submit")}</span></div>
+              </>
             }
-          )}
-        />
-        {formik.touched.email && formik.errors.email && (
-          <div className='fv-plugins-message-container'>
-            <div className='fv-help-block'>
-              <span role='alert'>{formik.errors.email}</span>
-            </div>
+            {
+              resetStatus && 
+              <>
+                <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
+                  {t("common.wd-enter-code")}
+                </div>
+                <div className='mt-[40px]'>
+                  <CssTextField 
+                    required fullWidth
+                    id="code"
+                    label={t("common.wd-code")}
+                    variant="standard"
+                    value={code}
+                    onChange={(e) => { setCode(e.target.value) }}
+                  />
+                </div>
+                <div className="mt-[10px] mb-[10px]">
+                  <CssTextField
+                    required fullWidth
+                    id="reset-password"
+                    type="reset-password"
+                    label={t("common.wd-password")}
+                    variant="standard"
+                    inputProps={{
+                      autoComplete: 'off',
+                    }}
+                    value={password}
+                    onChange={(e) => { setPassword(e.target.value) }}
+                  />
+                </div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
+              </>
+            }
           </div>
-        )}
+        </div>
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group */}
-      <div className='d-flex flex-wrap justify-content-center pb-lg-0'>
-        <button type='submit' id='kt_password_reset_submit' className='btn btn-primary me-4'>
-          <span className='indicator-label'>Submit</span>
-          {loading && (
-            <span className='indicator-progress'>
-              Please wait...
-              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-            </span>
-          )}
-        </button>
-        <Link to='/auth/login'>
-          <button
-            type='button'
-            id='kt_login_password_reset_form_cancel_button'
-            className='btn btn-light'
-            disabled={formik.isSubmitting || !formik.isValid}
-          >
-            Cancel
-          </button>
-        </Link>{' '}
-      </div>
-      {/* end::Form group */}
-    </form>
+    </div>
   )
 }

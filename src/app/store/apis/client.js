@@ -47,3 +47,19 @@ export function fetchCurrentOrderApi(params) {
     }
   });
 }
+
+export function SendEmailforgotPassword(params) {
+  return axios.post('/client/emailOtpForgotPassword', params, {
+    headers: {
+      'content-type': 'text/json'
+    }
+  });
+}
+
+export function SendCodeResetPassword(params) {
+  return axios.post('/client/resetPassword', params, {
+    headers: {
+      'content-type': 'text/json'
+    }
+  });
+}

@@ -86,6 +86,10 @@ const AccountEdit = () => {
       onNotification({ title: 'warning', message: "common.no-input-name", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
     }
+    if(name.length > 100) {
+      onNotification({ title: 'warning', message: "common.no-input-name-length", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    }
     if (contact === "") {
       onNotification({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
@@ -94,11 +98,23 @@ const AccountEdit = () => {
       let __re = /[^0-9]+/g;
       let __result = __contact.match(__re);
       let __length = __contact.length;
-      if(__result == null && __length === 8) {
+      if(__result == null && __length <= 11 && __length >= 8) {
       } else {
           onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
           return;
       }
+    }
+    if (studentId === "") {
+      onNotification({ title: 'warning', message: "common.no-input-studentID", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    }
+    if (studentId.length > 50) {
+        onNotification({ title: 'warning', message: "common.no-input-studentID-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+        return;
+    }
+    if (wechatId !== "" && wechatId.length > 50) {
+        onNotification({ title: 'warning', message: "common.no-input-wechatID-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+        return;
     }
     if(currentPassword === ""){
       if(newPassword === "" && confirmPassword === "") {
@@ -108,6 +124,10 @@ const AccountEdit = () => {
         return;
       }
     } else {
+      if (newPassword.length > 16 && newPassword.length < 8) {
+        onNotification({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
+        return;
+      }
       if(newPassword === "" && confirmPassword === "") {
         onNotification({ title: 'warning', message: "common.no-input-empty-password-validate", visible: true, status: Math.floor(Math.random() * 100000) });
         return;
@@ -206,7 +226,7 @@ const AccountEdit = () => {
             </Grid>
             <Grid item xs={12} sm={12} md={6} className="p-[15px]">
               <CssTextField
-                fullWidth
+                required fullWidth
                 id="standard-student-id"
                 label={t("common.wd-student-id")}
                 placeholder={t("common.wd-student-id")}

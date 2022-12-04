@@ -37,6 +37,7 @@ export default function ContentPage3(props) {
     const [initial, setInitial] = useState(false);
     const { t } = useTranslation();
     const __userInfo = localStorage.getItem("ubox-user") ? JSON.parse(localStorage.getItem("ubox-user")) : "";
+    const [deliveryMinDate, setDeliveryMinDate] = useState(dayjs().add(1, 'day'));
 
     useEffect(() => {
         setInitial(true);
@@ -45,11 +46,18 @@ export default function ContentPage3(props) {
     useEffect(() => {
         if (initial) {
             let __stuffInfo = stuffInfo;
+            let __today = new Date();
+            let __time = __today.getHours();
+            let __deliveryDate = dayjs().add(2, 'day');
+            if(__time < 12) {
+                __deliveryDate = dayjs().add(1, 'day');
+            }
+            setDeliveryMinDate(__deliveryDate);
             setName(__stuffInfo.name ? __stuffInfo.name : "");
             setEmail(__stuffInfo.email ? __stuffInfo.email : "");
             setContact(__stuffInfo.contact ? __stuffInfo.contact : "");
             setAddress(__stuffInfo.address ? __stuffInfo.address : "");
-            setDeliveryDate(__stuffInfo.deliveryDate ? __stuffInfo.deliveryDate : dayjs().add(2, 'day'));
+            setDeliveryDate(__stuffInfo.deliveryDate ? __stuffInfo.deliveryDate : __deliveryDate);
             setLadenReturnDate(__stuffInfo.ladenReturnDate ? __stuffInfo.ladenReturnDate : dayjs().add(2, 'day'));
             setTentativeDate(__stuffInfo.tentativeDate ? __stuffInfo.tentativeDate : dayjs().add(props.storage_month, "month").add(2, 'day'));
             setExpirationDate(__stuffInfo.expirationDate ? dayjs(__stuffInfo.ladenReturnDate).add(props.storage_month, "month") : dayjs().add(props.storage_month, "month").add(2, 'day'));
@@ -62,16 +70,16 @@ export default function ContentPage3(props) {
                 email: "",
                 contact: "",
                 address: "",
-                deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                deliveryDate: __deliveryDate.format("YYYY-MM-DD"),
                 deliveryTime: "09:00 - 12:00",
                 deliveryTimeIndex: 0,
-                ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                ladenReturnDate: __deliveryDate.format("YYYY-MM-DD"),
                 ladenReturnTime: "09:00 - 12:00",
                 ladenReturnTimeIndex: 0,
-                tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                tentativeDate: __deliveryDate.add(props.storage_month, "month").format("YYYY-MM-DD"),
                 tentativeTime: "09:00 - 12:00",
                 tentativeTimeIndex: 0, 
-                expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                expirationDate: __deliveryDate.add(props.storage_month, "month").format("YYYY-MM-DD"),
             })
 
             if(JSON.parse(localStorage.getItem("ubox-is-authenticated")) === 1){
@@ -88,16 +96,16 @@ export default function ContentPage3(props) {
                         email: __userInfo.email,
                         contact: __userInfo.contact,
                         address: __userInfo.address1,
-                        deliveryDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                        deliveryDate: __deliveryDate.format("YYYY-MM-DD"),
                         deliveryTime: "09:00 - 12:00",
                         deliveryTimeIndex: 0,
-                        ladenReturnDate: dayjs().add(2, 'day').format("YYYY-MM-DD"),
+                        ladenReturnDate: __deliveryDate.format("YYYY-MM-DD"),
                         ladenReturnTime: "09:00 - 12:00",
                         ladenReturnTimeIndex: 0,
-                        tentativeDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                        tentativeDate: __deliveryDate.add(props.storage_month, "month").format("YYYY-MM-DD"),
                         tentativeTime: "09:00 - 12:00",
                         tentativeTimeIndex: 0, 
-                        expirationDate: dayjs().add(props.storage_month, "month").add(2, 'day').format("YYYY-MM-DD"),
+                        expirationDate: __deliveryDate.add(props.storage_month, "month").format("YYYY-MM-DD"),
                     });
                 }
             }
@@ -109,6 +117,10 @@ export default function ContentPage3(props) {
         // validation checking...
         if (name === "") {
             onNotification({ title: 'warning', message: "common.no-input-name", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
+        if(name.length > 100) {
+            onNotification({ title: 'warning', message: "common.no-input-name-length", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
         if (email === "") {
@@ -123,6 +135,10 @@ export default function ContentPage3(props) {
                 return;
             }
         }
+        if(email.length > 100) {
+            onNotification({ title: 'warning', message: "common.no-input-email-length", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
         if (contact === "") {
             onNotification({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
@@ -131,7 +147,7 @@ export default function ContentPage3(props) {
             let __re = /[^0-9]+/g;
             let __result = __contact.match(__re);
             let __length = __contact.length;
-            if(__result == null && __length === 8) {
+            if(__result == null && __length <= 11 && __length >= 8) {
             } else {
                 onNotification({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
                 return;
@@ -306,7 +322,7 @@ export default function ContentPage3(props) {
                                         label={t("common.wd-empty-box-delivery")}
                                         inputFormat="DD/MM/YYYY"
                                         value={deliveryDate}
-                                        minDate={dayjs().add(2, 'day')}
+                                        minDate={deliveryMinDate}
                                         onChange={handleDeliveryDateChange}
                                         renderInput={(params) => <CssTextField
                                             required fullWidth

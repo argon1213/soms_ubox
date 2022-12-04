@@ -27,6 +27,7 @@ export const OrderDetailEdit = (props) => {
   const [retrievalTimeIndex, setRetrievalTimeIndex] = useState(0);
   const [emptyBoxReturnDate, setEmptyBoxReturnDate] = useState(dayjs());
   const [emptyBoxReturnTimeIndex, setEmptyBoxReturnTimeIndex] = useState(0);
+  const [address, setAddress] = useState("");
 
   const [permitEdit, setPermitEdit] = useState({
     permitDelivery: true,
@@ -58,6 +59,8 @@ export const OrderDetailEdit = (props) => {
         setLadenReturnTimeIndex(getTimeIndex(order?.checkin_time_other));
         setTentativeDate(order?.checkout_date_other);
         setTentativeTimeIndex(getTimeIndex(order?.checkout_time_other));
+
+        setAddress(order.emptyout_location_other);
 
         getPermitEdit();
     }
@@ -482,6 +485,18 @@ export const OrderDetailEdit = (props) => {
                         </MenuItem>
                     ))}
                 </CssTextField>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12} className="px-[8px] py-[15px]">
+            <CssTextField 
+              fullWidth required
+              id="address"
+              label={t("common.wd-address")}
+              variant="standard"
+              value={address}
+              onChange={(e) => { 
+                  setAddress("");
+              }}
+            />
             </Grid>
           </Grid>
         </div>

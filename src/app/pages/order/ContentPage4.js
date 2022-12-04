@@ -129,6 +129,14 @@ export default function ContentPage4(props) {
                 onNotification({ title: 'warning', message: "common.no-input-studentID", visible: true, status: Math.floor(Math.random() * 100000) });
                 return;
             }
+            if (studentID.length > 50) {
+                onNotification({ title: 'warning', message: "common.no-input-studentID-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
+            if (wechatID !== "" && wechatID.length > 50) {
+                onNotification({ title: 'warning', message: "common.no-input-wechatID-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
         }
 
         onChangeStep();

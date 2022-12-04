@@ -20,12 +20,15 @@ export const clientReducer = (state = initialState, action: ClientAction): Clien
         case ClientActionTypes.FETCH_ACCOUNT:
             return {...state, loading: false, client: action.payload}
         case ClientActionTypes.FETCH_ORDERS:
-            return {...state, loading: false, orders: action.payload}
+            return {...state, loading: false, 
+                orders: action.payload.orders,
+                page: action.payload.page}
         case ClientActionTypes.UPDATE_ORDER:
             return {...state, loading: false,
                 client: action.payload.client,
                 currentOrder: action.payload.currentOrder,
-                orders: action.payload.orders}
+                orders: action.payload.orders,
+                page: 1}
         case ClientActionTypes.GET_PRODUCTS:
             return {...state, loading: false, products: action.payload}
         case ClientActionTypes.FETCH_CURRENT_ORDER:

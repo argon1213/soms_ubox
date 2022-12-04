@@ -13,6 +13,7 @@ const OrdersList = ({className}) => {
   const user = JSON.parse(localStorage.getItem("ubox-user"));
   // const user = useSelector((state) => state.client.client);
   const orders = useSelector((state) => state.client.orders);
+  const currentPage = useSelector((state) => state.client.page);
   const isLoading = useSelector((state)=>state.client.loading);
   const [orderByKey, setOrderByKey] = useState(0);
   const [orderByLabel, setOrderByLabel] = useState("init");
@@ -59,6 +60,7 @@ const OrdersList = ({className}) => {
     dispatch(fetchOrders({
       client_id: user.id,
       label: __label,
+      page: currentPage,
       offset: offset,
       limit: perPage,
     }));
@@ -70,6 +72,7 @@ const OrdersList = ({className}) => {
     dispatch(fetchOrders({
       client_id: user.id,
       label: orderByLabel,
+      page: page,
       offset: __offset,
       limit: perPage,
     }));
@@ -100,7 +103,7 @@ const OrdersList = ({className}) => {
                 <th className='min-w-[120px]'>{t("common.wd-checkout-date")}</th>
                 <th className='min-w-[80px]'>{t("common.wd-total-fee")}</th>
                 <th className='min-w-[100px]'>{t("common.wd-outstanding-fee")}</th>
-                <th className='min-w-[120px]'>{t("common.wd-qr-code")}</th>
+                <th className='min-w-[120px]'>{t("common.wd-payment-method")}</th>
               </tr>
             </thead>
             {/* end::Table head */}
@@ -116,7 +119,7 @@ const OrdersList = ({className}) => {
         {
           (total > 10) && (
             <div className="flex justify-content-end my-[20px] pr-[20px]">
-              <Pagination onChange={onChangePagination} defaultCurrent={1} total={total} />
+              <Pagination onChange={onChangePagination} defaultCurrent={1} current={currentPage} total={total} />
             </div>
           )
         }

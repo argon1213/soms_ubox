@@ -121,10 +121,10 @@ export default function ContentPage5(props) {
                                     value={paymentType}
                                     onChange={handleRadioChange}
                                 >
-                                    <CssFormControlLabel value={3} control={<CustomColorRadio />} label="Credit Card" />
-                                    <CssFormControlLabel value={4} control={<CustomColorRadio />} label="WeChat Pay" />
-                                    <CssFormControlLabel value={5} control={<CustomColorRadio />} label="Alipay" />
-                                    <CssFormControlLabel value={6} control={<CustomColorRadio />} label="Cash/ATM" />
+                                    <CssFormControlLabel value={3} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
+                                    <CssFormControlLabel value={4} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
+                                    <CssFormControlLabel value={5} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
+                                    <CssFormControlLabel value={6} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
                                 </RadioGroup>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>

@@ -1,4 +1,4 @@
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 // import { useParams } from "react-router-dom";
 // import { useSelector } from "react-redux/es/exports";
@@ -12,6 +12,41 @@ import { useTranslation } from "react-i18next";
 export const OrderDetailCart = (props) => {
   const {order, user} = props;
   const { t, i18n } = useTranslation();
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [payStatus, setPayStatus] = useState(true);
+
+  useEffect(() => {
+    if(order.payment_type_id) {
+        switch(order.payment_type_id) {
+            case 3:
+                setPaymentMethod("common.wd-credit-card");
+                break;
+            case 4:
+                setPaymentMethod("common.wd-wechat-pay");
+                break;
+            case 5:
+                setPaymentMethod("common.wd-alipay");
+                break;
+            case 6:
+                setPaymentMethod("common.wd-cash/atm");
+                break;
+            default:
+                break;
+        }
+        let __cardName = order.payments[0].trans_id;
+        setCardName(__cardName);
+        if(parseInt(order.balance) > 0) {
+            setPayStatus(true);
+        } else {
+            setPayStatus(false);
+        }
+    }
+  }, [order])
+
+  const onPayHandler = () => {
+
+  }
 
   return (
     <div className="content">
@@ -92,6 +127,23 @@ export const OrderDetailCart = (props) => {
                 <span className="text-header text-black">{t("common.wd-outstanding")}</span>
             </span>
             <span className="text-header text-black">${order.balance ? order.balance : '0.00'}</span>
+        </div>
+        <div className="flex space-between my-[20px]" style={{position: 'relative'}} >
+            <span>
+                <span className="text-header text-black">{t("common.wd-payment-method")}</span>
+            </span>
+            <span className="text-header text-black">{t(paymentMethod)}</span>
+            <span className="text-header text-black card-name">{cardName}</span>
+        </div>
+        <div className="flex my-[30px] justify-content-end">
+          <span className={payStatus ? "btn hand" : "btn disabled-btn"} onClick={onPayHandler} >{t("common.wd-pay-now")}</span>
+        </div>
+        <div className="space-line mt-[20px] mb-[20px]"></div>
+        <div>
+            <span className="text-header text-black">{t("common.wd-qr-code")}</span>
+        </div>
+        <div>
+            <span className="text-normal text-black">{order.remark_qrcode ? order.remark_qrcode : ""}</span>
         </div>
     </div>
     )

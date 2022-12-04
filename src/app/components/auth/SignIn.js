@@ -23,9 +23,26 @@ const SignIn = (props) => {
             setNotify({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
+        if (email !== "") {
+            let __email = email;
+            let __re = /\S+@\S+\.\S+/;
+            let __result = __email.match(__re);
+            if(__result == null) {
+                setNotify({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+                return;
+            }
+        }
+        if (email.length > 100) {
+            setNotify({ title: 'warning', message: "common.no-input-email-length", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
         if (password === "" || email === undefined) {
             console.log("please input password");
             setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
+        if (password.length > 16 && password.length < 8) {
+            setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
         login({

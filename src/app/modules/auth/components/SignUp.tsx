@@ -39,16 +39,19 @@ const SignUp: FC<Props> = (props) => {
                 return;
             }
         }
+        if(email.length > 100) {
+            setNotify({ title: 'warning', message: "common.no-input-email-length", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
         if (name === "") {
             console.log("please input name");
             setNotify({ title: 'warning', message: "common.no-input-name", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
-        // if (contact === "") {
-        //     console.log("please input contact");
-        //     setNotify({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
-        //     return;
-        // }
+        if(name.length > 100) {
+            setNotify({ title: 'warning', message: "common.no-input-name-length", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
         if (contact === "") {
             setNotify({ title: 'warning', message: "common.no-input-contact", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
@@ -57,7 +60,7 @@ const SignUp: FC<Props> = (props) => {
             let __re = /[^0-9]+/g;
             let __result = __contact.match(__re);
             let __length = __contact.length;
-            if(__result == null && __length === 8) {
+            if(__result == null && __length <= 11 && __length >= 8) {
             } else {
                 setNotify({ title: 'warning', message: "common.no-input-contact-validate", visible: true, status: Math.floor(Math.random() * 100000) });
                 return;
@@ -66,6 +69,10 @@ const SignUp: FC<Props> = (props) => {
         if (password === "") {
             console.log("please input password");
             setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
+        }
+        if (password.length > 16 && password.length < 8) {
+            setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
         signup({

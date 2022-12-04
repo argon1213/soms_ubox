@@ -158,7 +158,7 @@ export default function Home() {
       let __re = /[^0-9]+/g;
       let __result = __contact.match(__re);
       let __length = __contact.length;
-      if(__result == null && __length === 8) {
+      if(__result == null && __length <= 11 && __length >= 8) {
       } else {
           return 2;
       }

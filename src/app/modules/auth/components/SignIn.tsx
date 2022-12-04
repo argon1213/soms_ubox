@@ -4,6 +4,7 @@ import CssTextField from '../../../components/custom-components/TextField'
 import { ShowNotification } from '../../../components/notification'
 import { useTranslation } from 'react-i18next'
 import { login } from '../../../store/apis/auth'
+import { Link } from 'react-router-dom';
 
 type Props = {
   returnHandler?: Function,
@@ -21,10 +22,26 @@ const SignIn: FC<Props> = (props) => {
         console.log("please input email");
         setNotify({ title: 'warning', message: "common.no-input-email", visible: true, status: Math.floor(Math.random() * 100000) });
         return;
+    } else {
+      let __email = email;
+      let __re = /\S+@\S+\.\S+/;
+      let __result = __email.match(__re);
+      if(__result == null) {
+          setNotify({ title: 'warning', message: "common.no-input-email-validate", visible: true, status: Math.floor(Math.random() * 100000) });
+          return;
+      }
     }
-    if (password === "" || email === undefined) {
+    if(email.length > 100) {
+      setNotify({ title: 'warning', message: "common.no-input-email-length", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    }
+    if (password === "" || password === undefined) {
         console.log("please input password");
         setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+        return;
+    }
+    if (password.length > 16 && password.length < 8) {
+        setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
         return;
     }
     login({
@@ -93,7 +110,10 @@ const SignIn: FC<Props> = (props) => {
         </div>
       </div>
       <div className="mb-[60px] pl-[32px]">
-        <span className="" style={{fontSize: "16px"}}>{t("common.wd-forgot-password")}</span>
+        <Link to="/client/forgot-password" className="text-normal text-black" style={{fontSize: "16px"}} 
+        >
+          {t("common.wd-forgot-password")}
+        </Link>
       </div>
       <div className="flex item-center mt-[10px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-signin")}</span></div>
     </>

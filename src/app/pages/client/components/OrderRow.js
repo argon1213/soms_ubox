@@ -1,65 +1,28 @@
 // import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 
 const OrderRow = (props) => {
   const { orders } = props;
-  // const [orderStatus, setOrderStatus] = useState();
-  // const [orderColor, setOrderColor] = useState();
+  const { t } = useTranslation();
 
-  // useEffect(() => {
-  //   switch (order.order_status_id) {
-  //     case 1:
-  //       setOrderStatus('New');
-  //       setOrderColor("badge-secondary");
-  //       return;
-  //     case 4:
-  //       setOrderStatus('In Progress');
-  //       setOrderColor('badge-light-warning');
-  //       return;
-  //     case 8:
-  //       setOrderStatus('Empty Delivery');
-  //       setOrderColor('badge-light-warning');
-  //       return;
-  //     case 12:
-  //       setOrderStatus('Sched Check-In');
-  //       setOrderColor('badge-light-primary');
-  //       return;
-  //     case 16:
-  //       setOrderStatus('Check-in');
-  //       setOrderColor('badge-light-primary');
-  //       return;
-  //     case 20:
-  //       setOrderStatus('Sch Check-Out');
-  //       setOrderColor('badge-light-primary');
-  //       return;
-  //     case 24:
-  //       setOrderStatus('Check-Out');
-  //       setOrderColor('badge-light-primary');
-  //       return;
-  //     case 25:
-  //       setOrderStatus('Sch Empty Return');
-  //       setOrderColor('badge-light-primary');
-  //       return;
-  //     case 28:
-  //       setOrderStatus('Completed');
-  //       setOrderColor('badge-light-success');
-  //       return;
-  //     case 30:
-  //       setOrderStatus('Hold');
-  //       setOrderColor("badge-light-danger");
-  //       return;
-  //     case 32:
-  //       setOrderStatus('Cancelled');
-  //       setOrderColor("badge-light-danger");
-  //       return;
-  //     default:
-  //       setOrderStatus();
-  //       setOrderColor();
-  //       return;
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  const getPaymentMethod = (order) => {
+    if(order.payment_type_id) {
+      switch(order.payment_type_id) {
+        case 3:
+          return (t("common.wd-credit-card"));
+        case 4:
+          return (t("common.wd-wechat-pay"));
+        case 5:
+          return (t("common.wd-alipay"));
+        case 6:
+          return (t("common.wd-cash/atm"));
+        default:
+          return "";
+      }
+    }
+  }
 
   const getStatus = (order) => {
     switch (order.order_status_id) {
@@ -170,7 +133,7 @@ const OrderRow = (props) => {
             </td>
             <td className='text-dark fw-bold  fs-5' key={index + '-total'}>{'$' + order.total_fee}</td>
             <td className='text-dark fw-bold fs-5' key={index + '-balance'}>${order.balance}</td>
-            <td className='text-dark fw-bold fs-5' key={index + '-qr'}>{order.pay_qr_code}</td>
+            <td className='text-dark fw-bold fs-5' >{getPaymentMethod(order)}</td>
           </tr>
         )
       }
