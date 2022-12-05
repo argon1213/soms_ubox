@@ -11,7 +11,7 @@ const ClientPortal = (props) => {
       <div className="content-page">
         <div className="flex justify-content-between align-items-center mt-[30px] mb-[10px] mr-[20px]">
           <span className="text-header text-black pr-[10px]">{t("common.wd-my-orders")}</span>
-          <Link to="/" className="btn hand">{t("common.wd-new-boxes")}</Link>
+          <Link to="/" className="custom-btn hand">{t("common.wd-new-boxes")}</Link>
         </div>
         <OrdersList className='mb-xl-8'/>
       </div>

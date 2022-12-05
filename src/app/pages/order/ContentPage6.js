@@ -28,7 +28,7 @@ export default function ContentPage6(props) {
                     </Trans>
                 </div>
             </div>
-            <div className="flex item-center my-[10px]"><span className="btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</span></div>
+            <div className="flex item-center my-[10px]"><span className="custom-btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</span></div>
         </div>
     )
 }

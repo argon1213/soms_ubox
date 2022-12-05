@@ -151,7 +151,7 @@ export default function ContentPage5(props) {
                         </Grid>
                     </div>
                 </div>
-                <div className="flex item-center mt-[30px]"><span className="btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
+                <div className="flex item-center mt-[30px]"><span className="custom-btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
             </div>
         </>
     )

@@ -18,7 +18,7 @@ import './_metronic/assets/sass/plugins.scss'
 import './_metronic/assets/sass/style.react.scss'
 
 import 'antd/dist/reset.css'
-import './app/assets/css/global.scss'
+// import './app/assets/css/global.scss'
 import './app/lib/modules/i18n'
 
 import {AppRoutes} from './app/routing/AppRoutes'

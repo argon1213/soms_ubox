@@ -121,7 +121,7 @@ const OrderDetail = (props) => {
     <div className="content-container">
       <div className="content-page">
         <div className="flex flex-row-reverse mt-[30px] mr-[20px]">
-          <Link to="/" className="btn hand">{t("common.wd-new-boxes")}</Link>
+          <Link to="/" className="custom-btn hand">{t("common.wd-new-boxes")}</Link>
         </div>
         <div className="text-normal text-black py-[20px]">
           <span>{t("oder-detail.no-title",{order: order.code ? order.code : "", date: dateFormat(order.created_at ? order.created_at : "" , 2), orderState: orderStatus})}</span>

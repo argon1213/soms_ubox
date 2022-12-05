@@ -414,7 +414,7 @@ export const OrderDetailEdit = (props) => {
           </Grid>
         </div>
         <div className="flex my-[30px]">
-          <span onClick={updateOrderHandler} className={permitEdit.permitTentative ? "btn hand" : "btn disabled-btn"}>{t("common.wd-change")}</span>
+          <span onClick={updateOrderHandler} className={permitEdit.permitTentative ? "custom-btn hand" : "custom-btn disabled-btn"}>{t("common.wd-change")}</span>
         </div>
         <div className="mx-[-8px]">
           <Grid container className="">
@@ -501,7 +501,7 @@ export const OrderDetailEdit = (props) => {
           </Grid>
         </div>
         <div className="flex my-[30px]">
-          <span onClick={setRetrievalHandler} className={permitEdit.permitRetrieval ? "btn hand" : "btn disabled-btn"}>{t("common.wd-retrieval-now")}</span>
+          <span onClick={setRetrievalHandler} className={permitEdit.permitRetrieval ? "custom-btn hand" : "custom-btn disabled-btn"}>{t("common.wd-retrieval-now")}</span>
         </div>
         <LoadingSpinner isLoading={isLoading} />
         <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />

@@ -58,9 +58,9 @@ export default function ContentPage3(props) {
             setContact(__stuffInfo.contact ? __stuffInfo.contact : "");
             setAddress(__stuffInfo.address ? __stuffInfo.address : "");
             setDeliveryDate(__stuffInfo.deliveryDate ? __stuffInfo.deliveryDate : __deliveryDate);
-            setLadenReturnDate(__stuffInfo.ladenReturnDate ? __stuffInfo.ladenReturnDate : dayjs().add(2, 'day'));
-            setTentativeDate(__stuffInfo.tentativeDate ? __stuffInfo.tentativeDate : dayjs().add(props.storage_month, "month").add(2, 'day'));
-            setExpirationDate(__stuffInfo.expirationDate ? dayjs(__stuffInfo.ladenReturnDate).add(props.storage_month, "month") : dayjs().add(props.storage_month, "month").add(2, 'day'));
+            setLadenReturnDate(__stuffInfo.ladenReturnDate ? __stuffInfo.ladenReturnDate : __deliveryDate);
+            setTentativeDate(__stuffInfo.tentativeDate ? __stuffInfo.tentativeDate : __deliveryDate.add(props.storage_month, "month"));
+            setExpirationDate(__stuffInfo.expirationDate ? dayjs(__stuffInfo.ladenReturnDate).add(props.storage_month, "month") : __deliveryDate.add(props.storage_month, "month"));
             setDeliveryTimeIndex(__stuffInfo.deliveryTimeIndex ? __stuffInfo.deliveryTimeIndex : '0');
             setLadenReturnTimeIndex(__stuffInfo.ladenReturnTimeIndex ? __stuffInfo.ladenReturnTimeIndex : 0);
             setTentativeTimeIndex(__stuffInfo.tentativeTimeIndex ? __stuffInfo.tentativeTimeIndex : 0);
@@ -431,7 +431,7 @@ export default function ContentPage3(props) {
                             </Grid>
                         </div>
                     </div>
-                    <div className="flex item-center mt-[30px]"><span className="btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
+                    <div className="flex item-center mt-[30px]"><span className="custom-btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
                 </div>
             </LocalizationProvider>
         </ThemeProvider>

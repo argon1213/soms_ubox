@@ -71,7 +71,7 @@ const SignUp: FC<Props> = (props) => {
             setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
-        if (password.length > 16 && password.length < 8) {
+        if (password.length > 16 || password.length < 8) {
             setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
@@ -164,7 +164,7 @@ const SignUp: FC<Props> = (props) => {
                     />
                 </div>
             </div>
-            <div className="flex item-center mt-[40px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-signup")}</span></div>
+            <div className="flex item-center mt-[40px] mb-[10px]"><span className="custom-btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-signup")}</span></div>
         </>
     )
 }

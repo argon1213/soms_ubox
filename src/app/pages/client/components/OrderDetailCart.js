@@ -136,7 +136,7 @@ export const OrderDetailCart = (props) => {
             <span className="text-header text-black card-name">{cardName}</span>
         </div>
         <div className="flex my-[30px] justify-content-end">
-          <span className={payStatus ? "btn hand" : "btn disabled-btn"} onClick={onPayHandler} >{t("common.wd-pay-now")}</span>
+          <span className={payStatus ? "custom-btn hand" : "custom-btn disabled-btn"} onClick={onPayHandler} >{t("common.wd-pay-now")}</span>
         </div>
         <div className="space-line mt-[20px] mb-[20px]"></div>
         <div>

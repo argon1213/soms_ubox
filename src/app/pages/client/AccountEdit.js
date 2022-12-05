@@ -124,7 +124,7 @@ const AccountEdit = () => {
         return;
       }
     } else {
-      if (newPassword.length > 16 && newPassword.length < 8) {
+      if (newPassword.length > 16 || newPassword.length < 8) {
         onNotification({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
         return;
       }
@@ -272,7 +272,7 @@ const AccountEdit = () => {
         />
       </div>
       <div className="flex item-center mt-[30px]">
-        <span className="btn hand" onClick={submitHandler}>{t("common.wd-change")}</span>
+        <span className="custom-btn hand" onClick={submitHandler}>{t("common.wd-change")}</span>
       </div>
     </div>
     <LoadingSpinner isLoading={isLoading} />

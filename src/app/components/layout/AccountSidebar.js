@@ -40,7 +40,7 @@ export default function AccountSidebar(props) {
             <div className="py-[10px]">
                 <Link to="/client/dashboard" className="text-header text-blue">{t("common.wd-my-order")}</Link>
             </div>
-            <div className="flex item-center my-[30px]"><Link to="client/account" className="btn hand text-normal-18">{t("common.wd-edit")}</Link></div>
+            <div className="flex item-center my-[30px]"><Link to="client/account" className="custom-btn hand text-normal-18">{t("common.wd-edit")}</Link></div>
           </div>
       </div>
     )

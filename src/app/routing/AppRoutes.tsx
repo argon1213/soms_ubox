@@ -8,6 +8,7 @@
 import {FC} from 'react'
 import {Routes, Route, BrowserRouter, Navigate} from 'react-router-dom'
 import {PrivateRoutes} from './PrivateRoutes'
+import { AdminPage } from '../pages/admin/AdminPage'
 import {ErrorsPage} from '../modules/errors/ErrorsPage'
 import {Logout, AuthPage} from '../modules/auth'
 import {App} from '../App'
@@ -40,6 +41,10 @@ const AppRoutes: FC = () => {
         <Route element={<App />}>
           <Route path='error/*' element={<ErrorsPage />} />
           <Route path='logout' element={<Logout />} />
+
+          <Route path='admin' element={<Navigate to='dashboard' />} />
+          <Route path='admin/*' element={<AdminPage />} />
+          
           {currentUser ? (
             <>
               <Route path='' element={<Home />} />
@@ -52,6 +57,8 @@ const AppRoutes: FC = () => {
               <Route path='*' element={<Navigate to='' />} />
             </>
           )}
+
+          
         </Route>
       </Routes>
     </BrowserRouter>

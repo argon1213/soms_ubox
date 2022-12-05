@@ -41,7 +41,7 @@ const SignIn = (props) => {
             setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
-        if (password.length > 16 && password.length < 8) {
+        if (password.length > 16 || password.length < 8) {
             setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
         }
@@ -99,7 +99,7 @@ const SignIn = (props) => {
                     />
                 </div>
             </div>
-            <div className="flex item-center mt-[10px] mb-[10px]"><span className="btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-next")}</span></div>
+            <div className="flex item-center mt-[10px] mb-[10px]"><span className="custom-btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-next")}</span></div>
         </>
     )
 }

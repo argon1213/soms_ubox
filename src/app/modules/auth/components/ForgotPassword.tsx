@@ -106,7 +106,7 @@ export function ForgotPassword() {
                     onChange={(e) => { setEmail(e.target.value) }}
                   />
                 </div>
-                <div className="flex item-center mt-[50px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSubmitEmail} >{t("common.wd-submit")}</span></div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span className="custom-btn hand text-normal-18" onClick={onSubmitEmail} >{t("common.wd-submit")}</span></div>
               </>
             }
             {
@@ -139,7 +139,7 @@ export function ForgotPassword() {
                     onChange={(e) => { setPassword(e.target.value) }}
                   />
                 </div>
-                <div className="flex item-center mt-[50px] mb-[40px]"><span className="btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span className="custom-btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
               </>
             }
           </div>
