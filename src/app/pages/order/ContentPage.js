@@ -9,7 +9,7 @@ import ContentPage5 from "./ContentPage5";
 import ContentPage6 from "./ContentPage6";
 
 const ContentPage = props => {
-    const { step, logged, stepChange, products, setProducts, materials, setMaterials, getStoragePeriodPrice, cartInfo, setCartInfo, stuffInfo, setStuffInfo, accountInfo, setAccountInfo, order, setOrder } = props;
+    const { step, logged, stepChange, products, materials, getStoragePeriodPrice, cartInfo, setCartInfo, stuffInfo, setStuffInfo, accountInfo, setAccountInfo, order, setOrder } = props;
     const [initial, setInitial] = useState(false);
     const [universities, setUniversities] = useState([]);
     const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
@@ -22,37 +22,10 @@ const ContentPage = props => {
         if (initial) {
             getProducts()
             .then((res) => {
-
-                let __initPrice = {
-                2: 35.00,
-                3: 40.00,
-                4: 60.00,
-                10: 880.00,
-                }
-            
-                let __newPrice = __initPrice;
                 let __products = res.data.store_items;
                 let __materials = res.data.material_items;
-            
-                __materials.forEach((item, index) => {
-                    Object.keys(__newPrice).forEach((key) => {
-                        if(parseInt(key) === item.id) {
-                            __materials[index].price = __newPrice[key];
-                        }
-                    })
-                });
-            
-                __products.forEach((item, index) => {
-                    Object.keys(__newPrice).forEach((key) => {
-                        if(parseInt(key) === item.id) {
-                            __products[index].price = __newPrice[key];
-                        }
-                    })
-                });
-
-                setProducts(__products);
-                setMaterials(__materials);
                 setUniversities(res.data.universities);
+                getStoragePeriodPrice(2, __products, __materials);
             })
             .catch((err) => {
             })

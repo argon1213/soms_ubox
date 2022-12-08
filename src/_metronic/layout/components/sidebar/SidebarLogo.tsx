@@ -18,32 +18,26 @@ const SidebarLogo = () => {
   const appSidebarDefaultMinimizeDefault = config.app?.sidebar?.default?.minimize?.desktop?.default
   return (
     <div className='app-sidebar-logo px-6' id='kt_app_sidebar_logo'>
-      <Link to='/dashboard'>
+      <Link to='/admin/dashboard'>
         {config.layoutType === 'dark-sidebar' ? (
           <img
             alt='Logo'
-            src={toAbsoluteUrl('/media/logos/default-dark.svg')}
-            className='h-25px app-sidebar-logo-default'
+            src={toAbsoluteUrl('/images/ubox-logo.png')}
+            className='h-65px app-sidebar-logo-default'
           />
         ) : (
           <>
             <img
               alt='Logo'
-              src={toAbsoluteUrl('/media/logos/default.svg')}
-              className='h-25px app-sidebar-logo-default theme-light-show'
-            />
-            <img
-              alt='Logo'
-              src={toAbsoluteUrl('/media/logos/default-dark.svg')}
-              className='h-25px app-sidebar-logo-default theme-dark-show'
+              src={toAbsoluteUrl('/images/ubox-logo.png')}
+              className='h-65px app-sidebar-logo-default theme-light-show'
             />
           </>
         )}
-
         <img
           alt='Logo'
-          src={toAbsoluteUrl('/media/logos/default-small.svg')}
-          className='h-20px app-sidebar-logo-minimize'
+          src={toAbsoluteUrl('/favicon.ico')}
+          className='h-35px app-sidebar-logo-minimize'
         />
       </Link>
 

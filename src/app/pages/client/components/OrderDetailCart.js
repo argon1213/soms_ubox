@@ -64,10 +64,10 @@ export const OrderDetailCart = (props) => {
                         <div className="flex space-between mt-[20px]" key={index}>
                             <div>
                                 <div className="text-normal text-black" >{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
-                                <div className="text-normal text-black" >${item.item.price} {t("cart.no-per-box")}</div>
+                                <div className="text-normal text-black" >${item.item_price} {t("cart.no-per-box")}</div>
                             </div>
                             <div className="my-auto" >
-                                <span className="text-normal text-black">${item.item_qty * item.item.price}</span>
+                                <span className="text-normal text-black">${item.item_qty * item.item_price}</span>
                             </div>
                         </div>
                     )
@@ -94,10 +94,10 @@ export const OrderDetailCart = (props) => {
                                 <div className="flex space-between mt-[20px]" key={index}>
                                     <div>
                                         <div className="text-normal text-black" >{item.item_qty} x {i18n.language==="zh" ? item.item.name_cn:item.item.name}</div>
-                                        <div className="text-normal text-black" >${item.item.price} {t("cart.no-per-box")}</div>
+                                        <div className="text-normal text-black" >${item.item_price} {t("cart.no-per-box")}</div>
                                     </div>
                                     <div className="my-auto">
-                                        <span className="text-normal text-black">${item.item_qty * item.item.price}</span>
+                                        <span className="text-normal text-black">${item.item_qty * item.item_price}</span>
                                     </div>
                                 </div>
                             ) 
@@ -133,6 +133,8 @@ export const OrderDetailCart = (props) => {
                 <span className="text-header text-black">{t("common.wd-payment-method")}</span>
             </span>
             <span className="text-header text-black">{t(paymentMethod)}</span>
+        </div>
+        <div className="" style={{position: 'relative'}} >
             <span className="text-header text-black card-name">{cardName}</span>
         </div>
         <div className="flex my-[30px] justify-content-end">

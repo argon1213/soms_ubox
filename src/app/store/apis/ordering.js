@@ -23,3 +23,11 @@ export function yedpayOrderSubmit(params) {
         }
     });
 }
+
+export function promoCodeValidate(params) {
+    return axios.post(`/promo-code`, params, {
+        headers: {
+            'content-type': 'text/json'
+        }
+    });
+}

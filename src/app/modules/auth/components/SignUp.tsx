@@ -85,7 +85,7 @@ const SignUp: FC<Props> = (props) => {
                 localStorage.setItem("ubox-user", JSON.stringify(res.data.user));
                 localStorage.setItem("ubox-is-authenticated", '1');
                 // returnHandler(true);
-                setNotify({ title: 'error', message: "common.no-signup-success", visible: true, status: Math.floor(Math.random() * 100000) });
+                setNotify({ title: 'success', message: "common.no-signup-success", visible: true, status: Math.floor(Math.random() * 100000) });
                 window.location.replace('/client/dashboard');
             } else {
                 localStorage.removeItem('ubox-user');

@@ -1,16 +1,16 @@
 import {useEffect} from 'react'
 import {Outlet, useLocation} from 'react-router-dom'
 import {HeaderWrapper} from './components/header'
-import {RightToolbar} from '../partials/layout/RightToolbar'
+// import {RightToolbar} from '../partials/layout/RightToolbar'
 import {ScrollTop} from './components/scroll-top'
 import {Content} from './components/content'
-import {FooterWrapper} from './components/footer'
+// import {FooterWrapper} from './components/footer'
 import {Sidebar} from './components/sidebar'
 import {
   DrawerMessenger,
   ActivityDrawer,
-  InviteUsers,
-  UpgradePlan,
+  // InviteUsers,
+  // UpgradePlan,
   ThemeModeProvider,
 } from '../partials'
 import {PageDataProvider} from './core'
@@ -38,7 +38,7 @@ const MasterLayout = () => {
                     <Outlet />
                   </Content>
                 </div>
-                <FooterWrapper />
+                {/* <FooterWrapper /> */}
               </div>
             </div>
           </div>
@@ -46,13 +46,13 @@ const MasterLayout = () => {
 
         {/* begin:: Drawers */}
         <ActivityDrawer />
-        <RightToolbar />
+        {/* <RightToolbar /> */}
         <DrawerMessenger />
         {/* end:: Drawers */}
 
         {/* begin:: Modals */}
-        <InviteUsers />
-        <UpgradePlan />
+        {/* <InviteUsers /> */}
+        {/* <UpgradePlan /> */}
         {/* end:: Modals */}
         <ScrollTop />
       </ThemeModeProvider>

@@ -104,7 +104,7 @@ const AccountEdit = () => {
           return;
       }
     }
-    if (studentId === "") {
+    if (user.university_id && studentId === "") {
       onNotification({ title: 'warning', message: "common.no-input-studentID", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
     }

@@ -26,7 +26,17 @@
     position: absolute;
     font-size: 10px !important;
     right: 0px;
-    top: 24px;
+    top: -30px;
+}
+
+.plusIcon {
+    background-color: #FFBE3D;
+    color: white;
+    border: 0px;
+}
+
+.plusIcon:hover {
+    color: white !important;
 }
 
 @media screen and (max-width: 575px) {

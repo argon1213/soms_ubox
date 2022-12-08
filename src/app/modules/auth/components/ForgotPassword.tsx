@@ -129,11 +129,11 @@ export function ForgotPassword() {
                   <CssTextField
                     required fullWidth
                     id="reset-password"
-                    type="reset-password"
+                    type="password"
                     label={t("common.wd-password")}
                     variant="standard"
                     inputProps={{
-                      autoComplete: 'off',
+                      autoComplete: 'new-password',
                     }}
                     value={password}
                     onChange={(e) => { setPassword(e.target.value) }}

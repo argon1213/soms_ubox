@@ -13,7 +13,7 @@ export default function ContentPage6(props) {
         window.location.href = "/client/dashboard";
     }
     const onOderStatusHandler = (e) => {
-        window.location.href = "/client/dashboard/" + order.id ;
+        window.location.href = "/client/order/" + order.id ;
     }
     return (
         <div className="content-container thanks">

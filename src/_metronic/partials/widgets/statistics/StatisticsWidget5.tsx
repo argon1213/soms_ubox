@@ -28,9 +28,9 @@ const StatisticsWidget5: React.FC<Props> = ({
       <div className='card-body'>
         <KTSVG path={svgIcon} className={`svg-icon-${iconColor} svg-icon-3x ms-n1`} />
 
-        <div className={`text-${titleColor} fw-bold fs-2 mb-2 mt-5`}>{title}</div>
+        <div className={`text-${titleColor} fw-bold fs-1 mb-2 mt-5`}>{title}</div>
 
-        <div className={`fw-semibold text-${descriptionColor}`}>{description}</div>
+        <div className={`fw-semibold fs-5 text-${descriptionColor}`}>{description}</div>
       </div>
     </a>
   )

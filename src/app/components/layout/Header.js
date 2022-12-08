@@ -40,12 +40,12 @@ const Header = (props) => {
                         {props.children}
                     </div>
                     <div className={(props.children ? "width-link" : "w-[50%]") + " flex align-items-center justify-content-end"}>
-                        <div className="flex justify-content-end flex-wrap align-content-around padding-link">
-                            <div className="pr-[20px] pl-[20px] py-[10px] min-w-[90] flex align-items-center">
-                                <a href="https://www.ubox.com.hk/contact/" target="_blank" rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-contact")}</a>
-                            </div>
-                            <div className="flex pr-[20px]">
-                                <div className="language my-auto flex min-w-[90px]">
+                        <div className="flex flex-column align-content-around min-w-[200px]">
+                            <div className="flex justify-content-between align-items-center">
+                                <div className="pl-[20px] py-[10px] min-w-[90] flex align-items-center">
+                                    <a href="https://www.ubox.com.hk/contact/" target="_blank" rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-contact")}</a>
+                                </div>
+                                <div className="language my-auto flex [90px]">
                                     <div>
                                         <img src="/images/lang_en.png" className={`${language === "en" ? "active link":"link"}`} alt="English Logo"  style={{ width: '38px', height: "auto"}} onClick={(e) => { onChangeLanguage("en")}} />
                                     </div>
@@ -53,15 +53,31 @@ const Header = (props) => {
                                         <img src="/images/lang_zh.png" className={`${language === "zh" ? "active link ":"link "}`} alt="Chinese Logo" style={{ width: '38px', height: "auto"}}  onClick={(e) => { onChangeLanguage("zh")}} />
                                     </div>
                                 </div>
+                            </div>
+                            <div className="flex justify-content-between align-items-center">
                                 {(logged === 1) ? (
-                                    <div className="my-auto pl-[15px] flex item-center min-w-[40px]">
-                                        <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
-                                    </div>
+                                    <>
+                                        <div className="pr-[20px] pl-[20px] py-[10px] min-w-[90] flex align-items-center">
+                                            <Link to='/client' rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-my-order")}</Link>
+                                        </div>
+                                        <div className="my-auto pl-[15px] flex item-center min-w-[40px]">
+                                            <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />
+                                        </div>
+                                    </>
                                     ) : (
-                                    <div className="my-auto flex item-center min-w-[80px]">
-                                        <Link to="/client" className="text-header text-yellow contact">{t("common.wd-signin")}</Link>
-                                    </div>
+                                    <>
+                                        <div className="pr-[20px] pl-[20px] py-[10px] min-w-[90] flex align-items-center">
+                                        </div>
+                                        <div className="my-auto flex item-center py-[10px] min-w-[80px]">
+                                            <Link to="/client" className="text-header text-yellow contact">{t("common.wd-signin")}</Link>
+                                        </div>
+                                    </>
                                 )}
+                                
+                            </div>
+                        </div>
+                        <div className="flex justify-content-end flex-wrap align-content-around padding-link">
+                            <div className="flex pr-[20px]">
                             </div>
                         </div>
                     </div>
