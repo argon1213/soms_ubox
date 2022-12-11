@@ -1,63 +1,76 @@
-import {useMemo} from 'react';
+import {useEffect, useState, useMemo} from 'react';
 import {useTable} from 'react-table';
-import {CustomHeaderColumn} from '../table/columns/CustomHeaderColumn';
-import {CustomRow} from '../table/columns/CustomRow';
-// import {useQueryResponseData, useQueryResponseLoading} from '../core/QueryResponseProvider';
-import {usersColumns} from './columns/_columns';
-// import {User} from '../core/_models';
-// import {UsersListLoading} from '../components/loading/UsersListLoading';
-// import {UsersListPagination} from '../components/pagination/UsersListPagination';
+import { toAbsoluteUrl } from '../../../../../_metronic/helpers';
+import { KTSVG } from '../../../../../_metronic/helpers';
 import {KTCardBody} from '../../../../../_metronic/helpers';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../../store/reducers';
 
+import { PeriodsTableBody } from './PeriodsTableBody';
+
 const PeriodsTable = () => {
-  // const users = useQueryResponseData()
   const periods = useSelector((state:RootState) => state.admin.periods.data)
-  // const isLoading = useQueryResponseLoading()
   // const isLoading = useSelector((state:RootState) => state.admin.periods.loading)
-  const data = useMemo(() => periods, [periods])
-  const columns = useMemo(() => usersColumns, [])
-  const {getTableProps, getTableBodyProps, headers, rows, prepareRow} = useTable({
-    columns,
-    data,
-  });
+  const data = useMemo(() => periods, [periods]);
+  const [listData, setListData] = useState(Array(0));
+  const [isAllSelected, setIsAllSelected] = useState(false);
+
+  useEffect(() => {
+    let __data = periods;
+    __data.forEach((element:any, index:number) => {
+      element = {
+        ...element,
+        checked: false,
+      };
+    });
+    setListData(__data);
+  }, []);
+
+  useEffect(() => {
+    console.log("listData", listData);
+  }, [listData]);
 
   return (
     <KTCardBody className='py-4'>
-      <div className='table-responsive'>
-        <table
-          id='kt_table_users'
-          className='table align-middle table-row-dashed fs-6 gy-5 dataTable no-footer'
-          {...getTableProps()}
-        >
-          <thead>
-            <tr className='text-start text-muted fw-bolder fs-7 text-uppercase gs-0'>
-              {headers.map((column) => (
-                <CustomHeaderColumn key={column.id} column={column} />
-              ))}
-            </tr>
-          </thead>
-          <tbody className='text-gray-600 fw-bold' {...getTableBodyProps()}>
-            {rows.length > 0 ? (
-              rows.map((row, i) => {
-                prepareRow(row)
-                return <CustomRow row={row} key={`row-${i}-${row.id}`} />
-              })
-            ) : (
-              <tr>
-                <td colSpan={7}>
-                  <div className='d-flex text-center w-100 align-content-center justify-content-center'>
-                    No matching records found
+      <div className='card-body py-3'>
+        <div className='table-responsive'>
+          <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
+            <thead>
+              <tr className='fw-bold text-muted'>
+                <th className='w-25px'>
+                  <div className='form-check form-check-sm form-check-custom form-check-solid'>
+                    <input
+                      className='form-check-input'
+                      type='checkbox'
+                      value='1'
+                      data-kt-check='true'
+                      data-kt-check-target='.widget-9-check'
+                      checked={isAllSelected}
+                      onChange={(e) => {
+                        setIsAllSelected(e.target.checked);
+                        let __listData = listData;
+                        __listData.forEach((data:any) => {
+                          data.checked = e.target.checked;
+                        });
+                        setListData(__listData);
+                      }}
+                    />
                   </div>
-                </td>
+                </th>
+                <th className='min-w-150px'>The Code</th>
+                <th className='min-w-140px'>Name</th>
+                <th className='min-w-120px text-center'>Minimum storage period(months)</th>
+                <th className='min-w-120px text-center'>The longest storage period(months)</th>
+                <th className='min-w-100px text-center'>Updated at</th>
+                <th className='min-w-100px text-end'>Action</th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              <PeriodsTableBody listData={listData} setListData={setListData} />
+            </tbody>
+          </table>
+        </div>
       </div>
-      {/* <UsersListPagination /> */}
-      {/* {isLoading && <UsersListLoading />} */}
     </KTCardBody>
   )
 }
