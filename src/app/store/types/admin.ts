@@ -1,10 +1,9 @@
 export interface AdminState {
   universities: any[];
-  periods: any,
+  periods: any[],
+  pagination: any,
   loading: boolean;
   error: null | string;
-  page: number;
-  limit: number;
 }
 
 export enum AdminActionTypes {

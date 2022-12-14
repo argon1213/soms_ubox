@@ -1,5 +1,13 @@
 import axios from "./index";
 
+export function adminLoginApi(param) {
+  return axios.post(`/admin/auth/login`, param, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
 export function fetchUniversitiesApi() {
   return axios.post(`/admin/fetchUniversities`, {
       headers: {

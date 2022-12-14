@@ -6,18 +6,7 @@ import {useListView} from '../../core/ListViewProvider'
 
 const UsersListGrouping = () => {
   const {selected} = useListView()
-  // const queryClient = useQueryClient()
-  // const {query} = useQueryResponse()
-
-  // const deleteSelectedItems = useMutation(() => deleteSelectedUsers(selected), {
-  //   // 💡 response of the mutation is passed to onSuccess
-  //   onSuccess: () => {
-  //     // ✅ update detail view directly
-  //     queryClient.invalidateQueries([`${QUERIES.USERS_LIST}-${query}`])
-  //     clearSelected()
-  //   },
-  // })
-
+  
   return (
     <div className='d-flex justify-content-end align-items-center' style={{paddingRight: '15px'}}>
       <div className='fw-bolder me-5'>

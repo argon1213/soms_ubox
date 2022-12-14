@@ -11,13 +11,13 @@ import LoadingSpinner from "../../components/loading-spinner";
 
 export default function ContentPage5(props) {
     const { onNotification, cartInfo, setCartInfo, stuffInfo, accountInfo, setOrder } = props;
-    const [paymentType, setPaymentType] = useState('3');
+    const [paymentType, setPaymentType] = useState(3);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
 
     const __carts = cartInfo;
     const __duration = cartInfo.storage_month;
-    const __payment_type = cartInfo.payment_type;
+    // const __payment_type = cartInfo.payment_type;
     const __stuff_info = stuffInfo;
     const __account_info = accountInfo;
     const __user_info = JSON.parse(localStorage.getItem("ubox-user"));
@@ -40,7 +40,8 @@ export default function ContentPage5(props) {
         return stripePromise;
     }
     const handleRadioChange = (event) => {
-        setPaymentType(event.target.value);
+        let type = parseInt(event.target.value);
+        setPaymentType(type);
         setCartInfo({
             ...cartInfo,
             payment_type: event.target.value,
@@ -48,10 +49,10 @@ export default function ContentPage5(props) {
     };
 
     const onNextHandler = (e) => {
-        if(paymentType === '3') {
+        if(paymentType === 3) {
             document.querySelector('form').requestSubmit();
             setIsLoading(true);
-        } else if(paymentType === '6') {
+        } else if(paymentType === 6) {
             setIsLoading(true);
             let stripeToken = ""
             orderSubmitHandler(stripeToken);
@@ -61,7 +62,7 @@ export default function ContentPage5(props) {
     const orderSubmitHandler = (stripeToken) => {
         orderSubmit({
             stripeToken: stripeToken,
-            carts: { ...__carts, duration: __duration, payment_type: __payment_type },
+            carts: { ...__carts, duration: __duration, payment_type: paymentType },
             stuff: {
                 ...__stuff_info,
             },
@@ -86,7 +87,7 @@ export default function ContentPage5(props) {
     }
 
     useEffect(() => {
-        if(paymentType === '4' || paymentType === '5') {
+        if(paymentType === 4 || paymentType === 5) {
           
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,19 +130,19 @@ export default function ContentPage5(props) {
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>
                                 <div className="flex items-center">
-                                    {paymentType === '3' && (
+                                    {paymentType === 3 && (
                                         <div className="h-[20px] w-[100%]">
                                             <Elements stripe={getStripe()}>
                                                 <PaymentForm onCallbackHandler={onCallbackFunc} />
                                             </Elements>
                                         </div>
                                     )}
-                                    {paymentType === '4' && (
+                                    {paymentType === 4 && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
                                             <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
                                         </div>
                                     )}
-                                    {paymentType === '5' && (
+                                    {paymentType === 5 && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
                                             <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
                                         </div>

@@ -2,15 +2,9 @@ import { AdminAction, AdminActionTypes, AdminState } from "../types/admin";
 
 const initialState: AdminState = {
     universities: [],
-    periods: {
-        data: [],
-        pagination: {
-            
-        },
-    },
-    page: 1,
+    periods: [],
+    pagination: {},
     error: null,
-    limit: 10,
     loading: false
 }
 
@@ -23,10 +17,8 @@ export const adminReducer = (state = initialState, action: AdminAction): AdminSt
             return {...state, loading: false, universities: action.payload}
         case AdminActionTypes.FETCH_PERIODS:
             return {...state, loading: false,
-                periods: {
-                    data: action.payload,
-                    pagination: {},
-                }}
+                periods: action.payload
+            }
         default:
             return state
     }

@@ -119,7 +119,7 @@ const OrdersList = ({className}) => {
         {
           (total > 10) && (
             <div className="flex justify-content-end my-[20px] pr-[20px]">
-              <Pagination onChange={onChangePagination} defaultCurrent={1} current={currentPage} total={total} />
+              <Pagination onChange={onChangePagination} defaultCurrent={1} current={currentPage} total={total} pageSize={10} showSizeChanger={false} />
             </div>
           )
         }

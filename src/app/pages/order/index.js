@@ -267,6 +267,7 @@ export default function Home() {
     const account_data = accountInfo;
     if (account_data === undefined || account_data == null)
       return 3; // step=4  
+    if (account_data.isStudent === undefined) return 3;
     const account_info = accountInfo;
     if (account_info.isStudent === 1 && (account_info.university.id === undefined || account_info.university.id == null))
       return 3; // step=4  

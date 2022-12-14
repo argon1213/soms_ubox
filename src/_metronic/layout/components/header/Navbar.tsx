@@ -58,7 +58,7 @@ const Navbar = () => {
           data-kt-menu-attach='parent'
           data-kt-menu-placement='bottom-end'
         >
-          <img src={toAbsoluteUrl('/media/avatars/300-1.jpg')} alt='' />
+          <img src={toAbsoluteUrl('/favicon.ico')} alt='' />
         </div>
         <HeaderUserMenu />
       </div>

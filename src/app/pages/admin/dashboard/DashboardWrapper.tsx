@@ -34,7 +34,7 @@ const DashboardPage: FC = () => {
         universities.length > 0 && universities.map((university, index) => (
           <div className='col-xl-3 col-md-4 col-sm-6 py-5' key={index} >
             <StatisticsWidget5
-              className='card-xl-stretch mb-xl-8'
+              className='card-xl-stretch mb-xl-8 min-h-200px'
               svgIcon='/media/icons/duotune/ecommerce/ecm008.svg'
               iconColor='white'
               color='warning'

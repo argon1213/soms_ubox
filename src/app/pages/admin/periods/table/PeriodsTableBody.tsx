@@ -1,31 +1,26 @@
-import { Dispatch } from "react";
-import { toAbsoluteUrl } from "../../../../../_metronic/helpers"
 import { KTSVG } from "../../../../../_metronic/helpers"
+import { useListView } from "../core/ListViewProvider";
 
-// type propsData = {
-//   listData: any;
-//   setListData: Dispatch<any[]>;
-// }
-
-export const PeriodsTableBody = (props) => {
+export const PeriodsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
+  const { setItemIdForUpdate, setItemIdForDelete } = useListView();
 
-  const selectHandler = (index, state) => {
-    // let __listData = listData;
-    // __listData[index] = {
-    //   ...__listData[index],
-    //   checked: state,
-    // }
-    // console.log("__listData", __listData);
-    // setListData(__listData);
+  const selectHandler = (index:number, state:boolean) => {
+    let __data = listData[index];
+    __data.checked = state;
+    setListData([
+      ...listData.slice(0, index),
+      __data,
+      ...listData.slice(index + 1),
+    ]);
   }
 
   return (
     <>
       {
         listData.length > 0 ?
-        listData.map((data, index) => {
+        listData.map((data:any, index:number) => {
           return (
             <tr key={index}>
               <td>
@@ -33,8 +28,7 @@ export const PeriodsTableBody = (props) => {
                   <input 
                     className='form-check-input widget-9-check' 
                     type='checkbox' 
-                    value='1'
-                    checked={data.checked} 
+                    checked={data.checked ? data.checked : false} 
                     onChange={(e) => {
                       selectHandler(index, e.target.checked);
                     }}
@@ -43,9 +37,12 @@ export const PeriodsTableBody = (props) => {
               </td>
               <td>
                 <div className='d-flex align-items-center'>
-                  <a href='#' className='text-blue fw-bold fs-6'>
+                  <span 
+                    className='text-blue fw-bold fs-6'
+                    onClick={() => {setItemIdForUpdate(index)}}
+                  >
                     {data.code}
-                  </a>
+                  </span>
                 </div>
               </td>
               <td>
@@ -70,30 +67,24 @@ export const PeriodsTableBody = (props) => {
               </td>
               <td>
                 <div className='d-flex justify-content-end flex-shrink-0'>
-                  <a
-                    href='#'
+                  <span
                     className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
+                    onClick={(e) => {}}
                   >
                     <KTSVG
                       path='/media/icons/duotune/general/gen019.svg'
                       className='svg-icon-3'
                     />
-                  </a>
-                  <a
-                    href='#'
-                    className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                  >
-                    <KTSVG path='/media/icons/duotune/art/art005.svg' className='svg-icon-3' />
-                  </a>
-                  <a
-                    href='#'
+                  </span>
+                  <span
                     className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
+                    onClick={(e) => {setItemIdForDelete(index)}}
                   >
                     <KTSVG
                       path='/media/icons/duotune/general/gen027.svg'
                       className='svg-icon-3'
                     />
-                  </a>
+                  </span>
                 </div>
               </td>
             </tr>
