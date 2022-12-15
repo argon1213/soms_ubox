@@ -1,10 +1,10 @@
 import { KTSVG } from "../../../../../_metronic/helpers"
-import { useListView } from "../core/PeriodsListViewProvider";
+import { useClientsListView } from "../core/ClientsListViewProvider";
 
-export const PeriodsTableBody = (props: any) => {
+export const ClientsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
-  const { setItemIdForUpdate, setItemIdForDelete } = useListView();
+  const { setItemIdForUpdate, setItemIdForDelete } = useClientsListView();
 
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];
@@ -41,23 +41,38 @@ export const PeriodsTableBody = (props: any) => {
                     className='text-blue fw-bold fs-6'
                     onClick={() => {setItemIdForUpdate(index)}}
                   >
-                    {data.code}
+                    {data.name}
                   </span>
                 </div>
               </td>
               <td>
                 <span className='text-dark fw-bold d-block fs-6'>
-                  {data.name}
+                  {data.email}
                 </span>
               </td>
               <td className='text-center'>
                   <span className='text-dark fw-bold d-block fs-6'>
-                    {data.min}
+                    {data.contact}
                   </span>
               </td>
               <td className='text-center'>
                   <span className='text-dark fw-bold d-block fs-6'>
-                    {data.max}
+                    {data.address1}
+                  </span>
+              </td>
+              <td className='text-center'>
+                  <span className='text-dark fw-bold d-block fs-6'>
+                    {data.wechat}
+                  </span>
+              </td>
+              <td className='text-center'>
+                  <span className='text-dark fw-bold d-block fs-6'>
+                    {data.student_id}
+                  </span>
+              </td>
+              <td className='text-center'>
+                  <span className='text-dark fw-bold d-block fs-6'>
+                    {data.orderCount}
                   </span>
               </td>
               <td className='text-center'>
@@ -67,15 +82,6 @@ export const PeriodsTableBody = (props: any) => {
               </td>
               <td>
                 <div className='d-flex justify-content-end flex-shrink-0'>
-                  <span
-                    className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                    onClick={(e) => {}}
-                  >
-                    <KTSVG
-                      path='/media/icons/duotune/general/gen019.svg'
-                      className='svg-icon-3'
-                    />
-                  </span>
                   <span
                     className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                     onClick={(e) => {setItemIdForDelete([data.id])}}

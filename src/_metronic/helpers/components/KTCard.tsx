@@ -30,8 +30,8 @@ const KTCard: FC<Props & WithChildren> = (props) => {
     dashed,
     stretch,
     rounded,
-    utilityP,
-    utilityPY,
+    // utilityP,
+    // utilityPY,
     utilityPX,
     children,
   } = props
@@ -48,9 +48,9 @@ const KTCard: FC<Props & WithChildren> = (props) => {
           'card-dashed': dashed,
         },
         stretch && `card-${stretch}`,
-        utilityP && `p-${utilityP}`,
+        // utilityP && `p-${utilityP}`,
         utilityPX && `px-${utilityPX}`,
-        utilityPY && `py-${utilityPY}`,
+        // utilityPY && `py-${utilityPY}`,
         rounded && `card-${rounded}`
       )}
     >

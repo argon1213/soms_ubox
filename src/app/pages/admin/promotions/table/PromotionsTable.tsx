@@ -2,15 +2,15 @@ import {useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import {KTCardBody} from '../../../../../_metronic/helpers';
 
-import { PeriodsTableBody } from './PeriodsTableBody';
-import { useListView } from '../core/PeriodsListViewProvider';
-import { StoragePeriodPagination } from '../components/pagination/StoragePeriodsPagination';
+import { PromotionsTableBody } from './PromotionsTableBody';
+import { usePromotionsListView } from '../core/PromotionsListViewProvider';
+import { PromotionsPagination } from '../components/pagination/PromotionsPagination';
 import { fetchPeriods } from '../../../../store/actions/admin';
 
-const PeriodsTable = () => {
+const PromotionsTable = () => {
 
   const dispatch = useDispatch();
-  const { data, setSelected, isAllSelected, pagination } = useListView();
+  const { data, setSelected, isAllSelected, pagination } = usePromotionsListView();
   const [listData, setListData] = useState(Array(0));
 
   const onSortHandler = (order: string) => {
@@ -123,16 +123,16 @@ const PeriodsTable = () => {
               </tr>
             </thead>
             <tbody>
-              <PeriodsTableBody listData={listData} setListData={setListData} />
+              <PromotionsTableBody listData={listData} setListData={setListData} />
             </tbody>
           </table>
         </div>
         <div className='d-flex justify-content-end my-7'>
-          <StoragePeriodPagination />
+          <PromotionsPagination />
         </div>
       </div>
     </KTCardBody>
   )
 }
 
-export {PeriodsTable}
+export {PromotionsTable}

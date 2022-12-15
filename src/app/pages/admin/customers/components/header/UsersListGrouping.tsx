@@ -1,7 +1,7 @@
-import {useListView} from '../../core/PeriodsListViewProvider'
+import {useClientsListView} from '../../core/ClientsListViewProvider'
 
 const UsersListGrouping = () => {
-  const {selected, setItemIdForDelete} = useListView()
+  const {selected, setItemIdForDelete} = useClientsListView();
 
   const deleteHandler = () => {
     let id: any[];

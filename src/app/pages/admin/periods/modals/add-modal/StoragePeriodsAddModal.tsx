@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 // import {UserEditModalHeader} from './UserEditModalHeader'
 // import {UserEditModalFormWrapper} from './UserEditModalFormWrapper'
 import { KTSVG } from '../../../../../../_metronic/helpers'
-import { useListView } from '../../core/ListViewProvider'
+import { useListView } from '../../core/PeriodsListViewProvider'
 import { StoragePeriodsAddModalFormWrapper } from './StoragePeriodsAddModalFormWrapper'
 
 export const StoragePeriodsAddModal = () => {

@@ -1,14 +1,14 @@
 import {useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
-import { useListView } from '../../core/PeriodsListViewProvider'
+import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
 import { deletePeriodsApi } from '../../../../../store/apis/admin'
 import { fetchPeriods } from '../../../../../store/actions/admin'
 
-export const StoragePeriodsDeleteModal = () => {
+export const PromotionsDeleteModal = () => {
 
   const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = useListView();
+  const { itemIdForDelete, setItemIdForDelete, pagination } = usePromotionsListView();
 
   useEffect(() => {
     document.body.classList.add('modal-open')

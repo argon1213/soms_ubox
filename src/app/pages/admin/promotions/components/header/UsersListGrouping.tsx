@@ -1,7 +1,7 @@
-import {useListView} from '../../core/PeriodsListViewProvider'
+import {usePromotionsListView} from '../../core/PromotionsListViewProvider'
 
 const UsersListGrouping = () => {
-  const {selected, setItemIdForDelete} = useListView()
+  const {selected, setItemIdForDelete} = usePromotionsListView()
 
   const deleteHandler = () => {
     let id: any[];

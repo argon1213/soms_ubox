@@ -22,40 +22,28 @@ const SidebarMenuMain = () => {
         </div>
       </div>
       <SidebarMenuItem
-        to='/admin/storage-periods'
-        icon='/media/icons/duotune/general/gen022.svg'
-        title={'Storage Period List'}
-        fontIcon='bi-app-indicator'
-      />
-      <SidebarMenuItem
         to='/admin/clients'
         icon='/media/icons/duotune/communication/com006.svg'
         title={'Customer list'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/admin/dashboard'
-        icon='/media/icons/duotune/general/gen040.svg'
-        title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
+        to='/admin/payments'
+        icon='/media/icons/duotune/general/gen051.svg'
+        title='Payment History'
+        fontIcon='bi-layers'
+      />
+      <SidebarMenuItem
+        to='/admin/storage-periods'
+        icon='/media/icons/duotune/general/gen022.svg'
+        title={'Storage Period List'}
         fontIcon='bi-app-indicator'
       />
       <SidebarMenuItem
-        to='/admin/dashboard'
-        icon='/media/icons/duotune/general/gen025.svg'
-        title={intl.formatMessage({id: 'MENU.DASHBOARD'})}
-        fontIcon='bi-layers'
-      />
-      <SidebarMenuItem
-        to='/admin/dashboard'
-        icon='/media/icons/duotune/communication/com012.svg'
-        title='dashboard'
-        fontIcon='bi-layers'
-      />
-      <SidebarMenuItem
-        to='/admin/dashboard'
-        icon='/media/icons/duotune/general/gen051.svg'
-        title='User management'
-        fontIcon='bi-layers'
+        to='/admin/promotions'
+        icon='/media/icons/duotune/general/gen040.svg'
+        title='Promotion List'
+        fontIcon='bi-app-indicator'
       />
       <SidebarMenuItemWithSub to='/admin/orders/all' title='Client Group' icon='/media/icons/duotune/general/gen051.svg'>
         <SidebarMenuItem to='/admin/orders/all' title='All' hasBullet={true} />

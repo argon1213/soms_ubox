@@ -1,27 +1,27 @@
 import {useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
-import { useListView } from '../../core/PeriodsListViewProvider'
-import { deletePeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
+import { useClientsListView } from '../../core/ClientsListViewProvider'
+import { deleteClientApi } from '../../../../../store/apis/admin'
+import { fetchClients } from '../../../../../store/actions/admin'
 
-export const StoragePeriodsDeleteModal = () => {
+export const ClientsDeleteModal = () => {
 
   const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = useListView();
+  const { itemIdForDelete, setItemIdForDelete, pagination } = useClientsListView();
 
   useEffect(() => {
     document.body.classList.add('modal-open')
     return () => {
       document.body.classList.remove('modal-open')
     }
-  }, [])
+  }, []);
 
   const onDeleteHandler = () => {
-    deletePeriodsApi({id: itemIdForDelete})
+    deleteClientApi({id: itemIdForDelete})
       .then((res) => {
         setItemIdForDelete(undefined);
-        dispatch(fetchPeriods({...pagination}));
+        dispatch(fetchClients({...pagination}));
       })
   }
 

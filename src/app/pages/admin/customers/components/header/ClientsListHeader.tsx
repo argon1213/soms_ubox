@@ -1,12 +1,12 @@
-import {useListView} from '../../core/PeriodsListViewProvider'
+import {useClientsListView} from '../../core/ClientsListViewProvider'
 import {UsersListToolbar} from './UserListToolbar'
 import {UsersListGrouping} from './UsersListGrouping'
 // import {UsersListFilter} from './UsersListFilter'
 
 // import {UsersListSearchComponent} from './UsersListSearchComponent'
 
-const PeriodsListHeader = () => {
-  const {selected} = useListView()
+const ClientsListHeader = () => {
+  const {selected} = useClientsListView()
   return (
     <div className='card-header border-0'>
 
@@ -26,4 +26,4 @@ const PeriodsListHeader = () => {
   )
 }
 
-export {PeriodsListHeader}
+export {ClientsListHeader}

@@ -1,9 +1,9 @@
 import {KTSVG} from '../../../../../../_metronic/helpers'
-import {useListView} from '../../core/PeriodsListViewProvider'
+import {usePromotionsListView} from '../../core/PromotionsListViewProvider'
 
 const UsersListToolbar = () => {
   
-  const {setItemIdForUpdate} = useListView()
+  const {setItemIdForUpdate} = usePromotionsListView()
   const openAddUserModal = () => {
     setItemIdForUpdate(null);
   }

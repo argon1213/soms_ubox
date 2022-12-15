@@ -1,14 +1,13 @@
 import {useEffect} from 'react'
-import { useDispatch } from 'react-redux'
+// import {UserEditModalHeader} from './UserEditModalHeader'
+// import {UserEditModalFormWrapper} from './UserEditModalFormWrapper'
 import { KTSVG } from '../../../../../../_metronic/helpers'
-import { useListView } from '../../core/PeriodsListViewProvider'
-import { deletePeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
+import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
+import { PromotionsAddModalFormWrapper } from './PromotionsAddModalFormWrapper'
 
-export const StoragePeriodsDeleteModal = () => {
+export const PromotionsAddModal = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = useListView();
+  const { setItemIdForUpdate } = usePromotionsListView();
 
   useEffect(() => {
     document.body.classList.add('modal-open')
@@ -16,14 +15,6 @@ export const StoragePeriodsDeleteModal = () => {
       document.body.classList.remove('modal-open')
     }
   }, [])
-
-  const onDeleteHandler = () => {
-    deletePeriodsApi({id: itemIdForDelete})
-      .then((res) => {
-        setItemIdForDelete(undefined);
-        dispatch(fetchPeriods({...pagination}));
-      })
-  }
 
   return (
     <>
@@ -35,19 +26,19 @@ export const StoragePeriodsDeleteModal = () => {
         aria-modal='true'
       >
         {/* begin::Modal dialog */}
-        <div className='modal-dialog modal-dialog-centered mw-450px'>
+        <div className='modal-dialog modal-dialog-centered mw-650px'>
           {/* begin::Modal content */}
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1'>Delete Storage Period</h2>
+              <h2 className='fw-bolder fs-1'>Storage Period</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}
               <div
                 className='btn btn-icon btn-sm btn-active-icon-primary'
                 data-kt-users-modal-action='close'
-                onClick={() => setItemIdForDelete(undefined)}
+                onClick={() => setItemIdForUpdate(undefined)}
                 style={{cursor: 'pointer'}}
               >
                 <KTSVG path='/media/icons/duotune/arrows/arr061.svg' className='svg-icon-1' />
@@ -56,17 +47,7 @@ export const StoragePeriodsDeleteModal = () => {
             </div>
             {/* begin::Modal body */}
             <div className='modal-body scroll-y mx-5 mx-xl-15 my-7'>
-              <p className='fw-bolder fs-1 text-center mb-15'>Confrim delete?</p>
-              <div className='d-flex justify-content-around'>
-                <button className='btn btn-danger'
-                  onClick={onDeleteHandler}
-                >
-                  Delete
-                </button>
-                <button className='btn btn-light' onClick={() => setItemIdForDelete(undefined)} >
-                  Cancle
-                </button>
-              </div>
+              <PromotionsAddModalFormWrapper />
             </div>
             {/* end::Modal body */}
           </div>

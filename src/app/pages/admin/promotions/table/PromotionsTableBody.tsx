@@ -1,10 +1,10 @@
 import { KTSVG } from "../../../../../_metronic/helpers"
-import { useListView } from "../core/PeriodsListViewProvider";
+import { usePromotionsListView } from "../core/PromotionsListViewProvider";
 
-export const PeriodsTableBody = (props: any) => {
+export const PromotionsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
-  const { setItemIdForUpdate, setItemIdForDelete } = useListView();
+  const { setItemIdForUpdate, setItemIdForDelete } = usePromotionsListView();
 
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];

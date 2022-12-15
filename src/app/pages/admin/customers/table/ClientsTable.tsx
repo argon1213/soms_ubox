@@ -2,15 +2,15 @@ import {useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import {KTCardBody} from '../../../../../_metronic/helpers';
 
-import { PeriodsTableBody } from './PeriodsTableBody';
-import { useListView } from '../core/PeriodsListViewProvider';
-import { StoragePeriodPagination } from '../components/pagination/StoragePeriodsPagination';
-import { fetchPeriods } from '../../../../store/actions/admin';
+import { ClientsTableBody } from './ClientsTableBody';
+import { useClientsListView } from '../core/ClientsListViewProvider';
+import { ClientsPagination } from '../components/pagination/ClientsPagination';
+import { fetchClients } from '../../../../store/actions/admin';
 
-const PeriodsTable = () => {
+const ClientsTable = () => {
 
   const dispatch = useDispatch();
-  const { data, setSelected, isAllSelected, pagination } = useListView();
+  const { data, setSelected, isAllSelected, pagination } = useClientsListView();
   const [listData, setListData] = useState(Array(0));
 
   const onSortHandler = (order: string) => {
@@ -24,8 +24,7 @@ const PeriodsTable = () => {
     } else {
       __sort = "desc";
     }
-   
-    dispatch(fetchPeriods({
+    dispatch(fetchClients({
       ...pagination,
       sort: __sort,
       orderBy: order,
@@ -76,38 +75,65 @@ const PeriodsTable = () => {
                 </th>
                 <th className='min-w-150px'>
                   <div 
-                    className={pagination.orderBy === "code" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("code")}
-                    style={{cursor: 'pointer'}}
-                  >
-                    The Code
-                  </div>
-                </th>
-                <th className='min-w-150px'>
-                  <div 
-                    className={pagination.orderBy ==="name" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    className={pagination.orderBy === "name" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
                     onClick={() => onSortHandler("name")}
                     style={{cursor: 'pointer'}}
                   >
                     Name
                   </div>
                 </th>
-                <th className='min-w-100px text-center'>
+                <th className='min-w-150px'>
                   <div 
-                    className={pagination.orderBy ==="min" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("min")}
+                    className={pagination.orderBy ==="email" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("email")}
                     style={{cursor: 'pointer'}}
                   >
-                    Minimum storage period(months)
+                    Email
+                  </div>
+                </th>
+                <th className='min-w-125px text-center'>
+                  <div 
+                    className={pagination.orderBy ==="contact" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("contact")}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Contact Number
+                  </div>
+                </th>
+                <th className='min-w-175px text-center'>
+                  <div 
+                    className={pagination.orderBy ==="address1" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("address1")}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Address
                   </div>
                 </th>
                 <th className='min-w-100px text-center'>
                   <div 
-                    className={pagination.orderBy ==="max" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("max")}
+                    className={pagination.orderBy ==="wechat" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("wechat")}
                     style={{cursor: 'pointer'}}
                   >
-                    The longest storage period(months)
+                    WeChat
+                  </div>
+                </th>
+                <th className='min-w-100px text-center'>
+                  <div 
+                    className={pagination.orderBy ==="student_id" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("student_id")}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Student ID
+                  </div>
+                </th>
+                <th className='min-w-75px text-center'>
+                  <div 
+                    className={pagination.orderBy ==="orderCount" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("orderCount")}
+                    style={{cursor: 'pointer'}}
+                  >
+                    Number of Order
                   </div>
                 </th>
                 <th className='min-w-125px text-center'>
@@ -123,16 +149,16 @@ const PeriodsTable = () => {
               </tr>
             </thead>
             <tbody>
-              <PeriodsTableBody listData={listData} setListData={setListData} />
+              <ClientsTableBody listData={listData} setListData={setListData} />
             </tbody>
           </table>
         </div>
         <div className='d-flex justify-content-end my-7'>
-          <StoragePeriodPagination />
+          <ClientsPagination />
         </div>
       </div>
     </KTCardBody>
   )
 }
 
-export {PeriodsTable}
+export {ClientsTable}

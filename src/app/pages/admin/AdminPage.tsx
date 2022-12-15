@@ -4,6 +4,7 @@ import { MasterLayout } from '../../../_metronic/layout/MasterLayout'
 import { DashboardWrapper } from './dashboard/DashboardWrapper'
 import { ClientsList } from './customers/ClientsList'
 import { StoragePeriodsList } from './periods/StoragePeriod'
+import { PromotionsList } from './promotions/PromotionsList'
 import { AdminAuth } from './auth/AdminAuth'
 
 const useAuth = () => {
@@ -30,6 +31,7 @@ export const AdminPage = () => {
               <Route path='/dashboard' element={<DashboardWrapper />} />
               <Route path='/clients' element={<ClientsList />} />
               <Route path='/storage-periods' element={<StoragePeriodsList />} />
+              <Route path='/promotions' element={<PromotionsList />} />
             </Route>
             <Route path='/*' element={<ErrorsPage />} />
           </>

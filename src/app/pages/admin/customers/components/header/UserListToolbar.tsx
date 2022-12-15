@@ -1,9 +1,9 @@
 import {KTSVG} from '../../../../../../_metronic/helpers'
-import {useListView} from '../../core/PeriodsListViewProvider'
+import {useClientsListView} from '../../core/ClientsListViewProvider'
 
 const UsersListToolbar = () => {
   
-  const {setItemIdForUpdate} = useListView()
+  const {setItemIdForUpdate} = useClientsListView()
   const openAddUserModal = () => {
     setItemIdForUpdate(null);
   }

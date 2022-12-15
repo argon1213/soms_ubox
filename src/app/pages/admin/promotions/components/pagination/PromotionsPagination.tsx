@@ -1,13 +1,13 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { Pagination } from "antd"
-import { useListView } from "../../core/PeriodsListViewProvider"
+import { usePromotionsListView } from "../../core/PromotionsListViewProvider"
 import { fetchPeriods } from "../../../../../store/actions/admin"
 
-export const StoragePeriodPagination: React.FC = () => {
+export const PromotionsPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { pagination } = useListView();
+  const { pagination } = usePromotionsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchPeriods({

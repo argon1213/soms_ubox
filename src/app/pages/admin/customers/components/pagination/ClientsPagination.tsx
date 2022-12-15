@@ -1,16 +1,16 @@
 import React from "react"
 import { useDispatch } from "react-redux"
 import { Pagination } from "antd"
-import { useListView } from "../../core/PeriodsListViewProvider"
-import { fetchPeriods } from "../../../../../store/actions/admin"
+import { useClientsListView } from "../../core/ClientsListViewProvider"
+import { fetchClients } from "../../../../../store/actions/admin"
 
-export const StoragePeriodPagination: React.FC = () => {
+export const ClientsPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { pagination } = useListView();
+  const {pagination} = useClientsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
-    dispatch(fetchPeriods({
+    dispatch(fetchClients({
       ...pagination,
       page: page,
       perPage: pageSize,
