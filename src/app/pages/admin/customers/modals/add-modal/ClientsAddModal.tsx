@@ -31,7 +31,7 @@ export const ClientsAddModal = () => {
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1 pl-1'>Client</h2>
+              <h2 className='fw-bolder fs-1 px-7'>Client</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}

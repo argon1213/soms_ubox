@@ -2,7 +2,7 @@ import {FC, useState, useEffect, createContext, useContext, useMemo, Dispatch, S
 import { useSelector, useDispatch } from 'react-redux'
 import { WithChildren } from '../../../../../_metronic/helpers';
 import { RootState } from '../../../../store/reducers'
-import { fetchPeriods } from '../../../../store/actions/admin';
+import { fetchPromotions } from '../../../../store/actions/admin';
 
 type pagination = {
   total: number,
@@ -17,8 +17,8 @@ type ListViewContextProps = {
     id?: number,
     code?: string,
     name?: string,
-    min?: number,
-    max?: number,
+    effective_from?: string,
+    effective_to?: string,
   }[];
   selected: any[];
   setSelected: Dispatch<SetStateAction<any[]>>;
@@ -29,14 +29,15 @@ type ListViewContextProps = {
   pagination: pagination;
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
+  isLoading: boolean;
 }
 
 const initialListView = {
   data: [{
     code: "",
     name: "",
-    min: 0,
-    max: 0,
+    effective_from: "",
+    effective_to: "",
   }],
   selected: [],
   setSelected: () => {},
@@ -53,6 +54,7 @@ const initialListView = {
   },
   setPagination: () => {},
   isAllSelected: false,
+  isLoading: false,
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -73,15 +75,15 @@ const PromotionsListViewProvider:FC<WithChildren> = ({children}) => {
   const [itemIdForUpdate, setItemIdForUpdate] = useState<undefined | null | number>(initialListView.itemIdForUpdate);
   const [itemIdForDelete, setItemIdForDelete] = useState<undefined | null | number | any[]>(initialListView.itemIdForUpdate);
   const [pagination, setPagination] = useState<pagination>(initialListView.pagination);
-  // const isLoading = useSelector((state:RootState) => state.admin.loading);
-  const data = useSelector((state:RootState) => state.admin.periods);
+  const isLoading = useSelector((state:RootState) => state.admin.loading);
+  const data = useSelector((state:RootState) => state.admin.promotions);
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
 
 
   useEffect(() => {
-    dispatch(fetchPeriods({
+    dispatch(fetchPromotions({
       total: 10,
       perPage: 10,
       page: 1,
@@ -112,8 +114,8 @@ const PromotionsListViewProvider:FC<WithChildren> = ({children}) => {
         setItemIdForDelete,
         pagination,
         setPagination,
-        // disabled,
         isAllSelected,
+        isLoading,
       }}
     >
       {children}

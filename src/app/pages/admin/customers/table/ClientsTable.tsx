@@ -54,7 +54,7 @@ const ClientsTable = () => {
         <div className='table-responsive'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
-              <tr className='fw-bold text-muted align-middle'>
+              <tr className='fw-bold text-muted align-middle fs-5'>
                 <th className='w-25px'>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
                     <input
@@ -73,7 +73,7 @@ const ClientsTable = () => {
                     />
                   </div>
                 </th>
-                <th className='min-w-150px'>
+                <th className='min-w-125px'>
                   <div 
                     className={pagination.orderBy === "name" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
                     onClick={() => onSortHandler("name")}
@@ -127,7 +127,7 @@ const ClientsTable = () => {
                     Student ID
                   </div>
                 </th>
-                <th className='min-w-75px text-center'>
+                <th className='min-w-100px text-center'>
                   <div 
                     className={pagination.orderBy ==="orderCount" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
                     onClick={() => onSortHandler("orderCount")}

@@ -5,7 +5,7 @@ import {KTCardBody} from '../../../../../_metronic/helpers';
 import { PromotionsTableBody } from './PromotionsTableBody';
 import { usePromotionsListView } from '../core/PromotionsListViewProvider';
 import { PromotionsPagination } from '../components/pagination/PromotionsPagination';
-import { fetchPeriods } from '../../../../store/actions/admin';
+import { fetchPromotions } from '../../../../store/actions/admin';
 
 const PromotionsTable = () => {
 
@@ -25,7 +25,7 @@ const PromotionsTable = () => {
       __sort = "desc";
     }
    
-    dispatch(fetchPeriods({
+    dispatch(fetchPromotions({
       ...pagination,
       sort: __sort,
       orderBy: order,
@@ -55,7 +55,7 @@ const PromotionsTable = () => {
         <div className='table-responsive'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
-              <tr className='fw-bold text-muted align-middle'>
+              <tr className='fw-bold text-muted align-middle fs-5'>
                 <th className='w-25px'>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
                     <input
@@ -83,7 +83,7 @@ const PromotionsTable = () => {
                     The Code
                   </div>
                 </th>
-                <th className='min-w-150px'>
+                <th className='min-w-175px'>
                   <div 
                     className={pagination.orderBy ==="name" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
                     onClick={() => onSortHandler("name")}
@@ -92,22 +92,22 @@ const PromotionsTable = () => {
                     Name
                   </div>
                 </th>
-                <th className='min-w-100px text-center'>
+                <th className='min-w-125px text-center'>
                   <div 
-                    className={pagination.orderBy ==="min" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("min")}
+                    className={pagination.orderBy ==="effective_from" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("effective_from")}
                     style={{cursor: 'pointer'}}
                   >
-                    Minimum storage period(months)
+                    Expiry date(by)
                   </div>
                 </th>
-                <th className='min-w-100px text-center'>
+                <th className='min-w-125px text-center'>
                   <div 
-                    className={pagination.orderBy ==="max" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("max")}
+                    className={pagination.orderBy ==="effective_to" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
+                    onClick={() => onSortHandler("effective_to")}
                     style={{cursor: 'pointer'}}
                   >
-                    The longest storage period(months)
+                    Valid(until)
                   </div>
                 </th>
                 <th className='min-w-125px text-center'>

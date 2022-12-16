@@ -64,8 +64,24 @@ export function deletePeriodsApi(params) {
   });
 }
 
-export function fetchPaymentsApi() {
-  return axios.post(`/admin/fetchPayments`, {
+export function fetchPaymentsApi(params) {
+  return axios.post(`/admin/fetchPayments`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function deletePaymentsApi(params) {
+  return axios.post(`/admin/deletePayment`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function editPaymentsApi(params) {
+  return axios.post(`/admin/editPayment`, {...params}, {
       headers: {
           'content-type': 'text/json'
       }
@@ -74,6 +90,46 @@ export function fetchPaymentsApi() {
 
 export function fetchPromotionsApi(params) {
   return axios.post(`/admin/fetchPromotions`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function editPromotionApi(params) {
+  return axios.post(`/admin/editPromotion`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function deletePromotionApi(params) {
+  return axios.post(`/admin/deletePromotion`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function fetchOrdersApi(params) {
+  return axios.post(`/admin/fetchOrders`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function editOrderApi(params) {
+  return axios.post(`/admin/editOrder`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function deleteOrderApi(params) {
+  return axios.post(`/admin/deleteOrder`, {...params}, {
       headers: {
           'content-type': 'text/json'
       }

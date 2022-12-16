@@ -2,8 +2,8 @@ import {useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
-import { deletePeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
+import { deletePromotionApi } from '../../../../../store/apis/admin'
+import { fetchPromotions } from '../../../../../store/actions/admin'
 
 export const PromotionsDeleteModal = () => {
 
@@ -18,10 +18,10 @@ export const PromotionsDeleteModal = () => {
   }, [])
 
   const onDeleteHandler = () => {
-    deletePeriodsApi({id: itemIdForDelete})
+    deletePromotionApi({id: itemIdForDelete})
       .then((res) => {
         setItemIdForDelete(undefined);
-        dispatch(fetchPeriods({...pagination}));
+        dispatch(fetchPromotions({...pagination}));
       })
   }
 

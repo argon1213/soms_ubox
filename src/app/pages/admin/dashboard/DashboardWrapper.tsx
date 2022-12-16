@@ -4,50 +4,80 @@ import {useIntl} from 'react-intl'
 import { useDispatch, useSelector } from 'react-redux'
 // import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PageTitle} from '../../../../_metronic/layout/core'
-import { StatisticsWidget5 } from '../../../../_metronic/partials/widgets'
 import { fetchUniversities } from '../../../store/actions/admin'
 import { RootState } from '../../../store/reducers'
+import { UniversityWidget } from './UniversityWidget'
+import { LoadingSpinner } from '../components/spinner/LoadingSpinner'
 
 const DashboardPage: FC = () => {
 
   const dispatch = useDispatch();
   const universities = useSelector((state:RootState) => state.admin.universities);
-  // dispatch(fetchUniversities());
-
-
+  const isLoading = useSelector((state:RootState) => state.admin.loading);
   useEffect(() => {
     dispatch(fetchUniversities());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   useEffect(() => {
     if(universities.length > 0) {
       console.log("universities", universities);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [universities])
+  }, [universities]);
+
+  const getColor = (index: number) => {
+    switch(index) {
+      case 0:
+        return "warning";
+      case 1:
+        return "success";
+      case 2:
+        return "primary";
+      case 3:
+        return "danger";
+      case 4:
+        return "info";
+      case 5:
+        return "primary";
+      case 6:
+        return "success";
+      case 7:
+        return "warning";
+      case 8:
+        return "danger";
+      case 9:
+        return "info";
+      default: 
+        return "";
+    }
+  }
 
 
   return(
-    <div className='row'>
-      {
-        universities.length > 0 && universities.map((university, index) => (
-          <div className='col-xl-3 col-md-4 col-sm-6 py-5' key={index} >
-            <StatisticsWidget5
-              className='card-xl-stretch mb-xl-8 min-h-200px'
-              svgIcon='/media/icons/duotune/ecommerce/ecm008.svg'
-              iconColor='white'
-              color='warning'
-              title={university.ordersCount}
-              titleColor='white'
-              description={university.label}
-              descriptionColor='white'
-            />
-          </div>
-        ))
-        
-      }
-    </div>
+    <>
+      <div className='row'>
+        {
+          universities.length > 0 && universities.map((university, index) => (
+            <div className='col-xl-3 col-md-4 col-sm-6 py-5' key={index} >
+              <UniversityWidget
+                location={'/admin/orders/' + university?.id}
+                className='card-xl-stretch mb-xl-8 min-h-200px'
+                svgIcon='/media/icons/duotune/ecommerce/ecm008.svg'
+                iconColor='white'
+                color={getColor(university?.id)}
+                title={university.ordersCount}
+                titleColor='white'
+                description={university.label}
+                descriptionColor='white'
+              />
+            </div>
+          ))
+          
+        }
+      </div>
+      {isLoading && <LoadingSpinner />}
+    </>
   )
 }
 

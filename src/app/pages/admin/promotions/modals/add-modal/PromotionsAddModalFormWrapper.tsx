@@ -3,8 +3,9 @@ import { useDispatch } from 'react-redux'
 import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import { editPeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
+import { editPromotionApi } from '../../../../../store/apis/admin'
+import { fetchPromotions } from '../../../../../store/actions/admin'
+import dayjs from "dayjs"
 
 export const PromotionsAddModalFormWrapper = () => {
 
@@ -14,26 +15,22 @@ export const PromotionsAddModalFormWrapper = () => {
   const profileDetailsSchema = Yup.object().shape({
     code: Yup.string().required('The code is required'),
     name: Yup.string().required('Name is required'),
-    min: Yup.number()
-            .required('The minmum storage is required')
-            .positive('This field should be positive integer')
-            .integer('This field should be positive integer'),
-    max: Yup.number()
+    effective_from: Yup.string()
+            .required('The minmum storage is required'),
+    effective_to: Yup.string()
             .required('The maximum storage is required')
-            .positive('This field should be positive integer')
-            .integer('This field should be positive integer'),
   });
 
   const initialValues = (itemIdForUpdate == null) ? {
     code: "",
     name: "",
-    max: undefined,
-    min: undefined,
+    effective_from: undefined,
+    effective_to: undefined,
   } : {
     code: data[itemIdForUpdate].code,
     name: data[itemIdForUpdate].name,
-    max: data[itemIdForUpdate].max ? data[itemIdForUpdate].max : undefined,
-    min: data[itemIdForUpdate].min ? data[itemIdForUpdate].min : undefined,
+    effective_from: data[itemIdForUpdate].effective_from ? dayjs(data[itemIdForUpdate].effective_from).format("YYYY-MM-DD") : undefined,
+    effective_to: data[itemIdForUpdate].effective_to ? dayjs(data[itemIdForUpdate].effective_to).format("YYYY-MM-DD") : undefined,
   }
 
   const [loading, setLoading] = useState(false)
@@ -43,20 +40,20 @@ export const PromotionsAddModalFormWrapper = () => {
     onSubmit: (values) => {
       setLoading(true);
       (itemIdForUpdate == null) ? 
-      editPeriodsApi({data: values, id: undefined})
+      editPromotionApi({data: values, id: undefined})
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPeriods({...pagination}));
+          dispatch(fetchPromotions({...pagination}));
         })
         .catch((err) => {
           setLoading(false);
         }) :
-      editPeriodsApi({data: values, id: data[itemIdForUpdate].id})
+      editPromotionApi({data: values, id: data[itemIdForUpdate].id})
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPeriods({...pagination}));
+          dispatch(fetchPromotions({...pagination}));
         })
         .catch((err) => {
           setLoading(false);
@@ -112,19 +109,19 @@ export const PromotionsAddModalFormWrapper = () => {
 
               <div className='row mb-6'>
                 <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                  <span className='required'>Minimum storage period</span>
+                  <span className='required'>Expiry date(by)</span>
                 </label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
-                    type='number'
+                    type='date'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Minimum storage month'
-                    {...formik.getFieldProps('min')}
+                    placeholder='From'
+                    {...formik.getFieldProps('effective_from')}
                   />
-                  {formik.touched.min && formik.errors.min && (
+                  {formik.touched.effective_from && formik.errors.effective_from && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block'>{formik.errors.min}</div>
+                      <div className='fv-help-block'>{formik.errors.effective_from}</div>
                     </div>
                   )}
                 </div>
@@ -132,24 +129,23 @@ export const PromotionsAddModalFormWrapper = () => {
 
               <div className='row mb-6'>
                 <label className='col-lg-4 col-form-label fw-bold fs-6'>
-                  <span className='required'>Maximum storage period</span>
+                  <span className='required'>Valid(until)</span>
                 </label>
 
                 <div className='col-lg-8 fv-row'>
                   <input
-                    type='number'
+                    type='date'
                     className='form-control form-control-lg form-control-solid'
-                    placeholder='Maximum storage month'
-                    {...formik.getFieldProps('max')}
+                    placeholder='To'
+                    {...formik.getFieldProps('effective_to')}
                   />
-                  {formik.touched.max && formik.errors.max && (
+                  {formik.touched.effective_to && formik.errors.effective_to && (
                     <div className='fv-plugins-message-container'>
-                      <div className='fv-help-block'>{formik.errors.max}</div>
+                      <div className='fv-help-block'>{formik.errors.effective_to}</div>
                     </div>
                   )}
                 </div>
               </div>
-
             </div>
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>

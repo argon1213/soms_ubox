@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import { AdminAction, AdminActionTypes } from "../types/admin";
-import { fetchPeriodsApi, fetchUniversitiesApi, fetchClientsApi } from "../apis/admin";
+import { fetchPeriodsApi, fetchUniversitiesApi, fetchClientsApi, fetchPromotionsApi, fetchPaymentsApi, fetchOrdersApi } from "../apis/admin";
 
 export const fetchUniversities = ():any => {
   return async (dispatch: Dispatch<AdminAction>) => {
@@ -44,6 +44,54 @@ export const fetchClients = (params: any):any => {
         } catch (e) {
             dispatch({
                 type: AdminActionTypes.FETCH_CLIENTS,
+                payload: []
+            })
+        }
+    }
+}
+
+export const fetchPromotions = (params: any):any => {
+    return async (dispatch: Dispatch<AdminAction>) => {
+        try {
+            dispatch({type: AdminActionTypes.FETCH_DATA_ADMIN})
+            const response = fetchPromotionsApi(params);
+            const payloadData = (await response).data;
+            dispatch({type: AdminActionTypes.FETCH_PROMOTIONS, payload: payloadData})
+        } catch (e) {
+            dispatch({
+                type: AdminActionTypes.FETCH_PROMOTIONS,
+                payload: []
+            })
+        }
+    }
+}
+
+export const fetchPayments = (params: any):any => {
+    return async (dispatch: Dispatch<AdminAction>) => {
+        try {
+            dispatch({type: AdminActionTypes.FETCH_DATA_ADMIN})
+            const response = fetchPaymentsApi(params);
+            const payloadData = (await response).data;
+            dispatch({type: AdminActionTypes.FETCH_PAYMENTS, payload: payloadData})
+        } catch (e) {
+            dispatch({
+                type: AdminActionTypes.FETCH_PAYMENTS,
+                payload: []
+            })
+        }
+    }
+}
+
+export const fetchOrders = (params: any):any => {
+    return async (dispatch: Dispatch<AdminAction>) => {
+        try {
+            dispatch({type: AdminActionTypes.FETCH_DATA_ADMIN})
+            const response = fetchOrdersApi(params);
+            const payloadData = (await response).data;
+            dispatch({type: AdminActionTypes.FETCH_ORDERS, payload: payloadData})
+        } catch (e) {
+            dispatch({
+                type: AdminActionTypes.FETCH_ORDERS,
                 payload: []
             })
         }

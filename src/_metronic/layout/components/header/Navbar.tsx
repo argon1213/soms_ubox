@@ -1,21 +1,21 @@
 import clsx from 'clsx'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import {toAbsoluteUrl} from '../../../helpers'
 import {
   // HeaderNotificationsMenu, 
   HeaderUserMenu, 
   // Search, 
   // ThemeModeSwitcher
 } from '../../../partials'
-import {useLayout} from '../../core'
+// import {useLayout} from '../../core'
 
 const itemClass = 'ms-1 ms-lg-3'
 // const btnClass =
 //   'btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-35px h-35px w-md-40px h-md-40px'
 const userAvatarClass = 'symbol-35px symbol-md-40px'
-const btnIconClass = 'svg-icon-1'
+// const btnIconClass = 'svg-icon-1'
 
 const Navbar = () => {
-  const {config} = useLayout()
+  // const {config} = useLayout()
   return (
     <div className='app-navbar flex-shrink-0'>
       {/* <div className={clsx('app-navbar-item align-items-stretch', itemClass)}>
@@ -62,7 +62,7 @@ const Navbar = () => {
         </div>
         <HeaderUserMenu />
       </div>
-
+{/* 
       {config.app?.header?.default?.menu?.display && (
         <div className='app-navbar-item d-lg-none ms-2 me-n3' title='Show header menu'>
           <div
@@ -72,7 +72,7 @@ const Navbar = () => {
             <KTSVG path='/media/icons/duotune/text/txt001.svg' className={btnIconClass} />
           </div>
         </div>
-      )}
+      )} */}
     </div>
   )
 }

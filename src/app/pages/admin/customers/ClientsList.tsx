@@ -6,11 +6,11 @@ import { KTCard } from "../../../../_metronic/helpers";
 import { ClientsTable } from "./table/ClientsTable";
 import { ClientsAddModal } from "./modals/add-modal/ClientsAddModal";
 import { ClientsDeleteModal } from "./modals/delete-modal/ClientsDeleteModal";
-
+import { LoadingSpinner } from "../components/spinner/LoadingSpinner";
 
 const ClientsListPage = () => {
 
-  const { itemIdForUpdate, itemIdForDelete } = useClientsListView();
+  const { itemIdForUpdate, itemIdForDelete, isLoading } = useClientsListView();
 
   return (
     <div style={{marginTop: '-30px'}}>
@@ -20,6 +20,7 @@ const ClientsListPage = () => {
       </KTCard>
       {itemIdForUpdate !== undefined && <ClientsAddModal /> }
       {itemIdForDelete !== undefined && <ClientsDeleteModal /> }
+      {isLoading && <LoadingSpinner />}
     </div>
   )
 }

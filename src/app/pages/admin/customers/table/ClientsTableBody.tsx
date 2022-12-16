@@ -39,6 +39,7 @@ export const ClientsTableBody = (props: any) => {
                 <div className='d-flex align-items-center'>
                   <span 
                     className='text-blue fw-bold fs-6'
+                    style={{cursor: 'pointer'}}
                     onClick={() => {setItemIdForUpdate(index)}}
                   >
                     {data.name}

@@ -31,7 +31,7 @@ export const StoragePeriodsAddModal = () => {
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1'>Storage Period</h2>
+              <h2 className='fw-bolder fs-1 px-7'>Storage Period</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}

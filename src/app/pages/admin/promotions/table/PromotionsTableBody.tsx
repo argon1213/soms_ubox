@@ -39,6 +39,7 @@ export const PromotionsTableBody = (props: any) => {
                 <div className='d-flex align-items-center'>
                   <span 
                     className='text-blue fw-bold fs-6'
+                    style={{cursor: 'pointer'}}
                     onClick={() => {setItemIdForUpdate(index)}}
                   >
                     {data.code}
@@ -52,12 +53,12 @@ export const PromotionsTableBody = (props: any) => {
               </td>
               <td className='text-center'>
                   <span className='text-dark fw-bold d-block fs-6'>
-                    {data.min}
+                    {data.effective_from}
                   </span>
               </td>
               <td className='text-center'>
                   <span className='text-dark fw-bold d-block fs-6'>
-                    {data.max}
+                    {data.effective_to}
                   </span>
               </td>
               <td className='text-center'>
@@ -67,15 +68,6 @@ export const PromotionsTableBody = (props: any) => {
               </td>
               <td>
                 <div className='d-flex justify-content-end flex-shrink-0'>
-                  <span
-                    className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                    onClick={(e) => {}}
-                  >
-                    <KTSVG
-                      path='/media/icons/duotune/general/gen019.svg'
-                      className='svg-icon-3'
-                    />
-                  </span>
                   <span
                     className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm'
                     onClick={(e) => {setItemIdForDelete([data.id])}}

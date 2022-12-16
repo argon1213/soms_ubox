@@ -45,14 +45,17 @@ const SidebarMenuMain = () => {
         title='Promotion List'
         fontIcon='bi-app-indicator'
       />
-      <SidebarMenuItemWithSub to='/admin/orders/all' title='Client Group' icon='/media/icons/duotune/general/gen051.svg'>
-        <SidebarMenuItem to='/admin/orders/all' title='All' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
-        <SidebarMenuItem to='/admin/orders/all' title='Projects' hasBullet={true} />
+      <SidebarMenuItemWithSub to='/admin/orders/90' title='Client Group' icon='/media/icons/duotune/general/gen051.svg'>
+        <SidebarMenuItem to='/admin/orders/90' title='All' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/1' title='HKU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/2' title='PolyU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/3' title='CityU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/8' title='SYU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/4' title='CHCHE' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/5' title='LU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/6' title='UST' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/7' title='HKBU' hasBullet={true} />
+        <SidebarMenuItem to='/admin/orders/0' title='ubox Group' hasBullet={true} />
       </SidebarMenuItemWithSub>
     </>
   )

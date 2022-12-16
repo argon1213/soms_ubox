@@ -3,7 +3,7 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
-import {Header} from './Header'
+// import {Header} from './Header'
 import {Navbar} from './Navbar'
 
 export function HeaderWrapper() {
@@ -21,6 +21,7 @@ export function HeaderWrapper() {
           classes.headerContainer.join(' '),
           config.app?.header?.default?.containerClass
         )}
+        style={{width: '100%'}}
       >
         {config.app.sidebar?.display && (
           <>
@@ -34,11 +35,11 @@ export function HeaderWrapper() {
               >
                 <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className=' svg-icon-1' />
               </div>
-              <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
+              {/* <div className='d-flex align-items-center flex-grow-1 flex-lg-grow-0'>
                 <Link to='/dashboard' className='d-lg-none'>
                   <img alt='Logo' src='./assets/media/logos/default-small.svg' className='h-30px' />
                 </Link>
-              </div>
+              </div> */}
             </div>
           </>
         )}
@@ -72,9 +73,9 @@ export function HeaderWrapper() {
 
         <div
           id='kt_app_header_wrapper'
-          className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'
+          className='d-flex align-items-stretch justify-content-end flex-lg-grow-1'
         >
-          {config.app.header.default?.content === 'menu' &&
+          {/* {config.app.header.default?.content === 'menu' &&
             config.app.header.default.menu?.display && (
               <div
                 className='app-header-menu app-header-mobile-drawer align-items-stretch'
@@ -91,7 +92,7 @@ export function HeaderWrapper() {
               >
                 <Header />
               </div>
-            )}
+            )} */}
           <Navbar />
         </div>
       </div>

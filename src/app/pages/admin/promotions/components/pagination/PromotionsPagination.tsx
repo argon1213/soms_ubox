@@ -2,7 +2,7 @@ import React from "react"
 import { useDispatch } from "react-redux"
 import { Pagination } from "antd"
 import { usePromotionsListView } from "../../core/PromotionsListViewProvider"
-import { fetchPeriods } from "../../../../../store/actions/admin"
+import { fetchPromotions } from "../../../../../store/actions/admin"
 
 export const PromotionsPagination: React.FC = () => {
 
@@ -10,7 +10,7 @@ export const PromotionsPagination: React.FC = () => {
   const { pagination } = usePromotionsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
-    dispatch(fetchPeriods({
+    dispatch(fetchPromotions({
       ...pagination,
       page: page,
       perPage: pageSize,

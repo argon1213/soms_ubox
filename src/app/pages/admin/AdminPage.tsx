@@ -5,6 +5,8 @@ import { DashboardWrapper } from './dashboard/DashboardWrapper'
 import { ClientsList } from './customers/ClientsList'
 import { StoragePeriodsList } from './periods/StoragePeriod'
 import { PromotionsList } from './promotions/PromotionsList'
+import { PaymentsList } from './payments/PaymentsList'
+import { OrdersList } from './orders/OrdersList'
 import { AdminAuth } from './auth/AdminAuth'
 
 const useAuth = () => {
@@ -32,6 +34,9 @@ export const AdminPage = () => {
               <Route path='/clients' element={<ClientsList />} />
               <Route path='/storage-periods' element={<StoragePeriodsList />} />
               <Route path='/promotions' element={<PromotionsList />} />
+              <Route path='/payments' element={<PaymentsList />} />
+              <Route path='/payments/:orderId' element={<PaymentsList />} />
+              <Route path='/orders/:uid' element={<OrdersList />} />
             </Route>
             <Route path='/*' element={<ErrorsPage />} />
           </>

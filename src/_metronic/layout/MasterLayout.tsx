@@ -7,8 +7,8 @@ import {Content} from './components/content'
 // import {FooterWrapper} from './components/footer'
 import {Sidebar} from './components/sidebar'
 import {
-  DrawerMessenger,
-  ActivityDrawer,
+  // DrawerMessenger,
+  // ActivityDrawer,
   // InviteUsers,
   // UpgradePlan,
   ThemeModeProvider,
@@ -45,9 +45,9 @@ const MasterLayout = () => {
         </div>
 
         {/* begin:: Drawers */}
-        <ActivityDrawer />
+        {/* <ActivityDrawer /> */}
         {/* <RightToolbar /> */}
-        <DrawerMessenger />
+        {/* <DrawerMessenger /> */}
         {/* end:: Drawers */}
 
         {/* begin:: Modals */}

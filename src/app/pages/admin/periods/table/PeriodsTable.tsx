@@ -55,7 +55,7 @@ const PeriodsTable = () => {
         <div className='table-responsive'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
-              <tr className='fw-bold text-muted align-middle'>
+              <tr className='fw-bold text-muted align-middle fs-5'>
                 <th className='w-25px'>
                   <div className='form-check form-check-sm form-check-custom form-check-solid'>
                     <input

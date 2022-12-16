@@ -31,6 +31,7 @@ type ListViewContextProps = {
   pagination: pagination;
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
+  isLoading: boolean;
 }
 
 const initialListView = {
@@ -57,6 +58,7 @@ const initialListView = {
   },
   setPagination: () => {},
   isAllSelected: false,
+  isLoading: false,
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -76,7 +78,7 @@ const ClientsListViewProvider:FC<WithChildren> = ({children}) => {
   const [itemIdForUpdate, setItemIdForUpdate] = useState<undefined | null | number>(initialListView.itemIdForUpdate);
   const [itemIdForDelete, setItemIdForDelete] = useState<undefined | null | number | any[]>(initialListView.itemIdForUpdate);
   const [pagination, setPagination] = useState<pagination>(initialListView.pagination);
-  // const isLoading = useSelector((state:RootState) => state.admin.loading);
+  const isLoading = useSelector((state:RootState) => state.admin.loading);
   const data = useSelector((state:RootState) => state.admin.clients);
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
@@ -113,8 +115,8 @@ const ClientsListViewProvider:FC<WithChildren> = ({children}) => {
         setItemIdForDelete,
         pagination,
         setPagination,
-        // disabled,
         isAllSelected,
+        isLoading
       }}
     >
       {children}
