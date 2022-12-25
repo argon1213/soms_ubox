@@ -16,6 +16,22 @@ export function fetchUniversitiesApi() {
   });
 }
 
+export function fetchProductsApi() {
+  return axios.post(`/admin/fetchProducts`, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function fetchRefApi() {
+  return axios.post(`/admin/fetchRef`, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
 export function fetchClientsApi(params) {
   return axios.post(`/admin/fetchClients`, {...params}, {
       headers: {
@@ -56,6 +72,14 @@ export function editPeriodsApi(params) {
   });
 }
 
+export function editPeriodItemApi(params) {
+  return axios.post(`/admin/editPeriodItem`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
 export function deletePeriodsApi(params) {
   return axios.post(`/admin/deletePeriod`, {...params}, {
       headers: {
@@ -88,6 +112,22 @@ export function editPaymentsApi(params) {
   });
 }
 
+export function paymentPaidApi(params) {
+  return axios.post(`/admin/payment/paid`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function paymentCancelledApi(params) {
+  return axios.post(`/admin/payment/cancelled`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
 export function fetchPromotionsApi(params) {
   return axios.post(`/admin/fetchPromotions`, {...params}, {
       headers: {
@@ -98,6 +138,14 @@ export function fetchPromotionsApi(params) {
 
 export function editPromotionApi(params) {
   return axios.post(`/admin/editPromotion`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function editPromotionItemApi(params) {
+  return axios.post(`/admin/editPromotionItem`, {...params}, {
       headers: {
           'content-type': 'text/json'
       }
@@ -130,6 +178,14 @@ export function editOrderApi(params) {
 
 export function deleteOrderApi(params) {
   return axios.post(`/admin/deleteOrder`, {...params}, {
+      headers: {
+          'content-type': 'text/json'
+      }
+  });
+}
+
+export function sendInvoiceApi(params) {
+  return axios.post(`/admin/sendInvoice`, {...params}, {
       headers: {
           'content-type': 'text/json'
       }

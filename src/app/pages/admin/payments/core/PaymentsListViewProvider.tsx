@@ -54,6 +54,12 @@ type ListViewContextProps = {
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
   isLoading: boolean;
+  filterData: {
+    order_id: string,
+    amount: string,
+  };
+  setFilterData: Dispatch<SetStateAction<any>>;
+  fetchPaymentsFunc: Function;
 }
 
 const initialListView = {
@@ -85,6 +91,12 @@ const initialListView = {
   setPagination: () => {},
   isAllSelected: false,
   isLoading: false,
+  filterData: {
+    order_id: "",
+    amount: "",
+  },
+  setFilterData: () => {},
+  fetchPaymentsFunc: () => {},
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -112,9 +124,11 @@ const PaymentsListViewProvider:FC<WithChildren> = ({children}) => {
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
+  const [filterData, setFilterData] = useState(initialListView.filterData);
 
   useEffect(() => {
     dispatch(fetchPayments({
+      filterData,
       orderId,
       total: 10,
       perPage: 10,
@@ -132,6 +146,14 @@ const PaymentsListViewProvider:FC<WithChildren> = ({children}) => {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
+
+  const fetchPaymentsFunc = () => {
+    dispatch(fetchPayments({
+      filterData,
+      orderId,
+      ...pagination,
+    }));
+  }
 
   return (
     <ListViewContext.Provider
@@ -152,6 +174,9 @@ const PaymentsListViewProvider:FC<WithChildren> = ({children}) => {
         setPagination,
         isAllSelected,
         isLoading,
+        filterData,
+        setFilterData,
+        fetchPaymentsFunc
       }}
     >
       {children}

@@ -1,12 +1,8 @@
 import clsx from 'clsx'
 import {toAbsoluteUrl} from '../../../helpers'
 import {
-  // HeaderNotificationsMenu, 
   HeaderUserMenu, 
-  // Search, 
-  // ThemeModeSwitcher
 } from '../../../partials'
-// import {useLayout} from '../../core'
 
 const itemClass = 'ms-1 ms-lg-3'
 // const btnClass =

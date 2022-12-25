@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import { useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { useClientsListView } from '../../core/ClientsListViewProvider'
@@ -9,6 +9,7 @@ export const ClientsDeleteModal = () => {
 
   const dispatch = useDispatch();
   const { itemIdForDelete, setItemIdForDelete, pagination } = useClientsListView();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('modal-open')
@@ -18,8 +19,10 @@ export const ClientsDeleteModal = () => {
   }, []);
 
   const onDeleteHandler = () => {
+    setLoading(true);
     deleteClientApi({id: itemIdForDelete})
       .then((res) => {
+        setLoading(false);
         setItemIdForDelete(undefined);
         dispatch(fetchClients({...pagination}));
       })
@@ -40,7 +43,7 @@ export const ClientsDeleteModal = () => {
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1'>Delete Storage Period</h2>
+              <h2 className='fw-bolder fs-1'>Delete Client</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}
@@ -61,7 +64,13 @@ export const ClientsDeleteModal = () => {
                 <button className='btn btn-danger'
                   onClick={onDeleteHandler}
                 >
-                  Delete
+                  {!loading && 'Delete'}
+                  {loading && (
+                    <span className='indicator-progress' style={{display: 'block'}}>
+                      Please wait...{' '}
+                      <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                    </span>
+                  )}
                 </button>
                 <button className='btn btn-light' onClick={() => setItemIdForDelete(undefined)} >
                   Cancle

@@ -1,6 +1,14 @@
 import {Dispatch} from "redux";
 import { AdminAction, AdminActionTypes } from "../types/admin";
-import { fetchPeriodsApi, fetchUniversitiesApi, fetchClientsApi, fetchPromotionsApi, fetchPaymentsApi, fetchOrdersApi } from "../apis/admin";
+import { fetchPeriodsApi, 
+    fetchUniversitiesApi, 
+    fetchClientsApi, 
+    fetchPromotionsApi, 
+    fetchPaymentsApi, 
+    fetchOrdersApi,
+    fetchProductsApi,
+    fetchRefApi
+} from "../apis/admin";
 
 export const fetchUniversities = ():any => {
   return async (dispatch: Dispatch<AdminAction>) => {
@@ -16,6 +24,38 @@ export const fetchUniversities = ():any => {
           })
       }
   }
+}
+
+export const fetchProducts = ():any => {
+    return async (dispatch: Dispatch<AdminAction>) => {
+        try {
+            dispatch({type: AdminActionTypes.FETCH_DATA_ADMIN})
+            const response = fetchProductsApi();
+            const payloadData = (await response).data;
+            dispatch({type: AdminActionTypes.FETCH_PRODUCTS, payload: payloadData})
+        } catch (e) {
+            dispatch({
+                type: AdminActionTypes.FETCH_PRODUCTS,
+                payload: []
+            })
+        }
+    }
+}
+
+export const fetchRef = ():any => {
+    return async (dispatch: Dispatch<AdminAction>) => {
+        try {
+            dispatch({type: AdminActionTypes.FETCH_DATA_ADMIN})
+            const response = fetchRefApi();
+            const payloadData = (await response).data;
+            dispatch({type: AdminActionTypes.FETCH_REF, payload: payloadData})
+        } catch (e) {
+            dispatch({
+                type: AdminActionTypes.FETCH_REF,
+                payload: []
+            })
+        }
+    }
 }
 
 export const fetchPeriods = (params: any):any => {

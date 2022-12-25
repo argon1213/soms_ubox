@@ -59,6 +59,7 @@ export const OrderDetailEdit = (props) => {
         setLadenReturnTimeIndex(getTimeIndex(order?.checkin_time_other));
         setTentativeDate(order?.checkout_date_other);
         setTentativeTimeIndex(getTimeIndex(order?.checkout_time_other));
+        setEmptyBoxReturnDate(order?.storage_expired_date);
 
         setAddress(order.emptyout_location_other);
 
@@ -71,6 +72,8 @@ export const OrderDetailEdit = (props) => {
     let __permitEdit = permitEdit;
     switch(order.order_status_id) {
       case 1:
+      case 4:
+      case 8:
         __permitEdit = ({
           ...__permitEdit,
           permitDelivery: true,
@@ -79,19 +82,11 @@ export const OrderDetailEdit = (props) => {
           permitRetrieval: false,
         });
         break;
-      case 4:
-      case 8:
-        __permitEdit = ({
-          ...__permitEdit,
-          permitDelivery: false,
-          permitLadenReturn: true,
-          permitTentative: true,
-          permitRetrieval: false,
-        });
-        break;
-      case 12:
+      case 14:
       case 16:
       case 20:
+      case 24:
+      case 25:
         __permitEdit = ({
           ...__permitEdit,
           permitDelivery: false,
@@ -100,9 +95,9 @@ export const OrderDetailEdit = (props) => {
           permitRetrieval: true,
         });
         break;
-      case 24:
-      case 25:
       case 28:
+      case 30:
+      case 32:
         __permitEdit = ({
           ...__permitEdit,
           permitDelivery: false,
@@ -314,6 +309,7 @@ export const OrderDetailEdit = (props) => {
                 <DesktopDatePicker
                     label={t("common.wd-empty-box-delivery")}
                     inputFormat="DD/MM/YYYY"
+                    minDate={order?.emptyout_date_other}
                     value={deliveryDate}
                     onChange={handleDeliveryDateChange}
                     disabled={!permitEdit.permitDelivery}
@@ -457,7 +453,7 @@ export const OrderDetailEdit = (props) => {
                     label={t("common.wd-empty-box-return-date")}
                     inputFormat="DD/MM/YYYY"
                     value={emptyBoxReturnDate}
-                    minDate={retrievalDate}
+                    minDate={order?.storage_expired_date}
                     onChange={handleEmptyBoxReturnDateChange}
                     disabled={!permitEdit.permitRetrieval}
                     renderInput={(params) => <CssTextField
@@ -489,6 +485,7 @@ export const OrderDetailEdit = (props) => {
             <Grid item xs={12} sm={12} md={12} className="px-[8px] py-[15px]">
             <CssTextField 
               fullWidth required
+              disabled
               id="address"
               label={t("common.wd-address")}
               variant="standard"

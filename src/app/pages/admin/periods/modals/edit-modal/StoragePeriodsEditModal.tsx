@@ -2,12 +2,12 @@ import {useEffect} from 'react'
 // import {UserEditModalHeader} from './UserEditModalHeader'
 // import {UserEditModalFormWrapper} from './UserEditModalFormWrapper'
 import { KTSVG } from '../../../../../../_metronic/helpers'
-import { useOrdersListView } from '../../core/OrdersListViewProvider'
-import { OrdersAddModalFormWrapper } from './OrdersAddModalFormWrapper'
+import { useListView } from '../../core/PeriodsListViewProvider'
+import { StoragePeriodsEditModalFormWrapper } from './StoragePeriodsEditModalFormWrapper'
 
-export const OrdersAddModal = () => {
+export const StoragePeriodsEditModal = () => {
 
-  const { setItemIdForUpdate } = useOrdersListView();
+  const { setItemIdForEdit } = useListView();
 
   useEffect(() => {
     document.body.classList.add('modal-open')
@@ -26,19 +26,19 @@ export const OrdersAddModal = () => {
         aria-modal='true'
       >
         {/* begin::Modal dialog */}
-        <div className='modal-dialog modal-dialog-centered mw-850px'>
+        <div className='modal-dialog modal-dialog-centered mw-650px'>
           {/* begin::Modal content */}
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1 px-7'>Client</h2>
+              <h2 className='fw-bolder fs-1 px-7'>Storage Period</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}
               <div
                 className='btn btn-icon btn-sm btn-active-icon-primary'
                 data-kt-users-modal-action='close'
-                onClick={() => setItemIdForUpdate(undefined)}
+                onClick={() => setItemIdForEdit(undefined)}
                 style={{cursor: 'pointer'}}
               >
                 <KTSVG path='/media/icons/duotune/arrows/arr061.svg' className='svg-icon-1' />
@@ -47,7 +47,7 @@ export const OrdersAddModal = () => {
             </div>
             {/* begin::Modal body */}
             <div className='modal-body scroll-y mx-5 mx-xl-15 my-7'>
-              <OrdersAddModalFormWrapper />
+              <StoragePeriodsEditModalFormWrapper />
             </div>
             {/* end::Modal body */}
           </div>

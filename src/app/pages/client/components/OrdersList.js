@@ -88,7 +88,7 @@ const OrdersList = ({className}) => {
           <table className='table gs-7 gy-7 gx-4'>
             {/* begin::Table head */}
             <thead>
-              <tr className='text-normal fw-bold fs-5 border-bottom border-gray-500'>
+              <tr className='text-normal fw-bold fs-5 border-bottom border-gray-500 align-middle'>
                 <th className='min-w-[160px]'>
                   <span className="hand" onClick={onOrderByHandler}>
                     {t("common.wd-order-no")}
@@ -97,7 +97,7 @@ const OrdersList = ({className}) => {
                     </span>
                   </span>
                 </th>
-                <th className='min-w-[90px]'>{t("common.wd-status")}</th>
+                <th className='min-w-[90px] text-center'>{t("common.wd-status")}</th>
                 <th className='min-w-[170px]'>{t("common.wd-order-date")}</th>
                 <th className='min-w-[140px]'>{t("common.wd-tentative-retrieval-date")}</th>
                 <th className='min-w-[120px]'>{t("common.wd-checkout-date")}</th>

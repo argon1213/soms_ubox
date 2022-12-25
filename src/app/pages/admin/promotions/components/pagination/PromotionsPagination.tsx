@@ -7,10 +7,11 @@ import { fetchPromotions } from "../../../../../store/actions/admin"
 export const PromotionsPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { pagination } = usePromotionsListView();
+  const { pagination, filterData } = usePromotionsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchPromotions({
+      filterData,
       ...pagination,
       page: page,
       perPage: pageSize,

@@ -66,7 +66,7 @@ const OrderDetail = (props) => {
         case 8:
           setOrderStatus('Empty Delivery');
           return;
-        case 12:
+        case 14:
           setOrderStatus('Sched Check-In');
           return;
         case 16:

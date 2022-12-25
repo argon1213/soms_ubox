@@ -7,10 +7,11 @@ import { fetchOrders } from "../../../../../store/actions/admin"
 export const OrdersPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { uid, pagination } = useOrdersListView();
+  const { uid, pagination, filterData } = useOrdersListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchOrders({
+      filterData,
       uid,
       ...pagination,
       page: page,

@@ -21,6 +21,7 @@ type ListViewContextProps = {
     wechat?: string,
     student_id?: string,
     address1?: string,
+    university_id?: number,
   }[];
   selected: any[];
   setSelected: Dispatch<SetStateAction<any[]>>;
@@ -32,6 +33,15 @@ type ListViewContextProps = {
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
   isLoading: boolean;
+  setFilterData: Dispatch<SetStateAction<any>>;
+  filterData: {
+    name: string,
+    email: string,
+    contact: string,
+    wechat: string,
+    student_id: string,
+  };
+  fetchClientsFunc: Function,
 }
 
 const initialListView = {
@@ -59,6 +69,15 @@ const initialListView = {
   setPagination: () => {},
   isAllSelected: false,
   isLoading: false,
+  setFilterData: () => {},
+  filterData: {
+    name: "",
+    email: "",
+    contact: "",
+    wechat: "",
+    student_id: "",
+  },
+  fetchClientsFunc: () => {},
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -83,9 +102,11 @@ const ClientsListViewProvider:FC<WithChildren> = ({children}) => {
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
+  const [filterData, setFilterData] = useState(initialListView.filterData);
 
   useEffect(() => {
     dispatch(fetchClients({
+      filterData,
       total: 10,
       perPage: 10,
       page: 1,
@@ -103,6 +124,13 @@ const ClientsListViewProvider:FC<WithChildren> = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+  const fetchClientsFunc = () => {
+    dispatch(fetchClients({
+      filterData,
+      ...pagination
+    }));
+  }
+
   return (
     <ListViewContext.Provider
       value={{
@@ -116,7 +144,10 @@ const ClientsListViewProvider:FC<WithChildren> = ({children}) => {
         pagination,
         setPagination,
         isAllSelected,
-        isLoading
+        isLoading,
+        setFilterData,
+        filterData,
+        fetchClientsFunc,
       }}
     >
       {children}

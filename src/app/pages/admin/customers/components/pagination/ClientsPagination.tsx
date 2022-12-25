@@ -7,10 +7,11 @@ import { fetchClients } from "../../../../../store/actions/admin"
 export const ClientsPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const {pagination} = useClientsListView();
+  const {pagination, filterData} = useClientsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchClients({
+      filterData,
       ...pagination,
       page: page,
       perPage: pageSize,

@@ -19,6 +19,7 @@ type ListViewContextProps = {
     name?: string,
     effective_from?: string,
     effective_to?: string,
+    items?: any[],
   }[];
   selected: any[];
   setSelected: Dispatch<SetStateAction<any[]>>;
@@ -30,6 +31,16 @@ type ListViewContextProps = {
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
   isLoading: boolean;
+  filterData: {
+    name: string,
+    code: string,
+    fromDateStart: string,
+    fromDateEnd: string,
+    toDateStart: string,
+    toDateEnd: string,
+  },
+  setFilterData: Dispatch<SetStateAction<any>>;
+  fetchPromotionFunc: Function;
 }
 
 const initialListView = {
@@ -38,6 +49,7 @@ const initialListView = {
     name: "",
     effective_from: "",
     effective_to: "",
+    items: [],
   }],
   selected: [],
   setSelected: () => {},
@@ -55,6 +67,16 @@ const initialListView = {
   setPagination: () => {},
   isAllSelected: false,
   isLoading: false,
+  filterData: {
+    name: "",
+    code: "",
+    fromDateStart: "",
+    fromDateEnd: "",
+    toDateStart: "",
+    toDateEnd: "",
+  },
+  setFilterData: () => {},
+  fetchPromotionFunc: () => {},
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -80,10 +102,11 @@ const PromotionsListViewProvider:FC<WithChildren> = ({children}) => {
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
-
+  const [filterData, setFilterData] = useState(initialListView.filterData);
 
   useEffect(() => {
     dispatch(fetchPromotions({
+      filterData,
       total: 10,
       perPage: 10,
       page: 1,
@@ -101,6 +124,12 @@ const PromotionsListViewProvider:FC<WithChildren> = ({children}) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+  const fetchPromotionFunc = () => {
+    dispatch(fetchPromotions({
+      filterData,
+      ...pagination
+    }))
+  };
 
   return (
     <ListViewContext.Provider
@@ -116,6 +145,9 @@ const PromotionsListViewProvider:FC<WithChildren> = ({children}) => {
         setPagination,
         isAllSelected,
         isLoading,
+        filterData,
+        setFilterData,
+        fetchPromotionFunc,
       }}
     >
       {children}

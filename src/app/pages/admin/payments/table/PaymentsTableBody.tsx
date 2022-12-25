@@ -1,10 +1,13 @@
-// import { KTSVG } from "../../../../../_metronic/helpers"
+import { useDispatch } from "react-redux";
 import { usePaymentsListView } from "../core/PaymentsListViewProvider";
+import { paymentPaidApi, paymentCancelledApi } from "../../../../store/apis/admin";
+import { fetchPayments } from "../../../../store/actions/admin";
 
 export const PaymentsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
-  const { setClientIdForUpdate, setOrderIdForUpdate } = usePaymentsListView();
+  const dispatch = useDispatch();
+  const { setClientIdForUpdate, setOrderIdForUpdate, pagination } = usePaymentsListView();
 
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];
@@ -14,6 +17,20 @@ export const PaymentsTableBody = (props: any) => {
       __data,
       ...listData.slice(index + 1),
     ]);
+  }
+
+  const onPaidHandler = (id: number) => {
+    paymentPaidApi({id: id})
+      .then(() => {
+        dispatch(fetchPayments({...pagination}));
+      })
+  }
+
+  const onMarkHandler = (id: number) => {
+    paymentCancelledApi({id: id})
+      .then(() => {
+        dispatch(fetchPayments({...pagination}));
+      })
   }
 
   return (
@@ -79,20 +96,25 @@ export const PaymentsTableBody = (props: any) => {
                     {data.completed_at}
                   </span>
               </td>
-              <td>
-                <div className='d-flex justify-content-around flex-shrink-0'>
-                  <button
-                    className='btn btn-success w-125px'
-                  >
-                    Mark as Paid
-                  </button>
-                  <button
-                    className='btn btn-danger w-125px'
-                  >
-                    Mark as Cancelled
-                  </button>
-                </div>
-              </td>
+              {
+                !data.completed_at && 
+                <td>
+                  <div className='d-flex justify-content-around flex-shrink-0'>
+                    <button
+                      className='btn btn-success w-125px'
+                      onClick={() => onPaidHandler(data.id)}
+                    >
+                      Mark as Paid
+                    </button>
+                    <button
+                      className='btn btn-danger w-125px'
+                      onClick={() => onMarkHandler(data.id)}
+                    >
+                      Mark as Cancelled
+                    </button>
+                  </div>
+                </td>
+              }
             </tr>
           )
         }) :

@@ -1,16 +1,35 @@
-import {useState} from 'react'
-import { useDispatch } from 'react-redux'
+import {useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useClientsListView } from '../../core/ClientsListViewProvider'
 // import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editClientApi } from '../../../../../store/apis/admin'
 import { fetchClients } from '../../../../../store/actions/admin'
+import { RootState } from '../../../../../store/reducers'
 
 export const ClientsAddModalFormWrapper = () => {
 
   const dispatch = useDispatch();
   const { itemIdForUpdate, setItemIdForUpdate, data, pagination } = useClientsListView();
+  const universities = useSelector((state:RootState) => state.admin.universities);
+  const [universityId, setUniversityId] = useState("");
+  const [resetPassword, setResetPassword] = useState(false);
+  const [errorStatus, setErrorStatus] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if(data.length > 0 && itemIdForUpdate !== undefined) {
+      if(itemIdForUpdate !== null) {
+        let __universityId = data[itemIdForUpdate].university_id?.toString();
+        __universityId && setUniversityId(__universityId);
+      } else {
+        setUniversityId("");
+      }
+      
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const profileDetailsSchema = Yup.object().shape({
     name: Yup.string()
@@ -62,30 +81,33 @@ export const ClientsAddModalFormWrapper = () => {
     confirmPassword: "",
   }
 
-  const [loading, setLoading] = useState(false)
   const formik = useFormik({
     initialValues,
     validationSchema: profileDetailsSchema,
     onSubmit: (values) => {
       setLoading(true);
       (itemIdForUpdate == null) ? 
-      editClientApi({data: values, id: undefined})
+      editClientApi({data: {...values, universityId}, id: undefined})
         .then((res) => {
           setLoading(false);
+          setErrorStatus(false);
           setItemIdForUpdate(undefined);
           dispatch(fetchClients({...pagination}));
         })
-        .catch((err) => {
+        .catch(() => {
           setLoading(false);
+          setErrorStatus(true);
         }) :
-      editClientApi({data: values, id: data[itemIdForUpdate].id})
+      editClientApi({data: {...values, universityId}, id: data[itemIdForUpdate].id})
         .then((res) => {
           setLoading(false);
+          setErrorStatus(false);
           setItemIdForUpdate(undefined);
           dispatch(fetchClients({...pagination}));
         })
         .catch((err) => {
           setLoading(false);
+          setErrorStatus(true);
         })
     },
   })
@@ -178,6 +200,39 @@ export const ClientsAddModalFormWrapper = () => {
 
               <div className='row mb-6'>
                 <label className='col-lg-4 col-form-label fw-bold fs-6'>
+                  <span className='required'>Univerisity</span>
+                </label>
+
+                <div className='col-lg-8 fv-row'>
+                  <select 
+                    className='form-select form-select-solid'
+                    onChange={(e) => {
+                      let __id = "";
+                      if(e.target.value !== 'default') {
+                        __id = e.target.value;
+                      }
+                      setUniversityId(__id);
+                    }}
+                    value={universityId}
+                  >
+                    <option value="default" >Select Univeristy</option>
+                    {
+                      universities.length > 0 && 
+                      universities.map((university) => 
+                        <option value={university.id} className="">{university.display_name}</option>
+                      )
+                    }
+                  </select>
+                  {formik.touched.address1 && formik.errors.address1 && (
+                    <div className='fv-plugins-message-container'>
+                      <div className='fv-help-block'>{formik.errors.address1}</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className='row mb-6'>
+                <label className='col-lg-4 col-form-label fw-bold fs-6'>
                   <span className=''>WeChat</span>
                 </label>
 
@@ -217,7 +272,7 @@ export const ClientsAddModalFormWrapper = () => {
               </div>
               
               {
-                (itemIdForUpdate == null) && 
+                (itemIdForUpdate == null || resetPassword === true) && 
                 <>
                   <div className='row mb-6'>
                     <label className='col-lg-4 col-form-label fw-bold fs-6'>
@@ -240,7 +295,7 @@ export const ClientsAddModalFormWrapper = () => {
                     </div>
                   </div>
 
-                  <div className='row mb-6'>
+                  {/* <div className='row mb-6'>
                     <label className='col-lg-4 col-form-label fw-bold fs-6'>
                       <span className='required'>Confirm Password</span>
                     </label>
@@ -258,12 +313,29 @@ export const ClientsAddModalFormWrapper = () => {
                         </div>
                       )}
                     </div>
-                  </div>
+                  </div> */}
                 </>
+              }
+              {
+                errorStatus && 
+                <div className='alert alert-danger'>
+                  <div className='alert-text font-weight-bold'>
+                    Email is already exist.
+                  </div>
+                </div>
               }
             </div>
 
             <div className='card-footer d-flex justify-content-end py-6 px-9'>
+              {
+                (itemIdForUpdate !== null) && 
+                <button className='btn btn-danger mx-7' disabled={loading}
+                  onClick={(e) => {setResetPassword(true)}}
+                >
+                  Reset Password
+                </button>
+              }
+
               <button type='submit' className='btn btn-primary' disabled={loading}>
                 {!loading && 'Save Changes'}
                 {loading && (
@@ -273,6 +345,9 @@ export const ClientsAddModalFormWrapper = () => {
                   </span>
                 )}
               </button>
+
+              
+              
             </div>
           </form>
         </div>

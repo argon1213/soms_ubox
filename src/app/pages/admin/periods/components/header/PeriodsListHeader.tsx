@@ -1,7 +1,7 @@
 import {useListView} from '../../core/PeriodsListViewProvider'
 import {UsersListToolbar} from './UserListToolbar'
 import {UsersListGrouping} from './UsersListGrouping'
-// import {UsersListFilter} from './UsersListFilter'
+import {UsersListFilter} from './UsersListFilter'
 
 // import {UsersListSearchComponent} from './UsersListSearchComponent'
 
@@ -13,7 +13,7 @@ const PeriodsListHeader = () => {
       <div className='card-toolbar'>
           <div className='d-flex justify-content-start align-items-center'>
             {selected.length > 0 ? <UsersListGrouping /> : <></>}
-            {/* <UsersListFilter /> */}
+            <UsersListFilter />
           </div>
       </div>
 

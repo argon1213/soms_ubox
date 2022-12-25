@@ -1,30 +1,30 @@
-import {useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {MenuComponent} from '../../../../../../_metronic/assets/ts/components'
 import {KTSVG} from '../../../../../../_metronic/helpers'
-// import {useQueryRequest} from '../core/QueryRequestProvider'
-// import {useQueryResponse} from '../../core/QueryResponseProvider'
+import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
 
 const UsersListFilter = () => {
-  // const {updateState} = useQueryRequest()
-  // const {isLoading} = useQueryResponse()
-  const isLoading = false
-  const [role, setRole] = useState<string | undefined>()
-  const [lastLogin, setLastLogin] = useState<string | undefined>()
+  const {filterData, setFilterData, fetchPromotionFunc } = usePromotionsListView();
+  const isLoading = false;
 
   useEffect(() => {
     MenuComponent.reinitialization()
   }, [])
 
-  const resetData = () => {
-    // updateState({filter: undefined, ...initialQueryState})
-  }
+  const applyHandler = () => {
+    fetchPromotionFunc();
+  };
 
-  const filterData = () => {
-    // updateState({
-    //   filter: {role, last_login: lastLogin},
-    //   ...initialQueryState,
-    // })
-  }
+  const resetHandler = () => {
+    setFilterData({
+      name: "",
+      code: "",
+      fromDateStart: "",
+      fromDateEnd: "",
+      toDateStart: "",
+      toDateEnd: "",
+    });
+  };
 
   return (
     <>
@@ -41,7 +41,7 @@ const UsersListFilter = () => {
       </button>
       {/* end::Filter Button */}
       {/* begin::SubMenu */}
-      <div className='menu menu-sub menu-sub-dropdown w-300px w-md-325px' data-kt-menu='true'>
+      <div className='menu menu-sub menu-sub-dropdown w-600px w-md-625px' data-kt-menu='true'>
         {/* begin::Header */}
         <div className='px-7 py-5'>
           <div className='fs-5 text-dark fw-bolder'>Filter Options</div>
@@ -55,48 +55,99 @@ const UsersListFilter = () => {
         {/* begin::Content */}
         <div className='px-7 py-5' data-kt-user-table-filter='form'>
           {/* begin::Input group */}
-          <div className='mb-10'>
-            <label className='form-label fs-6 fw-bold'>Role:</label>
-            <select
-              className='form-select form-select-solid fw-bolder'
-              data-kt-select2='true'
-              data-placeholder='Select option'
-              data-allow-clear='true'
-              data-kt-user-table-filter='role'
-              data-hide-search='true'
-              onChange={(e) => setRole(e.target.value)}
-              value={role}
-            >
-              <option value=''></option>
-              <option value='Administrator'>Administrator</option>
-              <option value='Analyst'>Analyst</option>
-              <option value='Developer'>Developer</option>
-              <option value='Support'>Support</option>
-              <option value='Trial'>Trial</option>
-            </select>
-          </div>
-          {/* end::Input group */}
+        <div className='row'>
 
-          {/* begin::Input group */}
-          <div className='mb-10'>
-            <label className='form-label fs-6 fw-bold'>Last login:</label>
-            <select
-              className='form-select form-select-solid fw-bolder'
-              data-kt-select2='true'
-              data-placeholder='Select option'
-              data-allow-clear='true'
-              data-kt-user-table-filter='two-step'
-              data-hide-search='true'
-              onChange={(e) => setLastLogin(e.target.value)}
-              value={lastLogin}
-            >
-              <option value=''></option>
-              <option value='Yesterday'>Yesterday</option>
-              <option value='20 mins ago'>20 mins ago</option>
-              <option value='5 hours ago'>5 hours ago</option>
-              <option value='2 days ago'>2 days ago</option>
-            </select>
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>The code</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='The code'
+                  value={filterData.code}
+                  onChange={(e) => {setFilterData({...filterData, code: e.target.value})}}
+                />
+              </div>
+            </div>
           </div>
+
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Name</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='text'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='Name'
+                  value={filterData.name}
+                  onChange={(e) => {setFilterData({...filterData, name: e.target.value})}}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Effective from start</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='date'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='Effective from start'
+                  value={filterData.fromDateStart}
+                  onChange={(e) => {setFilterData({...filterData, fromDateStart: e.target.value})}}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Effective from end</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='date'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='Effective from end'
+                  value={filterData.fromDateEnd}
+                  onChange={(e) => {setFilterData({...filterData, fromDateEnd: e.target.value})}}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Effective to start</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='date'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='Effective to start'
+                  value={filterData.toDateStart}
+                  onChange={(e) => {setFilterData({...filterData, toDateStart: e.target.value})}}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className='col-lg-6'>
+            <div className='row mb-6'>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>Effective to end</label>
+              <div className='col-lg-8 fv-row'>
+                <input
+                  type='date'
+                  className='form-control form-control-lg form-control-solid'
+                  placeholder='Effective to end'
+                  value={filterData.toDateEnd}
+                  onChange={(e) => {setFilterData({...filterData, toDateEnd: e.target.value})}}
+                />
+              </div>
+            </div>
+          </div>
+          
+        </div>
           {/* end::Input group */}
 
           {/* begin::Actions */}
@@ -104,17 +155,15 @@ const UsersListFilter = () => {
             <button
               type='button'
               disabled={isLoading}
-              onClick={filterData}
+              onClick={resetHandler}
               className='btn btn-light btn-active-light-primary fw-bold me-2 px-6'
-              data-kt-menu-dismiss='true'
-              data-kt-user-table-filter='reset'
             >
               Reset
             </button>
             <button
               disabled={isLoading}
               type='button'
-              onClick={resetData}
+              onClick={applyHandler}
               className='btn btn-primary fw-bold px-6'
               data-kt-menu-dismiss='true'
               data-kt-user-table-filter='filter'

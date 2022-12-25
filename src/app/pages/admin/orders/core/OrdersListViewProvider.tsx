@@ -41,9 +41,16 @@ type ListViewContextProps = {
     checkout_location_other?: string,
     checkout_date_other?: string,
     checkout_time_other?: string,
+    paid_fee?: string,
     special_instruction?: string,
+    payment_status_id: number,
+    payment_type_id: number,
+    order_status_id: number,
+    total_fee: string,
+    storage_month: string,
     client: client,
     status: paymentStatus,
+    items: any[],
   }[];
   selected: any[];
   setSelected: Dispatch<SetStateAction<any[]>>;
@@ -59,6 +66,35 @@ type ListViewContextProps = {
   setPagination: Dispatch<SetStateAction<pagination>>;
   isAllSelected: boolean;
   isLoading: boolean;
+  fetchOrdersFunc: Function;
+  filterData: {
+    name: string,
+    email: string,
+    contact: string,
+    wechat: string,
+    student_id: string,
+    code: string,
+    emptyDateStart: string,
+    emptyDateEnd: string,
+    checkinDateStart: string,
+    checkinDateEnd: string,
+    checkoutDateStart: string,
+    checkoutDateEnd: string,
+    status: {
+      new: boolean,
+      inProgress: boolean,
+      emptyDelivery: boolean,
+      schedCheckin: boolean,
+      checkin: boolean,
+      schedCheckout: boolean,
+      checkout: boolean,
+      schedEmptyReturn: boolean,
+      completed: boolean,
+      hold: boolean,
+      cancelled: boolean
+    },
+  },
+  setFilterData: Dispatch<SetStateAction<any>>;
 }
 
 const initialListView = {
@@ -83,6 +119,35 @@ const initialListView = {
   setPagination: () => {},
   isAllSelected: false,
   isLoading: false,
+  fetchOrdersFunc: () => {},
+  filterData: {
+    name: "",
+    email: "",
+    contact: "",
+    wechat: "",
+    student_id: "",
+    code: "",
+    emptyDateStart: "",
+    emptyDateEnd: "",
+    checkinDateStart: "",
+    checkinDateEnd: "",
+    checkoutDateStart: "",
+    checkoutDateEnd: "",
+    status: {
+      new: false,
+      inProgress: false,
+      emptyDelivery: false,
+      schedCheckin: false,
+      checkin: false,
+      schedCheckout: false,
+      checkout: false,
+      schedEmptyReturn: false,
+      completed: false,
+      hold: false,
+      cancelled: false
+    },
+  },
+  setFilterData: () => {},
 }
 
 const ListViewContext = createContext<ListViewContextProps>(initialListView);
@@ -110,9 +175,19 @@ const OrdersListViewProvider:FC<WithChildren> = ({children}) => {
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
+  const [filterData, setFilterData] = useState(initialListView.filterData);
+
+  const fetchOrdersFunc = () => {
+    dispatch(fetchOrders({
+      filterData,
+      uid, 
+      ...pagination
+    }));
+  }
 
   useEffect(() => {
     dispatch(fetchOrders({
+      filterData,
       uid: uid,
       total: 10,
       perPage: 10,
@@ -150,6 +225,9 @@ const OrdersListViewProvider:FC<WithChildren> = ({children}) => {
         setPagination,
         isAllSelected,
         isLoading,
+        fetchOrdersFunc,
+        filterData,
+        setFilterData,
       }}
     >
       {children}

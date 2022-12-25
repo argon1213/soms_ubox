@@ -1,4 +1,4 @@
-import {useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { usePaymentsListView } from '../../core/PaymentsListViewProvider'
@@ -9,6 +9,7 @@ export const PaymentsDeleteModal = () => {
 
   const dispatch = useDispatch();
   const { itemIdForDelete, setItemIdForDelete, pagination, orderId } = usePaymentsListView();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.body.classList.add('modal-open')
@@ -18,8 +19,10 @@ export const PaymentsDeleteModal = () => {
   }, []);
 
   const onDeleteHandler = () => {
+    setLoading(true);
     deletePaymentsApi({id: itemIdForDelete})
       .then((res) => {
+        setLoading(false);
         setItemIdForDelete(undefined);
         dispatch(fetchPayments({orderId, ...pagination}));
       })
@@ -61,7 +64,13 @@ export const PaymentsDeleteModal = () => {
                 <button className='btn btn-danger'
                   onClick={onDeleteHandler}
                 >
-                  Delete
+                  {!loading && 'Delete'}
+                  {loading && (
+                    <span className='indicator-progress' style={{display: 'block'}}>
+                      Please wait...{' '}
+                      <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                    </span>
+                  )}
                 </button>
                 <button className='btn btn-light' onClick={() => setItemIdForDelete(undefined)} >
                   Cancle

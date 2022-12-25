@@ -7,10 +7,11 @@ import { fetchPeriods } from "../../../../../store/actions/admin"
 export const StoragePeriodPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const { pagination } = useListView();
+  const { pagination, filterData } = useListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchPeriods({
+      filterData,
       ...pagination,
       page: page,
       perPage: pageSize,

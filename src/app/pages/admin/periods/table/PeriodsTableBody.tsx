@@ -4,7 +4,7 @@ import { useListView } from "../core/PeriodsListViewProvider";
 export const PeriodsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
-  const { setItemIdForUpdate, setItemIdForDelete } = useListView();
+  const { setItemIdForUpdate, setItemIdForDelete, setItemIdForEdit } = useListView();
 
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];
@@ -70,7 +70,7 @@ export const PeriodsTableBody = (props: any) => {
                 <div className='d-flex justify-content-end flex-shrink-0'>
                   <span
                     className='btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1'
-                    onClick={(e) => {}}
+                    onClick={(e) => {setItemIdForEdit(index)}}
                   >
                     <KTSVG
                       path='/media/icons/duotune/general/gen019.svg'

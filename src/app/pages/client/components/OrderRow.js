@@ -32,7 +32,7 @@ const OrderRow = (props) => {
         return ('In Progress');
       case 8:
         return ('Empty Delivery');
-      case 12:
+      case 14:
         return ('Sched Check-In');
       case 16:
         return ('Check-in');
@@ -61,7 +61,7 @@ const OrderRow = (props) => {
         return ('badge-light-warning');
       case 8:
         return('badge-light-warning');
-      case 12:
+      case 14:
         return ('badge-light-primary');
       case 16:
         return ('badge-light-primary');
@@ -111,7 +111,7 @@ const OrderRow = (props) => {
                 {order.code} 
               </Link>
             </td>
-            <td key={index + '-status'}>
+            <td key={index + '-status'} className='text-center'>
               <span className={'fs-7 min-w-[80px] badge ' + getStatusColor(order)} style={{display: "inline-block", lineHeight: "16px"}}>
                 {getStatus(order)}
               </span>

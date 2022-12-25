@@ -7,10 +7,11 @@ import { fetchPayments } from "../../../../../store/actions/admin"
 export const PaymentsPagination: React.FC = () => {
 
   const dispatch = useDispatch();
-  const {orderId, pagination} = usePaymentsListView();
+  const {orderId, pagination, filterData} = usePaymentsListView();
 
   const onChangeHandler = (page: number, pageSize:number) => {
     dispatch(fetchPayments({
+      filterData,
       orderId,
       ...pagination,
       page: page,

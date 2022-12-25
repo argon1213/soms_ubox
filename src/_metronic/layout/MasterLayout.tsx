@@ -17,11 +17,22 @@ import {PageDataProvider} from './core'
 import {reInitMenu} from '../helpers'
 import {ToolbarWrapper} from './components/toolbar'
 
+import { useDispatch } from 'react-redux'
+import { fetchUniversities, fetchProducts, fetchRef } from '../../app/store/actions/admin'
+
 const MasterLayout = () => {
   const location = useLocation()
   useEffect(() => {
     reInitMenu()
   }, [location.key])
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchUniversities());
+    dispatch(fetchProducts());
+    dispatch(fetchRef());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <PageDataProvider>

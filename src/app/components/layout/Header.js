@@ -7,11 +7,16 @@ const Header = (props) => {
     const { t, i18n } = useTranslation();
     const [language, setLanguage] = useState()
     useEffect(() => {
-        setLanguage(i18n.language);
+        let __lang = JSON.parse(localStorage.getItem("ubox-lang"));
+        setLanguage(__lang);
+        i18n.changeLanguage(__lang, ()=> {
+            setLanguage(__lang);
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const onChangeLanguage = (lang) => {
+        localStorage.setItem("ubox-lang", JSON.stringify(lang));
         i18n.changeLanguage(lang, ()=> {
             setLanguage(lang);
         });

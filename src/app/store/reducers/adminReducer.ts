@@ -2,6 +2,8 @@ import { AdminAction, AdminActionTypes, AdminState } from "../types/admin";
 
 const initialState: AdminState = {
     universities: [],
+    products: [],
+    ref: {},
     periods: [],
     clients: [],
     promotions: [],
@@ -19,6 +21,10 @@ export const adminReducer = (state = initialState, action: AdminAction): AdminSt
             return {...state, loading: true}
         case AdminActionTypes.FETCH_UNVERSITIES:
             return {...state, loading: false, universities: action.payload}
+        case AdminActionTypes.FETCH_REF:
+            return {...state, loading: false, ref: action.payload}
+        case AdminActionTypes.FETCH_PRODUCTS:
+            return{...state, loading: false, products: action.payload}
         case AdminActionTypes.FETCH_PERIODS:
             return {...state, loading: false,
                 periods: action.payload.data,

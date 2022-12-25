@@ -1,30 +1,17 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {FC, useEffect} from 'react'
+import {FC} from 'react'
 import {useIntl} from 'react-intl'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 // import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 import {PageTitle} from '../../../../_metronic/layout/core'
-import { fetchUniversities } from '../../../store/actions/admin'
 import { RootState } from '../../../store/reducers'
 import { UniversityWidget } from './UniversityWidget'
 import { LoadingSpinner } from '../components/spinner/LoadingSpinner'
 
 const DashboardPage: FC = () => {
 
-  const dispatch = useDispatch();
   const universities = useSelector((state:RootState) => state.admin.universities);
   const isLoading = useSelector((state:RootState) => state.admin.loading);
-  useEffect(() => {
-    dispatch(fetchUniversities());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    if(universities.length > 0) {
-      console.log("universities", universities);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [universities]);
 
   const getColor = (index: number) => {
     switch(index) {

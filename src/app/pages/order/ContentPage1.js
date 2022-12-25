@@ -130,7 +130,7 @@ export default function ContentPage1(props) {
                         </Grid>
                         <Grid item xs={12} sm={8} md={8} className="my-auto">
                             <div className="flex my-auto w-[100%] xs:mt-[20px]">
-                                <Slider value={duration} aria-label="pretto slider" valueLabelDisplay="auto" min={1} max={18} sx={PrettoSliderStyle} onChange={handleSliderChange} onChangeCommitted={changeSliderStatus}/>
+                                <Slider value={duration} aria-label="pretto slider" valueLabelDisplay="auto" min={2} max={18} sx={PrettoSliderStyle} onChange={handleSliderChange} onChangeCommitted={changeSliderStatus}/>
                             </div>
                         </Grid>
                     </Grid>

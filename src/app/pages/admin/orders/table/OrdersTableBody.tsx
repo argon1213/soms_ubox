@@ -1,10 +1,13 @@
-// import { KTSVG } from "../../../../../_metronic/helpers"
 import { useOrdersListView } from "../core/OrdersListViewProvider";
 import { Link } from "react-router-dom";
+import { sendInvoiceApi } from "../../../../store/apis/admin";
+import { notification } from "antd";
+
 export const OrdersTableBody = (props: any) => {
 
   const {listData, setListData} = props;
   const { setItemIdForUpdate, setClientIdForUpdate } = useOrdersListView();
+
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];
     __data.checked = state;
@@ -13,6 +16,25 @@ export const OrdersTableBody = (props: any) => {
       __data,
       ...listData.slice(index + 1),
     ]);
+  }
+  const onSendInvoiceHandler = (id: number) => {
+    sendInvoiceApi({id: id})
+      .then(() => {
+        notification.success({
+          message: 'Success',
+          description: 'Send Invoice successfully',
+          placement: 'topRight',
+          duration: 2,
+        });
+      })
+      .catch(() => {
+        notification.error({
+          message: 'Error',
+          description: 'Send Invoice is failed',
+          placement: 'topRight',
+          duration: 2,
+        });
+      })
   }
 
   return (
@@ -162,7 +184,10 @@ export const OrdersTableBody = (props: any) => {
                 <div className='d-flex justify-content-end flex-shrink-0'>
                   {
                     parseInt(data.balance) !== 0 && 
-                    <button className='btn btn-primary'>
+                    <button 
+                      className='btn btn-primary'
+                      onClick={() => {onSendInvoiceHandler(data.id)}}
+                    >
                       Send invoice
                     </button>
                   }
