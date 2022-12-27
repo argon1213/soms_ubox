@@ -52,7 +52,7 @@ export default function ContentPage5(props) {
         if(paymentType === 3) {
             document.querySelector('form').requestSubmit();
             setIsLoading(true);
-        } else if(paymentType === 6) {
+        } else {
             setIsLoading(true);
             let stripeToken = ""
             orderSubmitHandler(stripeToken);
