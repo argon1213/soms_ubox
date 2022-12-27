@@ -37,6 +37,7 @@ export const AdminPage = () => {
               <Route path='/payments' element={<PaymentsList />} />
               <Route path='/payments/:orderId' element={<PaymentsList />} />
               <Route path='/orders/:uid' element={<OrdersList />} />
+              <Route path='/orders/:uid/:clientName' element={<OrdersList />} />
             </Route>
             <Route path='/*' element={<ErrorsPage />} />
           </>

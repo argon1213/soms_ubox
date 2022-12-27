@@ -162,7 +162,7 @@ const calculateIsAllDataSelected = (__data: any[], __selected: any[]) => {
 
 const OrdersListViewProvider:FC<WithChildren> = ({children}) => {
 
-  const {uid} = useParams();
+  const {uid, clientName} = useParams();
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(Array(0));
   const [itemIdForUpdate, setItemIdForUpdate] = useState<undefined | null | number>(initialListView.itemIdForUpdate);
@@ -175,7 +175,7 @@ const OrdersListViewProvider:FC<WithChildren> = ({children}) => {
   const page = useSelector((state:RootState) => state.admin.pagination);
   // const disabled = useMemo(() => calculatedGroupingIsDisabled(isLoading, data), [isLoading, data])
   const isAllSelected = useMemo(() => calculateIsAllDataSelected(data, selected), [data, selected]);
-  const [filterData, setFilterData] = useState(initialListView.filterData);
+  const [filterData, setFilterData] = useState(clientName ? {...initialListView.filterData, name: clientName} : initialListView.filterData);
 
   const fetchOrdersFunc = () => {
     dispatch(fetchOrders({

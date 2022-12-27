@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { KTSVG } from "../../../../../_metronic/helpers"
 import { useClientsListView } from "../core/ClientsListViewProvider";
 
@@ -72,9 +73,13 @@ export const ClientsTableBody = (props: any) => {
                   </span>
               </td>
               <td className='text-center'>
-                  <span className='text-dark fw-bold d-block fs-6'>
+                  <Link 
+                    className='text-blue fw-bold d-block fs-6' 
+                    style={{cursor: 'pointer'}}
+                    to={"/admin/orders/90/" + data.name}
+                  >
                     {data.orderCount}
-                  </span>
+                  </Link>
               </td>
               <td className='text-center'>
                   <span className='text-dark fw-bold d-block fs-6'>
