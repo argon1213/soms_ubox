@@ -1,16 +1,14 @@
 import {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useListView } from '../../core/PeriodsListViewProvider'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editPeriodItemApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
 import { RootState } from '../../../../../store/reducers'
 
 export const StoragePeriodsEditModalFormWrapper = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForEdit, setItemIdForEdit, data, pagination } = useListView();
+  const { itemIdForEdit, setItemIdForEdit, data, fetchPeriodsFunc } = useListView();
   const products = useSelector((state:RootState) => state.admin.products);
   const [price, setPrice] = useState({
     documentBox: "",
@@ -68,7 +66,7 @@ export const StoragePeriodsEditModalFormWrapper = () => {
       editPeriodItemApi({data: price, id: (itemIdForEdit !== undefined) ? data[itemIdForEdit].id : ""})
         .then((res) => {
           setLoading(false);
-          dispatch(fetchPeriods({...pagination}));
+          fetchPeriodsFunc();
           setItemIdForEdit(undefined);
         })
         .catch((err) => {

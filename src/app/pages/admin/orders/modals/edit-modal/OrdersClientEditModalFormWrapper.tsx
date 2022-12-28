@@ -1,16 +1,16 @@
-import {useState} from 'react'
-// import { useDispatch } from 'react-redux'
+import {useState, useEffect} from 'react'
+// import { useSelector } from 'react-redux'
 import { useOrdersListView } from '../../core/OrdersListViewProvider'
-// import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-// import { editClientApi } from '../../../../../store/apis/admin'
-// import { fetchClients } from '../../../../../store/actions/admin'
+import { editClientApi } from '../../../../../store/apis/admin'
+// import { RootState } from '../../../../../store/reducers'
 
 export const OrdersClientEditModalFormWrapper = () => {
 
-  // const dispatch = useDispatch();
-  const { clientIdForUpdate, setClientIdForUpdate, data } = useOrdersListView();
+  // const universities = useSelector((state:RootState) => state.admin.universities);
+  const [universityId, setUniversityId] = useState("");
+  const { clientIdForUpdate, setClientIdForUpdate, data, fetchOrdersFunc } = useOrdersListView();
   const profileDetailsSchema = Yup.object().shape({
     name: Yup.string()
               .required('Name is required')
@@ -67,28 +67,39 @@ export const OrdersClientEditModalFormWrapper = () => {
     validationSchema: profileDetailsSchema,
     onSubmit: (values) => {
       setLoading(true);
-      setClientIdForUpdate(undefined);
-      // (itemIdForUpdate == null) ? 
-      // editClientApi({data: values, id: undefined})
-      //   .then((res) => {
-      //     setLoading(false);
-      //     setItemIdForUpdate(undefined);
-      //     dispatch(fetchClients({...pagination}));
-      //   })
-      //   .catch((err) => {
-      //     setLoading(false);
-      //   }) :
-      // editClientApi({data: values, id: data[itemIdForUpdate].id})
-      //   .then((res) => {
-      //     setLoading(false);
-      //     setItemIdForUpdate(undefined);
-      //     dispatch(fetchClients({...pagination}));
-      //   })
-      //   .catch((err) => {
-      //     setLoading(false);
-      //   })
+      (clientIdForUpdate == null) ? 
+      editClientApi({data: {...values, universityId}, id: undefined})
+        .then((res) => {
+          setLoading(false);
+          setClientIdForUpdate(undefined);
+          fetchOrdersFunc();
+        })
+        .catch(() => {
+          setLoading(false);
+        }) :
+      editClientApi({data: {...values, universityId}, id: data[clientIdForUpdate].client.id})
+        .then((res) => {
+          setLoading(false);
+          setClientIdForUpdate(undefined);
+          fetchOrdersFunc();
+        })
+        .catch((err) => {
+          setLoading(false);
+        })
     },
-  })
+  });
+
+  useEffect(() => {
+    if(data.length > 0 && clientIdForUpdate !== undefined) {
+      if(clientIdForUpdate !== null) {
+        let __universityId = data[clientIdForUpdate].client.university_id?.toString();
+        __universityId && setUniversityId(__universityId);
+      } else {
+        setUniversityId("");
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

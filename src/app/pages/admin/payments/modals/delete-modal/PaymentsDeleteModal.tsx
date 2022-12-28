@@ -1,14 +1,11 @@
 import {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { usePaymentsListView } from '../../core/PaymentsListViewProvider'
 import { deletePaymentsApi } from '../../../../../store/apis/admin'
-import { fetchPayments } from '../../../../../store/actions/admin'
 
 export const PaymentsDeleteModal = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination, orderId } = usePaymentsListView();
+  const { itemIdForDelete, setItemIdForDelete, fetchPaymentsFunc } = usePaymentsListView();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +21,7 @@ export const PaymentsDeleteModal = () => {
       .then((res) => {
         setLoading(false);
         setItemIdForDelete(undefined);
-        dispatch(fetchPayments({orderId, ...pagination}));
+        fetchPaymentsFunc();
       })
   }
 

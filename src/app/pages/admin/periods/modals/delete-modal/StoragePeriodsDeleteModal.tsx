@@ -1,14 +1,11 @@
 import {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { useListView } from '../../core/PeriodsListViewProvider'
 import { deletePeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
 
 export const StoragePeriodsDeleteModal = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = useListView();
+  const { itemIdForDelete, setItemIdForDelete, fetchPeriodsFunc } = useListView();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +21,7 @@ export const StoragePeriodsDeleteModal = () => {
       .then((res) => {
         setLoading(false);
         setItemIdForDelete(undefined);
-        dispatch(fetchPeriods({...pagination}));
+        fetchPeriodsFunc();
       })
   }
 

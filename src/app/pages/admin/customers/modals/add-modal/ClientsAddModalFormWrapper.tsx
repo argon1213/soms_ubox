@@ -1,17 +1,14 @@
 import {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useClientsListView } from '../../core/ClientsListViewProvider'
-// import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editClientApi } from '../../../../../store/apis/admin'
-import { fetchClients } from '../../../../../store/actions/admin'
 import { RootState } from '../../../../../store/reducers'
 
 export const ClientsAddModalFormWrapper = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForUpdate, setItemIdForUpdate, data, pagination } = useClientsListView();
+  const { itemIdForUpdate, setItemIdForUpdate, data, fetchClientsFunc } = useClientsListView();
   const universities = useSelector((state:RootState) => state.admin.universities);
   const [universityId, setUniversityId] = useState("");
   const [resetPassword, setResetPassword] = useState(false);
@@ -29,7 +26,7 @@ export const ClientsAddModalFormWrapper = () => {
       
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   const profileDetailsSchema = Yup.object().shape({
     name: Yup.string()
@@ -92,7 +89,7 @@ export const ClientsAddModalFormWrapper = () => {
           setLoading(false);
           setErrorStatus(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchClients({...pagination}));
+          fetchClientsFunc();
         })
         .catch(() => {
           setLoading(false);
@@ -103,7 +100,7 @@ export const ClientsAddModalFormWrapper = () => {
           setLoading(false);
           setErrorStatus(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchClients({...pagination}));
+          fetchClientsFunc();
         })
         .catch((err) => {
           setLoading(false);

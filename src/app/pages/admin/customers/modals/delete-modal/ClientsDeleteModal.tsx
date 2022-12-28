@@ -1,14 +1,11 @@
 import { useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { useClientsListView } from '../../core/ClientsListViewProvider'
 import { deleteClientApi } from '../../../../../store/apis/admin'
-import { fetchClients } from '../../../../../store/actions/admin'
 
 export const ClientsDeleteModal = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = useClientsListView();
+  const { itemIdForDelete, setItemIdForDelete, fetchClientsFunc } = useClientsListView();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +21,7 @@ export const ClientsDeleteModal = () => {
       .then((res) => {
         setLoading(false);
         setItemIdForDelete(undefined);
-        dispatch(fetchClients({...pagination}));
+        fetchClientsFunc();
       })
   }
 

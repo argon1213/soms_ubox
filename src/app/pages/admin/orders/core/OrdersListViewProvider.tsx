@@ -21,6 +21,7 @@ type client = {
   wechat?: string,
   student_id?: string,
   address1?: string,
+  university_id?: string,
 }
 
 type paymentStatus = {

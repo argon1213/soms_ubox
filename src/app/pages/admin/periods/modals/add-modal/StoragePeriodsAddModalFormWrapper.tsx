@@ -1,15 +1,12 @@
 import {useState} from 'react'
-import { useDispatch } from 'react-redux'
 import { useListView } from '../../core/PeriodsListViewProvider'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editPeriodsApi } from '../../../../../store/apis/admin'
-import { fetchPeriods } from '../../../../../store/actions/admin'
 
 export const StoragePeriodsAddModalFormWrapper = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForUpdate, setItemIdForUpdate, data, pagination } = useListView();
+  const { itemIdForUpdate, setItemIdForUpdate, data, fetchPeriodsFunc } = useListView();
 
   const profileDetailsSchema = Yup.object().shape({
     code: Yup.string().required('The code is required'),
@@ -47,7 +44,7 @@ export const StoragePeriodsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPeriods({...pagination}));
+          fetchPeriodsFunc();
         })
         .catch((err) => {
           setLoading(false);
@@ -56,7 +53,7 @@ export const StoragePeriodsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPeriods({...pagination}));
+          fetchPeriodsFunc();
         })
         .catch((err) => {
           setLoading(false);

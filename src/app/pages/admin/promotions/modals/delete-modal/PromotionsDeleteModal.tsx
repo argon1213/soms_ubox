@@ -1,14 +1,11 @@
 import {useState, useEffect} from 'react'
-import { useDispatch } from 'react-redux'
 import { KTSVG } from '../../../../../../_metronic/helpers'
 import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
 import { deletePromotionApi } from '../../../../../store/apis/admin'
-import { fetchPromotions } from '../../../../../store/actions/admin'
 
 export const PromotionsDeleteModal = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForDelete, setItemIdForDelete, pagination } = usePromotionsListView();
+  const { itemIdForDelete, setItemIdForDelete, fetchPromotionFunc } = usePromotionsListView();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -24,7 +21,7 @@ export const PromotionsDeleteModal = () => {
       .then((res) => {
         setLoading(false);
         setItemIdForDelete(undefined);
-        dispatch(fetchPromotions({...pagination}));
+        fetchPromotionFunc();
       })
   }
 

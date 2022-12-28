@@ -1,16 +1,12 @@
 import {useState} from 'react'
-import { useDispatch } from 'react-redux'
 import { usePaymentsListView } from '../../core/PaymentsListViewProvider'
-// import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editClientApi } from '../../../../../store/apis/admin'
-import { fetchClients } from '../../../../../store/actions/admin'
 
 export const PaymentsAddModalFormWrapper = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForUpdate, setItemIdForUpdate, data, pagination } = usePaymentsListView();
+  const { itemIdForUpdate, setItemIdForUpdate, data, fetchPaymentsFunc } = usePaymentsListView();
 
   const profileDetailsSchema = Yup.object().shape({
     name: Yup.string()
@@ -73,7 +69,7 @@ export const PaymentsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchClients({...pagination}));
+          fetchPaymentsFunc();
         })
         .catch((err) => {
           setLoading(false);
@@ -82,7 +78,7 @@ export const PaymentsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchClients({...pagination}));
+          fetchPaymentsFunc();
         })
         .catch((err) => {
           setLoading(false);

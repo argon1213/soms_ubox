@@ -1,13 +1,10 @@
-import { useDispatch } from "react-redux";
 import { usePaymentsListView } from "../core/PaymentsListViewProvider";
 import { paymentPaidApi, paymentCancelledApi } from "../../../../store/apis/admin";
-import { fetchPayments } from "../../../../store/actions/admin";
 
 export const PaymentsTableBody = (props: any) => {
 
   const {listData, setListData} = props;
-  const dispatch = useDispatch();
-  const { setClientIdForUpdate, setOrderIdForUpdate, pagination } = usePaymentsListView();
+  const { setClientIdForUpdate, setOrderIdForUpdate, fetchPaymentsFunc } = usePaymentsListView();
 
   const selectHandler = (index:number, state:boolean) => {
     let __data = listData[index];
@@ -22,14 +19,14 @@ export const PaymentsTableBody = (props: any) => {
   const onPaidHandler = (id: number) => {
     paymentPaidApi({id: id})
       .then(() => {
-        dispatch(fetchPayments({...pagination}));
+        fetchPaymentsFunc();
       })
   }
 
   const onMarkHandler = (id: number) => {
     paymentCancelledApi({id: id})
       .then(() => {
-        dispatch(fetchPayments({...pagination}));
+        fetchPaymentsFunc();
       })
   }
 

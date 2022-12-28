@@ -1,17 +1,15 @@
 import {useState, useEffect} from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { usePromotionsListView } from '../../core/PromotionsListViewProvider'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
 import { editPromotionApi, editPromotionItemApi } from '../../../../../store/apis/admin'
-import { fetchPromotions } from '../../../../../store/actions/admin'
 import dayjs from "dayjs"
 import { RootState } from '../../../../../store/reducers'
 
 export const PromotionsAddModalFormWrapper = () => {
 
-  const dispatch = useDispatch();
-  const { itemIdForUpdate, setItemIdForUpdate, data, pagination } = usePromotionsListView();
+  const { itemIdForUpdate, setItemIdForUpdate, data, fetchPromotionFunc } = usePromotionsListView();
   const products = useSelector((state:RootState) => state.admin.products);
   const [loading, setLoading] = useState(false);
 
@@ -62,7 +60,7 @@ export const PromotionsAddModalFormWrapper = () => {
     (itemIdForUpdate !== null) && editPromotionItemApi({data: price, id: (itemIdForUpdate !== undefined) ? data[itemIdForUpdate].id : ""})
       .then((res) => {
         setLoading(false);
-        dispatch(fetchPromotions({...pagination}));
+        fetchPromotionFunc();
         setItemIdForUpdate(undefined);
       })
       .catch(() => {
@@ -101,7 +99,7 @@ export const PromotionsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPromotions({...pagination}));
+          fetchPromotionFunc();
         })
         .catch((err) => {
           setLoading(false);
@@ -110,7 +108,7 @@ export const PromotionsAddModalFormWrapper = () => {
         .then((res) => {
           setLoading(false);
           setItemIdForUpdate(undefined);
-          dispatch(fetchPromotions({...pagination}));
+          fetchPromotionFunc();
         })
         .catch((err) => {
           setLoading(false);

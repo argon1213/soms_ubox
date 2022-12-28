@@ -26,12 +26,12 @@ export const OrdersAddModal = () => {
         aria-modal='true'
       >
         {/* begin::Modal dialog */}
-        <div className='modal-dialog modal-dialog-centered mw-850px'>
+        <div className='modal-dialog modal-dialog-centered mw-1000px'>
           {/* begin::Modal content */}
           <div className='modal-content'>
             <div className='modal-header'>
               {/* begin::Modal title */}
-              <h2 className='fw-bolder fs-1 px-7'>Client</h2>
+              <h2 className='fw-bolder fs-1 px-7'>Order</h2>
               {/* end::Modal title */}
 
               {/* begin::Close */}
