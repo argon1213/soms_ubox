@@ -10,7 +10,7 @@ import { fetchOrders } from '../../../../store/actions/admin';
 const OrdersTable = () => {
 
   const dispatch = useDispatch();
-  const { uid, data, setSelected, isAllSelected, pagination } = useOrdersListView();
+  const { uid, data, setSelected, isAllSelected, pagination, filterData } = useOrdersListView();
   const [listData, setListData] = useState(Array(0));
 
   const onSortHandler = (order: string) => {
@@ -25,6 +25,7 @@ const OrdersTable = () => {
       __sort = "desc";
     }
     dispatch(fetchOrders({
+      filterData,
       uid,
       ...pagination,
       sort: __sort,
@@ -51,7 +52,7 @@ const OrdersTable = () => {
 
   return (
     <KTCardBody className='py-4'>
-      <div className='card-body py-3'>
+      <div className='card-body py-3' style={{position: 'relative'}}>
         <div className='table-responsive min-h-300px'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
@@ -279,6 +280,15 @@ const OrdersTable = () => {
               <OrdersTableBody listData={listData} setListData={setListData} />
             </tbody>
           </table>
+          {
+            listData.length === 0 &&
+            <div 
+              className='w-100 text-center text-muted fw-bold fs-6'
+              style={{position: 'absolute', top: '100px'}}
+            >
+              No matching records found
+            </div>
+          }
         </div>
         <div className='d-flex justify-content-end my-7'>
           <OrdersPagination />

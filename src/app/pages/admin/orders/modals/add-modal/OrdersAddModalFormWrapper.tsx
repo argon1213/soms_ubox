@@ -151,17 +151,17 @@ export const OrdersAddModalFormWrapper = () => {
     special_instruction: "",
     paid_fee: "",
   } : {
-    emptyout_location_other: data[itemIdForUpdate].emptyout_location_other ? data[itemIdForUpdate].emptyout_location_other : "",
-    emptyout_date_other: data[itemIdForUpdate].emptyout_date_other ? data[itemIdForUpdate].emptyout_date_other : "",
-    emptyout_time_other: data[itemIdForUpdate].emptyout_time_other ? data[itemIdForUpdate].emptyout_time_other : "",
-    checkin_location_other: data[itemIdForUpdate].checkin_location_other ? data[itemIdForUpdate].checkin_location_other : "",
-    checkin_date_other: data[itemIdForUpdate].checkin_date_other ? data[itemIdForUpdate].checkin_date_other : "",
-    checkin_time_other: data[itemIdForUpdate].checkin_time_other ? data[itemIdForUpdate].checkin_time_other : "",
-    checkout_location_other: data[itemIdForUpdate].checkout_location_other ? data[itemIdForUpdate].checkout_location_other : "",
-    checkout_date_other: data[itemIdForUpdate].checkout_date_other ? data[itemIdForUpdate].checkout_date_other : "",
-    checkout_time_other: data[itemIdForUpdate].checkout_time_other ? data[itemIdForUpdate].checkout_time_other : "",
-    special_instruction: data[itemIdForUpdate].special_instruction ? data[itemIdForUpdate].special_instruction : "",
-    paid_fee: data[itemIdForUpdate].paid_fee ? data[itemIdForUpdate].paid_fee : "",
+    emptyout_location_other: data[itemIdForUpdate].emptyout_location_other !== null ? data[itemIdForUpdate].emptyout_location_other : "",
+    emptyout_date_other: data[itemIdForUpdate].emptyout_date_other !== null ? data[itemIdForUpdate].emptyout_date_other : "",
+    emptyout_time_other: data[itemIdForUpdate].emptyout_time_other !== null ? data[itemIdForUpdate].emptyout_time_other : "",
+    checkin_location_other: data[itemIdForUpdate].checkin_location_other !== null ? data[itemIdForUpdate].checkin_location_other : "",
+    checkin_date_other: data[itemIdForUpdate].checkin_date_other !== null ? data[itemIdForUpdate].checkin_date_other : "",
+    checkin_time_other: data[itemIdForUpdate].checkin_time_other !== null ? data[itemIdForUpdate].checkin_time_other : "",
+    checkout_location_other: data[itemIdForUpdate].checkout_location_other !== null ? data[itemIdForUpdate].checkout_location_other : "",
+    checkout_date_other: data[itemIdForUpdate].checkout_date_other !== null ? data[itemIdForUpdate].checkout_date_other : "",
+    checkout_time_other: data[itemIdForUpdate].checkout_time_other !== null ? data[itemIdForUpdate].checkout_time_other : "",
+    special_instruction: data[itemIdForUpdate].special_instruction !== null ? data[itemIdForUpdate].special_instruction : "",
+    paid_fee: data[itemIdForUpdate].paid_fee !== null ? data[itemIdForUpdate].paid_fee : "",
   }
 
   const [loading, setLoading] = useState(false)
@@ -454,7 +454,7 @@ export const OrdersAddModalFormWrapper = () => {
                         type='text'
                         className='form-control form-control-lg form-control-solid'
                         placeholder='Special requirement'
-                        value={(itemIdForUpdate === undefined || itemIdForUpdate == null ) ? "" : data[itemIdForUpdate].special_instruction}
+                        {...formik.getFieldProps('special_instruction')}
                       />
                     </div>
                   </div> 

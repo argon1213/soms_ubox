@@ -10,7 +10,7 @@ import { fetchClients } from '../../../../store/actions/admin';
 const ClientsTable = () => {
 
   const dispatch = useDispatch();
-  const { data, setSelected, isAllSelected, pagination } = useClientsListView();
+  const { data, setSelected, isAllSelected, pagination, filterData } = useClientsListView();
   const [listData, setListData] = useState(Array(0));
 
   const onSortHandler = (order: string) => {
@@ -25,6 +25,7 @@ const ClientsTable = () => {
       __sort = "desc";
     }
     dispatch(fetchClients({
+      filterData,
       ...pagination,
       sort: __sort,
       orderBy: order,
@@ -50,8 +51,8 @@ const ClientsTable = () => {
 
   return (
     <KTCardBody className='py-4'>
-      <div className='card-body py-3'>
-        <div className='table-responsive'>
+      <div className='card-body py-3' style={{position: 'relative'}}>
+        <div className='table-responsive min-h-300px'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
               <tr className='fw-bold text-muted align-middle fs-5'>
@@ -130,7 +131,7 @@ const ClientsTable = () => {
                 <th className='min-w-100px text-center'>
                   <div 
                     className={pagination.orderBy ==="orderCount" ? (pagination.sort ? (pagination.sort === "asc" ? "table-sort-asc" : "table-sort-desc") : "") : ""} 
-                    onClick={() => onSortHandler("orderCount")}
+                    // onClick={() => onSortHandler("orderCount")}
                     style={{cursor: 'pointer'}}
                   >
                     Number of Order
@@ -152,6 +153,15 @@ const ClientsTable = () => {
               <ClientsTableBody listData={listData} setListData={setListData} />
             </tbody>
           </table>
+          {
+            listData.length === 0 &&
+            <div 
+              className='w-100 text-center text-muted fw-bold fs-6'
+              style={{position: 'absolute', top: '100px'}}
+            >
+              No matching records found
+            </div>
+          }
         </div>
         <div className='d-flex justify-content-end my-7'>
           <ClientsPagination />

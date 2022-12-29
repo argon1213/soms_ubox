@@ -33,7 +33,7 @@ const UsersListFilter = () => {
         type='button'
         className='btn btn-light-primary me-3 d-flex justify-content-around align-items-center'
         data-kt-menu-trigger='click'
-        data-kt-menu-placement='bottom-end'
+        data-kt-menu-placement='bottom-start'
       >
         <KTSVG path='/media/icons/duotune/general/gen031.svg' className='svg-icon-2' />
         Filter

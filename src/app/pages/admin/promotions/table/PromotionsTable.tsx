@@ -10,7 +10,7 @@ import { fetchPromotions } from '../../../../store/actions/admin';
 const PromotionsTable = () => {
 
   const dispatch = useDispatch();
-  const { data, setSelected, isAllSelected, pagination } = usePromotionsListView();
+  const { data, setSelected, isAllSelected, pagination, filterData } = usePromotionsListView();
   const [listData, setListData] = useState(Array(0));
 
   const onSortHandler = (order: string) => {
@@ -26,6 +26,7 @@ const PromotionsTable = () => {
     }
    
     dispatch(fetchPromotions({
+      filterData,
       ...pagination,
       sort: __sort,
       orderBy: order,
@@ -51,8 +52,8 @@ const PromotionsTable = () => {
 
   return (
     <KTCardBody className='py-4'>
-      <div className='card-body py-3'>
-        <div className='table-responsive'>
+      <div className='card-body py-3' style={{position: 'relative'}}>
+        <div className='table-responsive min-h-300px'>
           <table className='table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4'>
             <thead>
               <tr className='fw-bold text-muted align-middle fs-5'>
@@ -126,6 +127,15 @@ const PromotionsTable = () => {
               <PromotionsTableBody listData={listData} setListData={setListData} />
             </tbody>
           </table>
+          {
+            listData.length === 0 &&
+            <div 
+              className='w-100 text-center text-muted fw-bold fs-6'
+              style={{position: 'absolute', top: '100px'}}
+            >
+              No matching records found
+            </div>
+          }
         </div>
         <div className='d-flex justify-content-end my-7'>
           <PromotionsPagination />

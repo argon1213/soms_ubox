@@ -31,19 +31,19 @@ type paymentStatus = {
 type ListViewContextProps = {
   uid?: string;
   data: {
-    id?: number;
-    code?: string,
-    emptyout_location_other?: string,
-    emptyout_date_other?: string,
-    emptyout_time_other?: string,
-    checkin_location_other?: string,
-    checkin_date_other?: string,
-    checkin_time_other?: string,
-    checkout_location_other?: string,
-    checkout_date_other?: string,
-    checkout_time_other?: string,
-    paid_fee?: string,
-    special_instruction?: string,
+    id: number;
+    code: string,
+    emptyout_location_other: string,
+    emptyout_date_other: string,
+    emptyout_time_other: string,
+    checkin_location_other: string,
+    checkin_date_other: string,
+    checkin_time_other: string,
+    checkout_location_other: string,
+    checkout_date_other: string,
+    checkout_time_other: string,
+    paid_fee: string,
+    special_instruction: string,
     payment_status_id: number,
     payment_type_id: number,
     order_status_id: number,

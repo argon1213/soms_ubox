@@ -215,8 +215,8 @@ export const ClientsAddModalFormWrapper = () => {
                     <option value="default" >Select Univeristy</option>
                     {
                       universities.length > 0 && 
-                      universities.map((university) => 
-                        <option value={university.id} className="">{university.display_name}</option>
+                      universities.map((university, index) => 
+                        <option value={university.id} key={index}>{university.display_name}</option>
                       )
                     }
                   </select>
