@@ -55,7 +55,7 @@ export default function CartPage(props) {
                                     <div className="text-normal text-black">${item.price} {t("cart.no-per-box")}</div>
                                 </div>
                                 <div className="my-auto">
-                                    <span className="text-normal text-black">${item.count * item.price}</span>
+                                    <span className="text-normal text-black">${Math.round(item.count * parseFloat(item.price) * 100) / 100}</span>
                                 </div>
                             </div>
                         )    

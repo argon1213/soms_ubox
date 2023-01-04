@@ -70,6 +70,50 @@ export const OrderDetailEdit = (props) => {
 
   const getPermitEdit = () => {
     let __permitEdit = permitEdit;
+
+    // let today = dayjs();
+    // if(dayjs(order?.checkout_date_other) < today) {
+    //   __permitEdit = ({
+    //     ...__permitEdit,
+    //     permitDelivery: false,
+    //     permitLadenReturn: false,
+    //     permitTentative: false,
+    //     permitRetrieval: false,
+    //   });
+    // } else if(dayjs(order?.checkin_date_other) < today) {
+    //   __permitEdit = ({
+    //     ...__permitEdit,
+    //     permitDelivery: false,
+    //     permitLadenReturn: false,
+    //     permitTentative: true,
+    //     permitRetrieval: true,
+    //   });
+    // } else if(dayjs(order?.emptyout_date_other) < today) {
+    //   __permitEdit = ({
+    //     ...__permitEdit,
+    //     permitDelivery: false,
+    //     permitLadenReturn: true,
+    //     permitTentative: true,
+    //     permitRetrieval: false,
+    //   });
+    // } else if(dayjs(order?.emptyout_date_other) > today) {
+    //   __permitEdit = ({
+    //     ...__permitEdit,
+    //     permitDelivery: true,
+    //     permitLadenReturn: true,
+    //     permitTentative: true,
+    //     permitRetrieval: false,
+    //   });
+    // } else {
+    //   __permitEdit = ({
+    //     ...__permitEdit,
+    //     permitDelivery: false,
+    //     permitLadenReturn: false,
+    //     permitTentative: false,
+    //     permitRetrieval: false,
+    //   });
+    // };
+
     switch(order.order_status_id) {
       case 1:
       case 4:
@@ -108,50 +152,8 @@ export const OrderDetailEdit = (props) => {
         break;
       default:
         break;
-    }
-
-    let today = dayjs();
-    if(dayjs(order?.checkout_date_other) < today) {
-      __permitEdit = ({
-        ...__permitEdit,
-        permitDelivery: false,
-        permitLadenReturn: false,
-        permitTentative: false,
-        permitRetrieval: false,
-      });
-    } else if(dayjs(order?.checkin_date_other) < today) {
-      __permitEdit = ({
-        ...__permitEdit,
-        permitDelivery: false,
-        permitLadenReturn: false,
-        permitTentative: true,
-        permitRetrieval: true,
-      });
-    } else if(dayjs(order?.emptyout_date_other) < today) {
-      __permitEdit = ({
-        ...__permitEdit,
-        permitDelivery: false,
-        permitLadenReturn: true,
-        permitTentative: true,
-        permitRetrieval: false,
-      });
-    } else if(dayjs(order?.emptyout_date_other) > today) {
-      __permitEdit = ({
-        ...__permitEdit,
-        permitDelivery: true,
-        permitLadenReturn: true,
-        permitTentative: true,
-        permitRetrieval: false,
-      });
-    } else {
-      __permitEdit = ({
-        ...__permitEdit,
-        permitDelivery: false,
-        permitLadenReturn: false,
-        permitTentative: false,
-        permitRetrieval: false,
-      });
-    }
+    };
+    
     setPermitEdit(__permitEdit);
   }
 

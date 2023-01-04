@@ -6,6 +6,7 @@ export interface ClientState {
   loading: boolean;
   error: null | string;
   page: number;
+  total: number;
   limit: number;
 }
 

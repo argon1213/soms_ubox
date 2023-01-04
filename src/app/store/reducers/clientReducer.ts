@@ -6,6 +6,7 @@ const initialState: ClientState = {
     products: [],
     currentOrder: {},
     page: 1,
+    total: 0,
     error: null,
     limit: 10,
     loading: false
@@ -22,7 +23,9 @@ export const clientReducer = (state = initialState, action: ClientAction): Clien
         case ClientActionTypes.FETCH_ORDERS:
             return {...state, loading: false, 
                 orders: action.payload.orders,
-                page: action.payload.page}
+                page: action.payload.page,
+                total: action.payload.total
+            }
         case ClientActionTypes.UPDATE_ORDER:
             return {...state, loading: false,
                 client: action.payload.client,

@@ -67,7 +67,7 @@ export const OrderDetailCart = (props) => {
                                 <div className="text-normal text-black" >${item.item_price} {t("cart.no-per-box")}</div>
                             </div>
                             <div className="my-auto" >
-                                <span className="text-normal text-black">${item.item_qty * item.item_price}</span>
+                                <span className="text-normal text-black">${Math.round(item.item_qty * item.item_price * 100) / 100}</span>
                             </div>
                         </div>
                     )

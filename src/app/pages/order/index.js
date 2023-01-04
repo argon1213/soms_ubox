@@ -228,7 +228,8 @@ export default function Home() {
     if(newCartInfo) {
       __cartInfo = newCartInfo;
     }
-   
+    __stores_total = Math.round(__stores_total * 100) / 100;
+    __material_total = Math.round(__material_total * 100) / 100;
     let __total = Math.round(__stores_total * __storage_month * 100) / 100 + __material_total;
 
     __cartInfo = {...__cartInfo, payment_type: 3, storage_month: __storage_month, stores: __stores, stores_total: __stores_total, materials: __materials, materials_total: __material_total, total: __total};

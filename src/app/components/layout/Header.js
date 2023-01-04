@@ -27,6 +27,9 @@ const Header = (props) => {
         // window.location.reload();
         window.location.href = "/";
     };
+    const onMyOrderHandler = () => {
+        window.location.href = "/client";
+    }
 
     return (
         <>
@@ -63,7 +66,7 @@ const Header = (props) => {
                                 {(logged === 1) ? (
                                     <>
                                         <div className="pr-[20px] pl-[20px] py-[10px] min-w-[90] flex align-items-center">
-                                            <Link to='/client' rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-my-order")}</Link>
+                                            <span onClick={onMyOrderHandler} rel="noreferrer" className="text-header text-yellow contact">{t("common.wd-my-order")}</span>
                                         </div>
                                         <div className="my-auto pl-[15px] flex item-center min-w-[40px]">
                                             <img src="/images/logout.png" className="link" alt="Logout" style={{ width: '26px', height: "auto"}} onClick={onLogout} />

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Header from "../../../components/layout/Header";
 import CssTextField from '../../../components/custom-components/TextField';
 import { useTranslation } from 'react-i18next'
@@ -82,6 +82,22 @@ export function ForgotPassword() {
       })
   }
 
+  const keyEnter = useCallback((event:any) => {
+    if (event.key === "Enter") {
+      document.getElementById("submit_otp_code")?.click();
+      document.getElementById("submit_forgetPassword_email")?.click();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyEnter, false);
+    return () => {
+      document.removeEventListener('keydown', keyEnter, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="top-container">
       <LoadingSpinner isLoading={isLoading} />
@@ -106,7 +122,7 @@ export function ForgotPassword() {
                     onChange={(e) => { setEmail(e.target.value) }}
                   />
                 </div>
-                <div className="flex item-center mt-[50px] mb-[40px]"><span className="custom-btn hand text-normal-18" onClick={onSubmitEmail} >{t("common.wd-submit")}</span></div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span id="submit_forgetPassword_email" className="custom-btn hand text-normal-18" onClick={onSubmitEmail} >{t("common.wd-submit")}</span></div>
               </>
             }
             {
@@ -139,7 +155,7 @@ export function ForgotPassword() {
                     onChange={(e) => { setPassword(e.target.value) }}
                   />
                 </div>
-                <div className="flex item-center mt-[50px] mb-[40px]"><span className="custom-btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
+                <div className="flex item-center mt-[50px] mb-[40px]"><span id="submit_otp_code" className="custom-btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
               </>
             }
           </div>

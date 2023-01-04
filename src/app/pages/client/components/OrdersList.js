@@ -22,7 +22,8 @@ const OrdersList = ({className}) => {
   const dispatch = useDispatch();
   const perPage = 10;
   const [offset, setOffset] = useState(0);
-  const [total, setTotal] = useState(0);
+  // const [total, setTotal] = useState(0);
+  const total = useSelector((state) => state.client.total);
 
   useEffect(() => {
     setInitial(true);
@@ -31,7 +32,7 @@ const OrdersList = ({className}) => {
   useEffect(() => {
     if(initial) {
       setOrderByKey(0);
-      setTotal(user.orderCount);
+      // setTotal(user.orderCount);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initial])
@@ -63,6 +64,7 @@ const OrdersList = ({className}) => {
       page: currentPage,
       offset: offset,
       limit: perPage,
+      total: total,
     }));
   }
 
@@ -75,6 +77,7 @@ const OrdersList = ({className}) => {
       page: page,
       offset: __offset,
       limit: perPage,
+      total: total,
     }));
   }
 
@@ -109,7 +112,10 @@ const OrdersList = ({className}) => {
             {/* end::Table head */}
             {/* begin::Table body */}
             <tbody>
-              <OrderRow orders={orders} />
+              {
+                orders &&
+                <OrderRow orders={orders} />
+              }
             </tbody>
             {/* end::Table body */}
           </table>

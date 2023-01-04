@@ -94,7 +94,7 @@ export const AdminAuth = () => {
               id='password'
               type='password'
               placeholder='Password'
-              autoComplete='off'
+              autoComplete='new-password'
               {...formik.getFieldProps('password')}
               className={clsx(
                 'form-control bg-transparent',

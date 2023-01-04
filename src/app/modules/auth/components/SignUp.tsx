@@ -1,4 +1,4 @@
-import { useState, FC } from "react";
+import { useState, FC, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { signup } from "../../../store/apis/auth";
 import CssTextField from "../../../components/custom-components/TextField";
@@ -111,6 +111,21 @@ const SignUp: FC<Props> = (props) => {
         });
     }
 
+    const keyEnter = useCallback((event:any) => {
+        if (event.key === "Enter") {
+          document.getElementById("submit_client_signup")?.click();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, []);
+    
+    useEffect(() => {
+    document.addEventListener('keydown', keyEnter, false);
+    return () => {
+        document.removeEventListener('keydown', keyEnter, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     return (
         <>
             <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
@@ -164,7 +179,7 @@ const SignUp: FC<Props> = (props) => {
                     />
                 </div>
             </div>
-            <div className="flex item-center mt-[40px] mb-[10px]"><span className="custom-btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-signup")}</span></div>
+            <div className="flex item-center mt-[40px] mb-[10px]"><span id="submit_client_signup" className="custom-btn hand text-normal-18" onClick={onSignUpFunc}>{t("common.wd-signup")}</span></div>
         </>
     )
 }

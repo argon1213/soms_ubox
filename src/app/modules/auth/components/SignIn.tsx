@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {useState, FC} from 'react'
+import {useState, FC, useEffect, useCallback} from 'react'
 import CssTextField from '../../../components/custom-components/TextField'
 import { ShowNotification } from '../../../components/notification'
 import { useTranslation } from 'react-i18next'
@@ -79,7 +79,21 @@ const SignIn: FC<Props> = (props) => {
         visible: false,
     });
   }
-  
+
+  const keyEnter = useCallback((event:any) => {
+    if (event.key === "Enter") {
+      document.getElementById("submit_client_sign")?.click();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('keydown', keyEnter, false);
+    return () => {
+      document.removeEventListener('keydown', keyEnter, false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -94,6 +108,7 @@ const SignIn: FC<Props> = (props) => {
             variant="standard"
             value={email}
             onChange={(e) => { setEmail(e.target.value) }}
+            onKeyDown={keyEnter}
           />
         </div>
         <div className="mt-[10px] mb-[10px]">
@@ -106,6 +121,7 @@ const SignIn: FC<Props> = (props) => {
             variant="standard"
             value={password}
             onChange={(e) => { setPassword(e.target.value) }}
+            onKeyDown={keyEnter}
           />
         </div>
       </div>
@@ -115,7 +131,7 @@ const SignIn: FC<Props> = (props) => {
           {t("common.wd-forgot-password")}
         </Link>
       </div>
-      <div className="flex item-center mt-[10px] mb-[40px]"><span className="custom-btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-signin")}</span></div>
+      <div className="flex item-center mt-[10px] mb-[40px]"><span id="submit_client_sign" className="custom-btn hand text-normal-18" onClick={onSignInFunc}>{t("common.wd-signin")}</span></div>
     </>
   )
 }
