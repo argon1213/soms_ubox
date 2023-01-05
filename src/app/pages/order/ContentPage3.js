@@ -156,6 +156,9 @@ export default function ContentPage3(props) {
         if (address === "") {
             onNotification({ title: 'warning', message: "common.no-input-address", visible: true, status: Math.floor(Math.random() * 100000) });
             return;
+        } else if (address.length > 250) {
+            onNotification({ title: 'warning', message: "common.no-input-address-length", visible: true, status: Math.floor(Math.random() * 100000) });
+            return;
         }
 
         onChangeStep();
@@ -355,6 +358,7 @@ export default function ContentPage3(props) {
                                         inputFormat="DD/MM/YYYY"
                                         value={ladenReturnDate}
                                         minDate={deliveryDate}
+                                        maxDate={dayjs(deliveryDate).add(14, 'day')}
                                         onChange={handleLadenReturnDateChange}
                                         renderInput={(params) => <CssTextField
                                             label={t("common.wd-laden-return-date")}

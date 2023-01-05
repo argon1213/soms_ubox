@@ -60,9 +60,12 @@ export function ForgotPassword() {
     if(code === "") {
       setNotify({ title: 'warning', message: "common.wd-enter-code", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
-    }
+    } 
     if(password === "") {
       setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+      return;
+    } else if(password.length < 9) {
+      setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
     }
     let __data = {

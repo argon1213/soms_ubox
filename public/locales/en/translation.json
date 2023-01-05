@@ -64,6 +64,7 @@
   "common.no-input-contact": "Please input the contact",
   "common.no-input-contact-validate": "Contact must be number and the length must be between 8 and 11 letters.",
   "common.no-input-address": "Please input the address",
+  "common.no-input-address-length": "Address must be less than 250 letters",
   "common.no-input-password": "Please input the password",
   "common.no-input-password-length": "Length of Password must be between 8 and 16 letters",
   "common.no-input-university": "Please input the university",

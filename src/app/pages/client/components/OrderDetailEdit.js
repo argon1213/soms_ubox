@@ -347,6 +347,7 @@ export const OrderDetailEdit = (props) => {
                     inputFormat="DD/MM/YYYY"
                     value={ladenReturnDate}
                     minDate={deliveryDate}
+                    maxDate={dayjs(deliveryDate).add(14, 'day')}
                     onChange={handleLadenReturnDateChange}
                     disabled={!permitEdit.permitLadenReturn}
                     renderInput={(params) => <CssTextField

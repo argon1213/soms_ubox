@@ -64,6 +64,7 @@
   "common.no-input-contact": "請輸入聯絡電話",
   "common.no-input-contact-validate": "聯絡電話必須全是 0~9 的數字和長度為 8-11 位數字",  
   "common.no-input-address": "請輸入交收地址",
+  "common.no-input-address-length": "地址必须少于 250 个字母",
   "common.no-input-password": "請輸入密碼",
   "common.no-input-password-length": "密码长度必须在 8 到 16 个字母之间",
   "common.no-input-university": "請輸入所讀大學",
