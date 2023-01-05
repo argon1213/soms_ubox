@@ -45,7 +45,7 @@ const SidebarMenuMain = () => {
         title='Promotion List'
         fontIcon='bi-app-indicator'
       />
-      <SidebarMenuItemWithSub to='/admin/orders/90' title='Client Group' icon='/media/icons/duotune/general/gen051.svg'>
+      <SidebarMenuItemWithSub to='/admin/orders' title='Client Group' icon='/media/icons/duotune/general/gen051.svg'>
         <SidebarMenuItem to='/admin/orders/90' title='All' hasBullet={true} />
         <SidebarMenuItem to='/admin/orders/1' title='HKU' hasBullet={true} />
         <SidebarMenuItem to='/admin/orders/2' title='PolyU' hasBullet={true} />
