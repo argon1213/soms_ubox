@@ -101,9 +101,9 @@ const OrdersList = ({className}) => {
                   </span>
                 </th>
                 <th className='min-w-[90px] text-center'>{t("common.wd-status")}</th>
-                <th className='min-w-[170px]'>{t("common.wd-order-date")}</th>
+                <th className='min-w-[120px]'>{t("common.wd-order-date")}</th>
+                <th className='min-w-[140px]'>{t("common.wd-laden-return-date")}</th>
                 <th className='min-w-[140px]'>{t("common.wd-tentative-retrieval-date")}</th>
-                <th className='min-w-[120px]'>{t("common.wd-checkout-date")}</th>
                 <th className='min-w-[80px]'>{t("common.wd-total-fee")}</th>
                 <th className='min-w-[100px]'>{t("common.wd-outstanding-fee")}</th>
                 <th className='min-w-[120px]'>{t("common.wd-payment-method")}</th>

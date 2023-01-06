@@ -94,7 +94,7 @@
   "common.wd-outstanding-fee": "欠费",
   "common.wd-qr-code": "QR 代码",
   "common.wd-account-infomation": "帐户信息",
-  "common.wd-paid-by": "付费（由 {{name}})",
+  "common.wd-paid-by": "付费",
   "common.wd-outstanding": "杰出的",
   "common.wd-payment-method": "付款方式",
   "common.wd-my-order": "我的订单",
@@ -122,5 +122,8 @@
   "common.no-input-current-password-validate": "当前密码不正确.",
   "common.no-input-email-registered": "此邮箱未注册",
   "common.no-success-reset-password": "密码重置成功",
-  "common.no-error-reset-password-code": "代码不正确"
+  "common.no-error-reset-password-code": "代码不正确",
+
+  "common.no-forgot-password-email-msg": "输入您用于 ubox 的电子邮件，我们将帮助您创建一个新密码。",
+  "common.no-forgot-password-code-msg": "我们向 ***{{emailLetter}}**.com 发送了安全代码。 您可能需要检查您的垃圾邮件文件夹"
 }

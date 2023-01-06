@@ -94,7 +94,7 @@ const OrderRow = (props) => {
     let mm = newDate.getMinutes();
     if(mm <= 9) mm = "0" + mm;
     if(type === 1) {
-      let result = DD + '/' + MM + '/' + YY + ' ' + HH + ':' + mm;
+      let result = DD + '/' + MM + '/' + YY;
       return result;
     } else if (type === 2) {
       let result = DD + '/' + MM + '/' + YY;

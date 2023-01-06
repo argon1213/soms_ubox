@@ -60,7 +60,6 @@ export const OrderDetailEdit = (props) => {
         setTentativeDate(order?.checkout_date_other);
         setTentativeTimeIndex(getTimeIndex(order?.checkout_time_other));
         setEmptyBoxReturnDate(order?.storage_expired_date);
-
         setAddress(order.emptyout_location_other);
 
         getPermitEdit();
@@ -382,6 +381,7 @@ export const OrderDetailEdit = (props) => {
                     inputFormat="DD/MM/YYYY"
                     value={tentativeDate}
                     minDate={ladenReturnDate}
+                    maxDate={emptyBoxReturnDate}
                     onChange={handleTentativeDateChange}
                     disabled={!permitEdit.permitTentative}
                     renderInput={(params) => <CssTextField

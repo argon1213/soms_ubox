@@ -94,7 +94,7 @@
   "common.wd-outstanding-fee": "Outstanding Fee",
   "common.wd-qr-code": "QR Code",
   "common.wd-account-infomation": "Account Information",
-  "common.wd-paid-by": "Paid (by {{name}})",
+  "common.wd-paid-by": "Paid",
   "common.wd-outstanding": "Outstanding",
   "common.wd-payment-method": "Payment method",
   "common.wd-my-order": "My Order",
@@ -122,5 +122,8 @@
   "common.no-input-current-password-validate": "Current password is incorrect.",
   "common.no-input-email-registered": "This email is not registered",
   "common.no-success-reset-password": "Password is reset successfully",
-  "common.no-error-reset-password-code": "Code is incorrect"
+  "common.no-error-reset-password-code": "Code is incorrect",
+
+  "common.no-forgot-password-email-msg": "Enter the email you use for ubox, and we’ll help you create a new password.",
+  "common.no-forgot-password-code-msg": "We sent a security code to ***{{emailLetter}}**.com. You may need to check your Junk or Spam folder"
 }

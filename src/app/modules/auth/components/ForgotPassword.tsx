@@ -6,7 +6,6 @@ import { ShowNotification } from '../../../components/notification';
 import { SendEmailforgotPassword, SendCodeResetPassword } from '../../../store/apis/client';
 import LoadingSpinner from '../../../components/loading-spinner';
 
-
 export function ForgotPassword() {
   const { t } = useTranslation();
   const [logged, setLogged] = useState<Number>(0);
@@ -16,6 +15,8 @@ export function ForgotPassword() {
   const [resetStatus, setResetStatus] = useState<boolean>(false);
   const [notify, setNotify] = useState({ title: '', message: '', visible: false, status: 0 });
   const [isLoading, setIsLoading] = useState(false);
+  const [validatePassword, setValidatePassword] = useState(false);
+  const [emailLetter, setEmailLetter] = useState("");
 
   useEffect(() => {
     let __logged: String | any = localStorage.getItem("ubox-is-authenticated");
@@ -49,6 +50,7 @@ export function ForgotPassword() {
           setResetStatus(true);
         }
         setIsLoading(false);
+        getEmailLetter();
       })
       .catch((res) => {
         setNotify({ title: 'warning', message: "common.no-input-email-registered", visible: true, status: Math.floor(Math.random() * 100000) });
@@ -62,10 +64,10 @@ export function ForgotPassword() {
       return;
     } 
     if(password === "") {
-      setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
+      // setNotify({ title: 'warning', message: "common.no-input-password", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
-    } else if(password.length < 9) {
-      setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
+    } else if(password.length > 16 || password.length < 8) {
+      // setNotify({ title: 'warning', message: "common.no-input-password-length", visible: true, status: Math.floor(Math.random() * 100000) });
       return;
     }
     let __data = {
@@ -78,11 +80,20 @@ export function ForgotPassword() {
       .then((res) => {
         setNotify({ title: 'warning', message: "common.no-success-reset-password", visible: true, status: Math.floor(Math.random() * 100000) });
         setIsLoading(false);
+        window.location.href = "/client/login";
       })
       .catch((err) => {
         setNotify({ title: 'warning', message: "common.no-error-reset-password-code", visible: true, status: Math.floor(Math.random() * 100000) });
         setIsLoading(false);
       })
+  }
+
+  const getEmailLetter = () => {
+    let __email = email;
+    let __pos = __email.indexOf('@');
+    let __letter = __email.substring(__pos - 2, __pos + 3);
+    setEmailLetter(__letter);
+    return __letter;
   }
 
   const keyEnter = useCallback((event:any) => {
@@ -115,7 +126,14 @@ export function ForgotPassword() {
                 <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
                   {t("common.wd-enter-email")}
                 </div>
-                <div className='mt-[40px]'>
+
+                <div className='forgot-password-msg'>
+                  <span className='text-yellow'>
+                    {t("common.no-forgot-password-email-msg", {emailLetter: emailLetter})}
+                  </span>
+                </div>
+
+                <div className='mt-[20px]'>
                   <CssTextField 
                     required fullWidth
                     id="email"
@@ -134,7 +152,14 @@ export function ForgotPassword() {
                 <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
                   {t("common.wd-enter-code")}
                 </div>
-                <div className='mt-[40px]'>
+
+                <div className='forgot-password-msg'>
+                  <span className='text-yellow'>
+                    {t("common.no-forgot-password-code-msg", {emailLetter: emailLetter})}
+                  </span>
+                </div>
+
+                <div className='mt-[20px]'>
                   <CssTextField 
                     required fullWidth
                     id="code"
@@ -144,7 +169,7 @@ export function ForgotPassword() {
                     onChange={(e) => { setCode(e.target.value) }}
                   />
                 </div>
-                <div className="mt-[10px] mb-[10px]">
+                <div className="mt-[10px] mb-[10px]" style={{position: 'relative'}}>
                   <CssTextField
                     required fullWidth
                     id="reset-password"
@@ -155,10 +180,32 @@ export function ForgotPassword() {
                       autoComplete: 'new-password',
                     }}
                     value={password}
-                    onChange={(e) => { setPassword(e.target.value) }}
+                    onChange={(e) => { 
+                      setPassword(e.target.value); 
+                      let __password = e.target.value;
+                      if(__password.length > 16 || __password.length < 8) {
+                      } else {
+                        setValidatePassword(false);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      let __password = e.target.value;
+                      if(__password.length > 16 || __password.length < 8) {
+                        setValidatePassword(true);
+                      } else {
+                        setValidatePassword(false);
+                      }
+                    }}  
                   />
+                  {
+                    validatePassword &&
+                    <div className='py-1' style={{position: 'absolute', bottom: '-20px'}}>
+                      <span className='text-red'>{t("common.no-input-password-length")}</span>
+                    </div>
+                  }
                 </div>
                 <div className="flex item-center mt-[50px] mb-[40px]"><span id="submit_otp_code" className="custom-btn hand text-normal-18" onClick={onSubmitCode} >{t("common.wd-submit")}</span></div>
+                
               </>
             }
           </div>
