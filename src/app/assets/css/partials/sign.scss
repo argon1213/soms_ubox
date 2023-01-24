@@ -18,16 +18,15 @@
 .forgot-password-tab {
     text-align: center;
     padding: 23px;
-    border: 1px #FFBE3D solid;
-    background: #FFBE3D;
-    color: #fff;
+    color: #FFBE3D;
+    font-size: 25px;
 }
 
 .forgot-password-msg {
     display: flex;
     justify-content: center;
     max-width: 400px;
-    margin-top: 30px;
+    margin-top: 20px;
 
     span {
         text-align: justify;

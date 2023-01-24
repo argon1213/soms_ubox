@@ -123,8 +123,8 @@ export function ForgotPassword() {
             {
               !resetStatus && 
               <>
-                <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
-                  {t("common.wd-enter-email")}
+                <div className='forgot-password-tab text-normal'>
+                  {t("common.no-need-help-password")}
                 </div>
 
                 <div className='forgot-password-msg'>
@@ -149,7 +149,7 @@ export function ForgotPassword() {
             {
               resetStatus && 
               <>
-                <div className='forgot-password-tab text-normal' style={{fontSize: "22px"}}>
+                <div className='forgot-password-tab text-normal'>
                   {t("common.wd-enter-code")}
                 </div>
 

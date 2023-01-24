@@ -124,6 +124,7 @@
   "common.no-success-reset-password": "Password is reset successfully",
   "common.no-error-reset-password-code": "Code is incorrect",
 
+  "common.no-need-help-password": "Need help with your password?",
   "common.no-forgot-password-email-msg": "Enter the email you use for ubox, and we’ll help you create a new password.",
   "common.no-forgot-password-code-msg": "We sent a security code to ***{{emailLetter}}**.com. You may need to check your Junk or Spam folder"
 }

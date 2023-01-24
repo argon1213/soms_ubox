@@ -124,6 +124,7 @@
   "common.no-success-reset-password": "密码重置成功",
   "common.no-error-reset-password-code": "代码不正确",
 
+  "common.no-need-help-password": "需要密码方面的帮助吗？",
   "common.no-forgot-password-email-msg": "输入您用于 ubox 的电子邮件，我们将帮助您创建一个新密码。",
   "common.no-forgot-password-code-msg": "我们向 ***{{emailLetter}}**.com 发送了安全代码。 您可能需要检查您的垃圾邮件文件夹"
 }
