@@ -8,12 +8,16 @@ import { Elements } from "@stripe/react-stripe-js";
 import PaymentForm from "../../components/payment";
 import { orderSubmit } from "../../store/apis/ordering";
 import LoadingSpinner from "../../components/loading-spinner";
+import Iframe from "../../components/yedpay-frame";
+import { payConfirm } from "../../store/apis/ordering";
 
 export default function ContentPage5(props) {
     const { onNotification, cartInfo, setCartInfo, stuffInfo, accountInfo, setOrder } = props;
     const [paymentType, setPaymentType] = useState(3);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
+    const [checkoutUrl, setCheckoutUrl] = useState();
+    const [paymentCode, setPaymentCode] = useState();
 
     const __carts = cartInfo;
     const __duration = cartInfo.storage_month;
@@ -23,7 +27,7 @@ export default function ContentPage5(props) {
     const __user_info = JSON.parse(localStorage.getItem("ubox-user"));
 
     let __account_info_student = {};
-    if(__account_info.isStudent === 0){
+    if (__account_info.isStudent === 0) {
         __account_info_student = {
             ...__account_info,
             studentID: "",
@@ -33,10 +37,10 @@ export default function ContentPage5(props) {
     } else {
         __account_info_student = __account_info;
     }
-    
+
     const getStripe = () => {
         const stripeKey = process.env.REACT_APP_STRIPE_KEY;
-        const stripePromise = loadStripe(stripeKey); 
+        const stripePromise = loadStripe(stripeKey);
         return stripePromise;
     }
     const handleRadioChange = (event) => {
@@ -49,13 +53,51 @@ export default function ContentPage5(props) {
     };
 
     const onNextHandler = (e) => {
-        if(paymentType === 3) {
+        if (paymentType === 3) {
             document.querySelector('form').requestSubmit();
             setIsLoading(true);
+        } else if (paymentType === 6) {
+            setIsLoading(true);
+            let stripeToken = "";
+            orderSubmitHandler(stripeToken);
         } else {
             setIsLoading(true);
-            let stripeToken = ""
-            orderSubmitHandler(stripeToken);
+            orderSubmit({
+                stripeToken: "",
+                carts: { ...__carts, duration: __duration, payment_type: paymentType },
+                stuff: {
+                    ...__stuff_info,
+                },
+                account: __account_info_student,
+                somsclient_id: __user_info.id,
+            }).then((res) => {
+                setOrder(res.data.order);
+                if (res.data.success === false) {
+                    setCheckoutUrl(res.data.data);
+                    setPaymentCode(res.data.code);
+                    setIsLoading(true);
+                    const payConfirmTimer = setInterval(() => {
+                        payConfirm({ code: paymentCode })
+                            .then((res) => {
+                                if (res.data.success === true) {
+                                    clearInterval(payConfirmTimer);
+                                    props.onChangeStep();
+                                }
+                            })
+                            .catch((err) => {
+                                console.log('error', err);
+                            })
+                    }, 3000);
+                } else {
+                    console.log("responseError", res.data);
+                    onNotification({ title: "warning", message: "No connect.", visible: true, status: Math.floor(Math.random() * 100000) });
+                }
+            }).catch((err) => {
+                console.log("errors_message", err);
+                onNotification({ title: "error", message: err.data.message, visible: true, status: Math.floor(Math.random() * 100000) });
+            }).finally(() => {
+                setIsLoading(false);
+            });
         }
     }
 
@@ -70,10 +112,10 @@ export default function ContentPage5(props) {
             somsclient_id: __user_info.id,
         }).then((res) => {
             setOrder(res.data.order);
-            if(res.data.code === "success") {
+            if (res.data.code === "success") {
                 onNotification({ title: res.data.code, message: res.data.message, visible: true, status: Math.floor(Math.random() * 100000) });
                 props.onChangeStep();
-            } else if(res.data.code === "error") {
+            } else if (res.data.code === "error") {
                 console.log("responseError", res.data);
                 onNotification({ title: "warning", message: res.data.message, visible: true, status: Math.floor(Math.random() * 100000) });
                 props.onChangeStep();
@@ -87,10 +129,10 @@ export default function ContentPage5(props) {
     }
 
     useEffect(() => {
-        if(paymentType === 4 || paymentType === 5) {
-          
+        if (paymentType === 4 || paymentType === 5) {
+
         }
-         // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [paymentType]);
 
     const onCallbackFunc = (error, token) => {
@@ -115,19 +157,22 @@ export default function ContentPage5(props) {
                     <div className="text-normal text-black">{t("page5.an-which-payment")}</div>
                     <div className="mt-[33px]" >
                         <Grid container spacing={1}>
-                            <Grid item xs={12} sm={12} md={12}>
-                                <RadioGroup
-                                    aria-labelledby="payment-type-radio-buttons-group"
-                                    name="radio-buttons-group"
-                                    value={paymentType}
-                                    onChange={handleRadioChange}
-                                >
-                                    <CssFormControlLabel value={3} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
-                                    <CssFormControlLabel value={4} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
-                                    <CssFormControlLabel value={5} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
-                                    <CssFormControlLabel value={6} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
-                                </RadioGroup>
-                            </Grid>
+                            {
+                                !checkoutUrl &&
+                                <Grid item xs={12} sm={12} md={12}>
+                                    <RadioGroup
+                                        aria-labelledby="payment-type-radio-buttons-group"
+                                        name="radio-buttons-group"
+                                        value={paymentType}
+                                        onChange={handleRadioChange}
+                                    >
+                                        <CssFormControlLabel value={3} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
+                                        <CssFormControlLabel value={4} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
+                                        <CssFormControlLabel value={5} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
+                                        <CssFormControlLabel value={6} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
+                                    </RadioGroup>
+                                </Grid>
+                            }
                             <Grid item xs={12} sm={12} md={12}>
                                 <div className="flex items-center">
                                     {paymentType === 3 && (
@@ -139,12 +184,14 @@ export default function ContentPage5(props) {
                                     )}
                                     {paymentType === 4 && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
-                                            <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
+                                            {/* <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} /> */}
+                                            <Iframe source={checkoutUrl} />
                                         </div>
                                     )}
                                     {paymentType === 5 && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
-                                            <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} />
+                                            {/* <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} /> */}
+                                            <Iframe source={checkoutUrl} />
                                         </div>
                                     )}
                                 </div>
@@ -152,7 +199,12 @@ export default function ContentPage5(props) {
                         </Grid>
                     </div>
                 </div>
-                <div className="flex item-center mt-[30px]"><span className="custom-btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span></div>
+                <div className="flex item-center mt-[30px]">
+                    {
+                        !checkoutUrl &&
+                        <span className="custom-btn hand" onClick={onNextHandler}>{t("common.wd-next")}</span>
+                    }
+                </div>
             </div>
         </>
     )
