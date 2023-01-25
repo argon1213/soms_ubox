@@ -16,8 +16,8 @@ export default function ContentPage5(props) {
     const [paymentType, setPaymentType] = useState(3);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
-    const [checkoutUrl, setCheckoutUrl] = useState();
-    const [paymentCode, setPaymentCode] = useState();
+    const [checkoutUrl, setCheckoutUrl] = useState("");
+    const [paymentCode, setPaymentCode] = useState("");
 
     const __carts = cartInfo;
     const __duration = cartInfo.storage_month;
@@ -37,6 +37,27 @@ export default function ContentPage5(props) {
     } else {
         __account_info_student = __account_info;
     }
+
+    useEffect(() => {
+        if (paymentCode !== undefined && paymentCode !== "") {
+            const payConfirmTimer = setInterval(() => {
+                payConfirm({ code: paymentCode })
+                    .then((res) => {
+                        if (res.data.success === true) {
+                            clearInterval(payConfirmTimer);
+                            props.onChangeStep();
+                        }
+                    })
+                    .catch((err) => {
+                        console.log('error', err);
+                    })
+            }, 3000);
+            setTimeout(() => {
+                clearInterval(payConfirmTimer);
+            }, 300000);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [paymentCode])
 
     const getStripe = () => {
         const stripeKey = process.env.REACT_APP_STRIPE_KEY;
@@ -72,22 +93,10 @@ export default function ContentPage5(props) {
                 somsclient_id: __user_info.id,
             }).then((res) => {
                 setOrder(res.data.order);
-                if (res.data.success === false) {
+                if (res.data.success === true) {
                     setCheckoutUrl(res.data.data);
                     setPaymentCode(res.data.code);
                     setIsLoading(true);
-                    const payConfirmTimer = setInterval(() => {
-                        payConfirm({ code: paymentCode })
-                            .then((res) => {
-                                if (res.data.success === true) {
-                                    clearInterval(payConfirmTimer);
-                                    props.onChangeStep();
-                                }
-                            })
-                            .catch((err) => {
-                                console.log('error', err);
-                            })
-                    }, 3000);
                 } else {
                     console.log("responseError", res.data);
                     onNotification({ title: "warning", message: "No connect.", visible: true, status: Math.floor(Math.random() * 100000) });

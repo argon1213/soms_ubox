@@ -2,7 +2,7 @@ import React from 'react';
 
 const Iframe = ({ source }) => {
 
-  if (!source) {
+  if (source === undefined || source === "") {
     return <div></div>;
   }
 
