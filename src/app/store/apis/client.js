@@ -2,9 +2,9 @@ import axios from "./index";
 
 export function updateAccountApi(params) {
   return axios.post(`/client/account/update`, params, {
-      headers: {
-          'content-type': 'text/json'
-      }
+    headers: {
+      'content-type': 'text/json'
+    }
   });
 }
 
@@ -58,6 +58,14 @@ export function SendEmailforgotPassword(params) {
 
 export function SendCodeResetPassword(params) {
   return axios.post('/client/resetPassword', params, {
+    headers: {
+      'content-type': 'text/json'
+    }
+  });
+}
+
+export function outstandPayApi(params) {
+  return axios.post('/client/outstand-pay', params, {
     headers: {
       'content-type': 'text/json'
     }

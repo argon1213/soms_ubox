@@ -13,14 +13,14 @@ export default function ContentPage6(props) {
         window.location.href = "/client/dashboard";
     }
     const onOderStatusHandler = (e) => {
-        window.location.href = "/client/order/" + order.id ;
+        window.location.href = "/client/order/" + order.id;
     }
     return (
         <div className="content-container thanks">
             <div className="content-page">
                 <div className="text-header text-black">{t("common.wd-thank-you")}</div>
                 <div className="text-normal text-black">{t("common.wd-thank-you")}</div>
-                <div className="text-normal text-black mt-[110px]">{t("page6.no-paragraph1", {order: order.code, email:email})}</div>
+                <div className="text-normal text-black mt-[110px]">{t("page6.no-paragraph1", { order: order.code, email: email })}</div>
                 <div className="text-normal text-black mt-[36px]">
                     <Trans i18nKey="page6.no-paragraph2">
                         Click for your{" "}
@@ -28,7 +28,7 @@ export default function ContentPage6(props) {
                     </Trans>
                 </div>
             </div>
-            <div className="flex item-center my-[10px]"><span className="custom-btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</span></div>
+            <div className="flex item-center my-[30px]"><span className="custom-btn hand" onClick={onDoneHandler}>{t("common.wd-done")}</span></div>
         </div>
     )
 }

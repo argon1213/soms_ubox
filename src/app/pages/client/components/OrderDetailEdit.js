@@ -12,7 +12,7 @@ import LoadingSpinner from "../../../components/loading-spinner";
 import { ShowNotification } from "../../../components/notification";
 
 export const OrderDetailEdit = (props) => {
-  const {order} = props;
+  const { order } = props;
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.client.loading);
@@ -38,31 +38,31 @@ export const OrderDetailEdit = (props) => {
 
   const timelist = [
     {
-        value: 0,
-        label: '09:00 - 12:00',
+      value: 0,
+      label: '09:00 - 12:00',
     },
     {
-        value: 1,
-        label: '13:00 - 15:00',
+      value: 1,
+      label: '13:00 - 15:00',
     },
     {
-        value: 2,
-        label: '15:00 - 18:00',
+      value: 2,
+      label: '15:00 - 18:00',
     },
   ];
 
   useEffect(() => {
-    if(order.emptyout_date_other !== undefined) {
-        setDeliveryDate(order?.emptyout_date_other);
-        setDeliveryTimeIndex(getTimeIndex(order?.emptyout_time_other));
-        setLadenReturnDate(order?.checkin_date_other);
-        setLadenReturnTimeIndex(getTimeIndex(order?.checkin_time_other));
-        setTentativeDate(order?.checkout_date_other);
-        setTentativeTimeIndex(getTimeIndex(order?.checkout_time_other));
-        setEmptyBoxReturnDate(order?.storage_expired_date);
-        setAddress(order.emptyout_location_other);
+    if (order.emptyout_date_other !== undefined) {
+      setDeliveryDate(order?.emptyout_date_other);
+      setDeliveryTimeIndex(getTimeIndex(order?.emptyout_time_other));
+      setLadenReturnDate(order?.checkin_date_other);
+      setLadenReturnTimeIndex(getTimeIndex(order?.checkin_time_other));
+      setTentativeDate(order?.checkout_date_other);
+      setTentativeTimeIndex(getTimeIndex(order?.checkout_time_other));
+      setEmptyBoxReturnDate(order?.storage_expired_date);
+      setAddress(order.emptyout_location_other);
 
-        getPermitEdit();
+      getPermitEdit();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [order])
@@ -113,10 +113,8 @@ export const OrderDetailEdit = (props) => {
     //   });
     // };
 
-    switch(order.order_status_id) {
+    switch (order.order_status_id) {
       case 1:
-      case 4:
-      case 8:
         __permitEdit = ({
           ...__permitEdit,
           permitDelivery: true,
@@ -125,16 +123,34 @@ export const OrderDetailEdit = (props) => {
           permitRetrieval: false,
         });
         break;
+      case 4:
+      case 8:
+        __permitEdit = ({
+          ...__permitEdit,
+          permitDelivery: false,
+          permitLadenReturn: true,
+          permitTentative: true,
+          permitRetrieval: false,
+        });
+        break;
       case 14:
       case 16:
       case 20:
+        __permitEdit = ({
+          ...__permitEdit,
+          permitDelivery: false,
+          permitLadenReturn: false,
+          permitTentative: true,
+          permitRetrieval: true,
+        });
+        break;
       case 24:
       case 25:
         __permitEdit = ({
           ...__permitEdit,
           permitDelivery: false,
           permitLadenReturn: false,
-          permitTentative: true,
+          permitTentative: false,
           permitRetrieval: true,
         });
         break;
@@ -152,35 +168,35 @@ export const OrderDetailEdit = (props) => {
       default:
         break;
     };
-    
+
     setPermitEdit(__permitEdit);
   }
 
-  const onNotification = ({title, message, visible, status}) => {
-    setNotify({ title, message, visible, status});
+  const onNotification = ({ title, message, visible, status }) => {
+    setNotify({ title, message, visible, status });
   }
   const closeNotify = () => {
     setNotify({
-        ...notify,
-        visible: false,
+      ...notify,
+      visible: false,
     });
   }
 
   const getTimeIndex = (time) => {
-    switch(time) {
-        case "09:00 - 12:00":
-            return 0;
-        case "13:00 - 15:00":
-            return 1;
-        case "15:00 - 18:00":
-            return 2;
-        default:
-            return 0;
+    switch (time) {
+      case "09:00 - 12:00":
+        return 0;
+      case "13:00 - 15:00":
+        return 1;
+      case "15:00 - 18:00":
+        return 2;
+      default:
+        return 0;
     }
   }
 
   const getTime = (index) => {
-    switch(index) {
+    switch (index) {
       case 0:
         return "09:00 - 12:00";
       case 1:
@@ -198,51 +214,51 @@ export const OrderDetailEdit = (props) => {
   };
 
   const defaultMaterialTheme = createTheme({
-      palette: {
-          primary: customColor,
-      },
+    palette: {
+      primary: customColor,
+    },
   });
 
   const handleDeliveryDateChange = (newValue) => {
     // let __stuffInfo = stuffInfo;
     // __stuffInfo = ({...__stuffInfo, deliveryDate: newValue.format("YYYY-MM-DD")});
     setDeliveryDate(newValue);
-    if(newValue >= dayjs(ladenReturnDate)) {
-        setLadenReturnDate(newValue);
-        // __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
-        // let __expirationDate = newValue.add(props.storage_month, 'month');
-        // setExpirationDate(__expirationDate);
-        // __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
+    if (newValue >= dayjs(ladenReturnDate)) {
+      setLadenReturnDate(newValue);
+      // __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
+      // let __expirationDate = newValue.add(props.storage_month, 'month');
+      // setExpirationDate(__expirationDate);
+      // __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
     }
     // setStuffInfo(__stuffInfo);
   };
   const handleLadenReturnDateChange = (newValue) => {
-      // let __stuffInfo = stuffInfo;
-      // __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
-      setLadenReturnDate(newValue);
-      // let __expirationDate = newValue.add(props.storage_month, 'month');
-      // setExpirationDate(__expirationDate);
-      // __stuffInfo = ({...__stuffInfo, expirationDate: __expirationDate.format("YYYY-MM-DD")});
-      if(newValue >= dayjs(tentativeDate)) {
-          setTentativeDate(newValue);
-        //   __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
-      }
-      // setStuffInfo(__stuffInfo);
+    // let __stuffInfo = stuffInfo;
+    // __stuffInfo = ({...__stuffInfo, ladenReturnDate: newValue.format("YYYY-MM-DD")});
+    setLadenReturnDate(newValue);
+    // let __expirationDate = newValue.add(props.storage_month, 'month');
+    // setExpirationDate(__expirationDate);
+    // __stuffInfo = ({...__stuffInfo, expirationDate: __expirationDate.format("YYYY-MM-DD")});
+    if (newValue >= dayjs(tentativeDate)) {
+      setTentativeDate(newValue);
+      //   __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
+    }
+    // setStuffInfo(__stuffInfo);
   };
   const handleTentativeDateChange = (newValue) => {
-      // let __stuffInfo = stuffInfo;
-      // __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
-      setTentativeDate(newValue);
-      // if(newValue >= dayjs(expirationDate)) {
-      //     setExpirationDate(newValue);
-      //     __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
-      // }
-      // setStuffInfo(__stuffInfo);
+    // let __stuffInfo = stuffInfo;
+    // __stuffInfo = ({...__stuffInfo, tentativeDate: newValue.format("YYYY-MM-DD")});
+    setTentativeDate(newValue);
+    // if(newValue >= dayjs(expirationDate)) {
+    //     setExpirationDate(newValue);
+    //     __stuffInfo = ({...__stuffInfo, expirationDate: newValue.format("YYYY-MM-DD")});
+    // }
+    // setStuffInfo(__stuffInfo);
   };
   const handleRetrievalDateChange = (newValue) => {
     setRetrievalDate(newValue);
-    if(newValue >= dayjs(emptyBoxReturnDate)) {
-        setEmptyBoxReturnDate(newValue);
+    if (newValue >= dayjs(emptyBoxReturnDate)) {
+      setEmptyBoxReturnDate(newValue);
     }
   }
   const handleEmptyBoxReturnDateChange = (newValue) => {
@@ -250,25 +266,25 @@ export const OrderDetailEdit = (props) => {
   }
 
   const handleDeliveryTimeChange = (e) => {
-      setDeliveryTimeIndex(e.target.value);
-      // setStuffInfo({...stuffInfo,
-      //     deliveryTimeIndex: e.target.value,
-      //     deliveryTime: timelist[e.target.value].label
-      // });
+    setDeliveryTimeIndex(e.target.value);
+    // setStuffInfo({...stuffInfo,
+    //     deliveryTimeIndex: e.target.value,
+    //     deliveryTime: timelist[e.target.value].label
+    // });
   };
   const handleLadenReturnTimeChange = (e) => {
-      setLadenReturnTimeIndex(e.target.value);
-      // setStuffInfo({...stuffInfo,
-      //     ladenReturnTimeIndex: e.target.value, 
-      //     ladenReturnTime: timelist[e.target.value].label
-      // });
+    setLadenReturnTimeIndex(e.target.value);
+    // setStuffInfo({...stuffInfo,
+    //     ladenReturnTimeIndex: e.target.value, 
+    //     ladenReturnTime: timelist[e.target.value].label
+    // });
   };
   const handleTentativeTimeChange = (e) => {
-      setTentativeTimeIndex(e.target.value);
-      // setStuffInfo({...stuffInfo,
-      //     tentativeTimeIndex: e.target.value,
-      //     tentativeTime: timelist[e.target.value].label
-      // });
+    setTentativeTimeIndex(e.target.value);
+    // setStuffInfo({...stuffInfo,
+    //     tentativeTimeIndex: e.target.value,
+    //     tentativeTime: timelist[e.target.value].label
+    // });
   };
   const handleRetrievalTimeChange = (e) => {
     setRetrievalTimeIndex(e.target.value);
@@ -278,7 +294,7 @@ export const OrderDetailEdit = (props) => {
   }
 
   const updateOrderHandler = () => {
-    if(permitEdit.permitTentative) {
+    if (permitEdit.permitTentative) {
       let data = {
         id: order.id,
         code: order.code,
@@ -307,108 +323,108 @@ export const OrderDetailEdit = (props) => {
         <div className="mx-[-8px]">
           <Grid container className="">
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <DesktopDatePicker
-                    label={t("common.wd-empty-box-delivery")}
-                    inputFormat="DD/MM/YYYY"
-                    minDate={order?.emptyout_date_other}
-                    value={deliveryDate}
-                    onChange={handleDeliveryDateChange}
-                    disabled={!permitEdit.permitDelivery}
-                    renderInput={(params) => <CssTextField
-                        required fullWidth
-                        id="standard-required1"
-                        label={t("common.wd-empty-box-delivery")}
-                        variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, button: {fontSize: 16} }} />}
-                />
+              <DesktopDatePicker
+                label={t("common.wd-empty-box-delivery")}
+                inputFormat="DD/MM/YYYY"
+                minDate={order?.emptyout_date_other}
+                value={deliveryDate}
+                onChange={handleDeliveryDateChange}
+                disabled={!permitEdit.permitDelivery}
+                renderInput={(params) => <CssTextField
+                  required fullWidth
+                  id="standard-required1"
+                  label={t("common.wd-empty-box-delivery")}
+                  variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, button: { fontSize: 16 } }} />}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <CssTextField
-                    id="standard-select-currency1"
-                    select fullWidth
-                    label=""
-                    value={deliveryTimeIndex}
-                    onChange={handleDeliveryTimeChange}
-                    disabled={!permitEdit.permitDelivery}
-                    className="mt-17"
-                    helperText=""
-                    variant="standard"
-                >
-                    {timelist.map((option) => (
-                        <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </CssTextField>
+              <CssTextField
+                id="standard-select-currency1"
+                select fullWidth
+                label=""
+                value={deliveryTimeIndex}
+                onChange={handleDeliveryTimeChange}
+                disabled={!permitEdit.permitDelivery}
+                className="mt-17"
+                helperText=""
+                variant="standard"
+              >
+                {timelist.map((option) => (
+                  <MenuItem key={option.value} value={option.value} style={{ fontSize: '16px' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </CssTextField>
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <DesktopDatePicker
-                    label={t("common.wd-laden-return-date")}
-                    inputFormat="DD/MM/YYYY"
-                    value={ladenReturnDate}
-                    minDate={deliveryDate}
-                    maxDate={dayjs(deliveryDate).add(14, 'day')}
-                    onChange={handleLadenReturnDateChange}
-                    disabled={!permitEdit.permitLadenReturn}
-                    renderInput={(params) => <CssTextField
-                        label={t("common.wd-laden-return-date")}
-                        required fullWidth
-                        id="standard-required2"
-                        variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
-                />
+              <DesktopDatePicker
+                label={t("common.wd-laden-return-date")}
+                inputFormat="DD/MM/YYYY"
+                value={ladenReturnDate}
+                minDate={deliveryDate}
+                maxDate={dayjs(deliveryDate).add(14, 'day')}
+                onChange={handleLadenReturnDateChange}
+                disabled={!permitEdit.permitLadenReturn}
+                renderInput={(params) => <CssTextField
+                  label={t("common.wd-laden-return-date")}
+                  required fullWidth
+                  id="standard-required2"
+                  variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[9px] py-[15px]">
-                <CssTextField
-                    id="standard-select-currency2"
-                    select fullWidth
-                    label=""
-                    value={ladenReturnTimeIndex}
-                    onChange={handleLadenReturnTimeChange}
-                    disabled={!permitEdit.permitLadenReturn}
-                    className="mt-17"
-                    helperText=""
-                    variant="standard"
-                >
-                    {timelist.map((option) => (
-                        <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </CssTextField>
+              <CssTextField
+                id="standard-select-currency2"
+                select fullWidth
+                label=""
+                value={ladenReturnTimeIndex}
+                onChange={handleLadenReturnTimeChange}
+                disabled={!permitEdit.permitLadenReturn}
+                className="mt-17"
+                helperText=""
+                variant="standard"
+              >
+                {timelist.map((option) => (
+                  <MenuItem key={option.value} value={option.value} style={{ fontSize: '16px' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </CssTextField>
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <DesktopDatePicker
-                    label={t("common.wd-tentative-retrieval-date")}
-                    inputFormat="DD/MM/YYYY"
-                    value={tentativeDate}
-                    minDate={ladenReturnDate}
-                    maxDate={emptyBoxReturnDate}
-                    onChange={handleTentativeDateChange}
-                    disabled={!permitEdit.permitTentative}
-                    renderInput={(params) => <CssTextField
-                        required fullWidth
-                        id="standard-required3"
-                        label={t("common.wd-tentative-retrieval-date")}
-                        variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
-                />
+              <DesktopDatePicker
+                label={t("common.wd-tentative-retrieval-date")}
+                inputFormat="DD/MM/YYYY"
+                value={tentativeDate}
+                minDate={ladenReturnDate}
+                maxDate={emptyBoxReturnDate}
+                onChange={handleTentativeDateChange}
+                disabled={!permitEdit.permitTentative}
+                renderInput={(params) => <CssTextField
+                  required fullWidth
+                  id="standard-required3"
+                  label={t("common.wd-tentative-retrieval-date")}
+                  variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <CssTextField
-                    id="standard-select-currency3"
-                    select fullWidth
-                    label=""
-                    value={tentativeTimeIndex}
-                    onChange={handleTentativeTimeChange}
-                    disabled={!permitEdit.permitTentative}
-                    className="mt-17"
-                    helperText=""
-                    variant="standard"
-                >
-                    {timelist.map((option) => (
-                        <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </CssTextField>
+              <CssTextField
+                id="standard-select-currency3"
+                select fullWidth
+                label=""
+                value={tentativeTimeIndex}
+                onChange={handleTentativeTimeChange}
+                disabled={!permitEdit.permitTentative}
+                className="mt-17"
+                helperText=""
+                variant="standard"
+              >
+                {timelist.map((option) => (
+                  <MenuItem key={option.value} value={option.value} style={{ fontSize: '16px' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </CssTextField>
             </Grid>
           </Grid>
         </div>
@@ -418,85 +434,85 @@ export const OrderDetailEdit = (props) => {
         <div className="mx-[-8px]">
           <Grid container className="">
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <DesktopDatePicker
-                    label={t("common.wd-retrieval-date")}
-                    inputFormat="DD/MM/YYYY"
-                    value={retrievalDate}
-                    minDate={dayjs()}
-                    onChange={handleRetrievalDateChange}
-                    disabled={!permitEdit.permitRetrieval}
-                    renderInput={(params) => <CssTextField
-                        required fullWidth
-                        id="standard-required1"
-                        label={t("common.wd-empty-box-delivery")}
-                        variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, button: {fontSize: 16} }} />}
-                />
+              <DesktopDatePicker
+                label={t("common.wd-retrieval-date")}
+                inputFormat="DD/MM/YYYY"
+                value={retrievalDate}
+                minDate={dayjs()}
+                onChange={handleRetrievalDateChange}
+                disabled={!permitEdit.permitRetrieval}
+                renderInput={(params) => <CssTextField
+                  required fullWidth
+                  id="standard-required1"
+                  label={t("common.wd-empty-box-delivery")}
+                  variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, button: { fontSize: 16 } }} />}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <CssTextField
-                    id="standard-select-currency1"
-                    select fullWidth
-                    label=""
-                    value={retrievalTimeIndex}
-                    onChange={handleRetrievalTimeChange}
-                    disabled={!permitEdit.permitRetrieval}
-                    className="mt-17"
-                    helperText=""
-                    variant="standard"
-                >
-                    {timelist.map((option) => (
-                        <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </CssTextField>
+              <CssTextField
+                id="standard-select-currency1"
+                select fullWidth
+                label=""
+                value={retrievalTimeIndex}
+                onChange={handleRetrievalTimeChange}
+                disabled={!permitEdit.permitRetrieval}
+                className="mt-17"
+                helperText=""
+                variant="standard"
+              >
+                {timelist.map((option) => (
+                  <MenuItem key={option.value} value={option.value} style={{ fontSize: '16px' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </CssTextField>
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[8px] py-[15px]">
-                <DesktopDatePicker
-                    label={t("common.wd-empty-box-return-date")}
-                    inputFormat="DD/MM/YYYY"
-                    value={emptyBoxReturnDate}
-                    minDate={order?.storage_expired_date}
-                    onChange={handleEmptyBoxReturnDateChange}
-                    disabled={!permitEdit.permitRetrieval}
-                    renderInput={(params) => <CssTextField
-                        label={t("common.wd-laden-return-date")}
-                        required fullWidth
-                        id="standard-required2"
-                        variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
-                />
+              <DesktopDatePicker
+                label={t("common.wd-empty-box-return-date")}
+                inputFormat="DD/MM/YYYY"
+                value={emptyBoxReturnDate}
+                minDate={order?.storage_expired_date}
+                onChange={handleEmptyBoxReturnDateChange}
+                disabled={!permitEdit.permitRetrieval}
+                renderInput={(params) => <CssTextField
+                  label={t("common.wd-laden-return-date")}
+                  required fullWidth
+                  id="standard-required2"
+                  variant="standard" {...params} sx={{ svg: { color: '#FFBE3D' }, }} />}
+              />
             </Grid>
             <Grid item xs={12} sm={6} md={6} className="px-[9px] py-[15px]">
-                <CssTextField
-                    id="standard-select-currency2"
-                    select fullWidth
-                    label=""
-                    value={emptyBoxReturnTimeIndex}
-                    onChange={handleEmptyBoxTimeChange}
-                    disabled={!permitEdit.permitRetrieval}
-                    className="mt-17"
-                    helperText=""
-                    variant="standard"
-                >
-                    {timelist.map((option) => (
-                        <MenuItem key={option.value} value={option.value} style={{fontSize: '16px'}}>
-                            {option.label}
-                        </MenuItem>
-                    ))}
-                </CssTextField>
+              <CssTextField
+                id="standard-select-currency2"
+                select fullWidth
+                label=""
+                value={emptyBoxReturnTimeIndex}
+                onChange={handleEmptyBoxTimeChange}
+                disabled={!permitEdit.permitRetrieval}
+                className="mt-17"
+                helperText=""
+                variant="standard"
+              >
+                {timelist.map((option) => (
+                  <MenuItem key={option.value} value={option.value} style={{ fontSize: '16px' }}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </CssTextField>
             </Grid>
             <Grid item xs={12} sm={12} md={12} className="px-[8px] py-[15px]">
-            <CssTextField 
-              fullWidth required
-              disabled
-              id="address"
-              label={t("common.wd-address")}
-              variant="standard"
-              value={address}
-              onChange={(e) => { 
+              <CssTextField
+                fullWidth required
+                disabled
+                id="address"
+                label={t("common.wd-address")}
+                variant="standard"
+                value={address}
+                onChange={(e) => {
                   setAddress("");
-              }}
-            />
+                }}
+              />
             </Grid>
           </Grid>
         </div>
