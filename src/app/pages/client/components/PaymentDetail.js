@@ -152,7 +152,7 @@ export const PaymentDetail = (props) => {
           <div>
             <LoadingSpinner isLoading={isLoading} />
             <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
-            <div className="text-normal text-black py-[40px]">
+            <div className="text-normal text-black py-[0px]">
               <span className="text-header text-black">{t("page5.qu-which-payment")}</span>
             </div>
             <div className="mt-[33px]">
