@@ -7,6 +7,7 @@ import ContentPage3 from './ContentPage3';
 import ContentPage4 from './ContentPage4';
 import ContentPage5 from "./ContentPage5";
 import ContentPage6 from "./ContentPage6";
+import { StepType } from "../../constants/step-type";
 
 const ContentPage = props => {
     const { step, logged, stepChange, products, materials, getStoragePeriodPrice, cartInfo, setCartInfo, stuffInfo, setStuffInfo, accountInfo, setAccountInfo, order, setOrder } = props;
@@ -36,10 +37,10 @@ const ContentPage = props => {
     }, [initial]);
 
     const onChangeHandle = () => {
-        if (logged === 0 && (step === 4)) {
+        if (logged === 0 && (step === StepType.PAYMENT)) {
             stepChange(4);
         } else {
-            stepChange(step === 5 ? step : step + 1);
+            stepChange(step === StepType.SUCCESS ? step : step + 1);
         }
     }
     const showNotification = ({ title, message, visible, status }) => {
@@ -54,13 +55,13 @@ const ContentPage = props => {
     return (
         <div className="h-[100%]">
             <ShowNotification title={notify.title} message={notify.message} visible={notify.visible} status={notify.status} closeNotify={closeNotify} />
-            {step === 0 && (<ContentPage1 onNotification={showNotification} onChangeStep={onChangeHandle} onRefreshCart={props.onRefreshCart} items={products} selectedItems={props.stores} getStoragePeriodPrice={getStoragePeriodPrice} storage_month={props.storage_month} />)}
-            {step === 1 && (<ContentPage2 onNotification={showNotification} onChangeStep={onChangeHandle} onRefreshCart={props.onRefreshCart} items={materials} selectedItems={props.cartMaterials} />)}
-            {step === 2 && (<ContentPage3 onNotification={showNotification} onChangeStep={onChangeHandle} storage_month={props.storage_month} stuffInfo={stuffInfo} setStuffInfo={setStuffInfo} />)}
-            {step === 3 && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
-            {step === 4 && (logged === 0) && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
-            {step === 4 && (logged === 1) && (<ContentPage5 onNotification={showNotification} onChangeStep={onChangeHandle} cartInfo={cartInfo} setCartInfo={setCartInfo} stuffInfo={stuffInfo} accountInfo={accountInfo} setOrder={setOrder} order={order} />)}
-            {step === 5 && (logged === 1) && (<ContentPage6 onNotification={showNotification} onChangeStep={onChangeHandle} order={order} />)}
+            {step === StepType.STOREITEM && (<ContentPage1 onNotification={showNotification} onChangeStep={onChangeHandle} onRefreshCart={props.onRefreshCart} items={products} selectedItems={props.stores} getStoragePeriodPrice={getStoragePeriodPrice} storage_month={props.storage_month} />)}
+            {step === StepType.MATERIALITEM && (<ContentPage2 onNotification={showNotification} onChangeStep={onChangeHandle} onRefreshCart={props.onRefreshCart} items={materials} selectedItems={props.cartMaterials} />)}
+            {step === StepType.STUFF && (<ContentPage3 onNotification={showNotification} onChangeStep={onChangeHandle} storage_month={props.storage_month} stuffInfo={stuffInfo} setStuffInfo={setStuffInfo} />)}
+            {step === StepType.ACCOUNT && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
+            {step === StepType.PAYMENT && (logged === 0) && (<ContentPage4 onNotification={showNotification} onChangeStep={onChangeHandle} universities={universities} accountInfo={accountInfo} setAccountInfo={setAccountInfo} />)}
+            {step === StepType.PAYMENT && (logged === 1) && (<ContentPage5 onNotification={showNotification} onChangeStep={onChangeHandle} cartInfo={cartInfo} setCartInfo={setCartInfo} stuffInfo={stuffInfo} accountInfo={accountInfo} setOrder={setOrder} order={order} />)}
+            {step === StepType.SUCCESS && (logged === 1) && (<ContentPage6 onNotification={showNotification} onChangeStep={onChangeHandle} order={order} />)}
         </div>
     )
 }

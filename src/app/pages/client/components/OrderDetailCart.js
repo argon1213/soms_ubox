@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { PaymentType } from "../../../constants/payment-type";
 
 export const OrderDetailCart = (props) => {
     const { order, user, orderId } = props;
@@ -12,22 +13,22 @@ export const OrderDetailCart = (props) => {
     useEffect(() => {
         if (order.payment_type_id) {
             switch (order.payment_type_id) {
-                case 3:
+                case PaymentType.CREDITCARD:
                     setPaymentMethod("common.wd-credit-card");
                     break;
-                case 4:
+                case PaymentType.WECHATPAY:
                     setPaymentMethod("common.wd-wechat-pay");
                     break;
-                case 5:
+                case PaymentType.ALIPAY:
                     setPaymentMethod("common.wd-alipay");
                     break;
-                case 6:
+                case PaymentType.CASH:
                     setPaymentMethod("common.wd-cash/atm");
                     break;
                 default:
                     break;
             }
-            let __cardName = order.payments[0]?.trans_id;
+            let __cardName = order.payments.slice(-1)[0]?.trans_id;
             setCardName(__cardName);
             if (parseInt(order.balance) > 0) {
                 setPayStatus(true);

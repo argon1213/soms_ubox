@@ -11,11 +11,12 @@ import { payConfirm } from "../../../store/apis/ordering";
 import { ShowNotification } from "../../../components/notification";
 import { outstandPayApi } from "../../../store/apis/client";
 import ContentPage6 from "../../order/ContentPage6";
+import { PaymentType } from "../../../constants/payment-type";
 
 export const PaymentDetail = (props) => {
   const { orderId } = props;
   const [isLoading, setIsLoading] = useState(false);
-  const [paymentType, setPaymentType] = useState(3);
+  const [paymentType, setPaymentType] = useState(PaymentType.CREDITCARD);
   const { t } = useTranslation();
   const [paymentCode, setPaymentCode] = useState("");
   const [order, setOrder] = useState({});
@@ -70,10 +71,10 @@ export const PaymentDetail = (props) => {
 
   const onNextHandler = (e) => {
     clearInterval();
-    if (paymentType === 3) {
+    if (paymentType === PaymentType.CREDITCARD) {
       document.querySelector('form').requestSubmit();
       setIsLoading(true);
-    } else if (paymentType === 6) {
+    } else if (paymentType === PaymentType.CASH) {
       setIsLoading(true);
       let stripeToken = "";
       orderSubmitHandler(stripeToken);
@@ -164,26 +165,26 @@ export const PaymentDetail = (props) => {
                     value={paymentType}
                     onChange={handleRadioChange}
                   >
-                    <CssFormControlLabel value={3} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
-                    <CssFormControlLabel value={4} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
-                    <CssFormControlLabel value={5} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
-                    <CssFormControlLabel value={6} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
+                    <CssFormControlLabel value={PaymentType.CREDITCARD} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
+                    <CssFormControlLabel value={PaymentType.WECHATPAY} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
+                    <CssFormControlLabel value={PaymentType.ALIPAY} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
+                    <CssFormControlLabel value={PaymentType.CASH} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
                   </RadioGroup>
                 </Grid>
                 <Grid item xs={12} sm={12} md={12}>
                   <div className="flex items-center">
-                    {paymentType === 3 && (
+                    {paymentType === PaymentType.CREDITCARD && (
                       <div className="h-[20px] w-[100%]">
                         <Elements stripe={getStripe()}>
                           <PaymentForm onCallbackHandler={onCallbackFunc} />
                         </Elements>
                       </div>
                     )}
-                    {paymentType === 4 && (
+                    {paymentType === PaymentType.WECHATPAY && (
                       <div className="w-[100%] mt-[30px] flex item-center">
                       </div>
                     )}
-                    {paymentType === 5 && (
+                    {paymentType === PaymentType.ALIPAY && (
                       <div className="w-[100%] mt-[30px] flex item-center">
                       </div>
                     )}

@@ -9,10 +9,11 @@ import PaymentForm from "../../components/payment";
 import { orderSubmit } from "../../store/apis/ordering";
 import LoadingSpinner from "../../components/loading-spinner";
 import { payConfirm } from "../../store/apis/ordering";
+import { PaymentType } from "../../constants/payment-type";
 
 export default function ContentPage5(props) {
     const { onNotification, cartInfo, setCartInfo, stuffInfo, accountInfo, order, setOrder } = props;
-    const [paymentType, setPaymentType] = useState(3);
+    const [paymentType, setPaymentType] = useState(PaymentType.CREDITCARD);
     const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
     const [paymentCode, setPaymentCode] = useState("");
@@ -75,10 +76,10 @@ export default function ContentPage5(props) {
     };
 
     const onNextHandler = (e) => {
-        if (paymentType === 3) {
+        if (paymentType === PaymentType.CREDITCARD) {
             document.querySelector('form').requestSubmit();
             setIsLoading(true);
-        } else if (paymentType === 6) {
+        } else if (paymentType === PaymentType.CASH) {
             setIsLoading(true);
             let stripeToken = "";
             orderSubmitHandler(stripeToken);
@@ -142,13 +143,6 @@ export default function ContentPage5(props) {
         });
     }
 
-    useEffect(() => {
-        if (paymentType === 4 || paymentType === 5) {
-
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [paymentType]);
-
     const onCallbackFunc = (error, token) => {
         setIsLoading(false);
         if (!error) {
@@ -181,27 +175,27 @@ export default function ContentPage5(props) {
                                     value={paymentType}
                                     onChange={handleRadioChange}
                                 >
-                                    <CssFormControlLabel value={3} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
-                                    <CssFormControlLabel value={4} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
-                                    <CssFormControlLabel value={5} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
-                                    <CssFormControlLabel value={6} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
+                                    <CssFormControlLabel value={PaymentType.CREDITCARD} control={<CustomColorRadio />} label={t("common.wd-credit-card")} />
+                                    <CssFormControlLabel value={PaymentType.WECHATPAY} control={<CustomColorRadio />} label={t("common.wd-wechat-pay")} />
+                                    <CssFormControlLabel value={PaymentType.ALIPAY} control={<CustomColorRadio />} label={t("common.wd-alipay")} />
+                                    <CssFormControlLabel value={PaymentType.CASH} control={<CustomColorRadio />} label={t("common.wd-cash/atm")} />
                                 </RadioGroup>
                             </Grid>
                             <Grid item xs={12} sm={12} md={12}>
                                 <div className="flex items-center">
-                                    {paymentType === 3 && (
+                                    {paymentType === PaymentType.CREDITCARD && (
                                         <div className="h-[20px] w-[100%]">
                                             <Elements stripe={getStripe()}>
                                                 <PaymentForm onCallbackHandler={onCallbackFunc} />
                                             </Elements>
                                         </div>
                                     )}
-                                    {paymentType === 4 && (
+                                    {paymentType === PaymentType.WECHATPAY && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
                                             {/* <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} /> */}
                                         </div>
                                     )}
-                                    {paymentType === 5 && (
+                                    {paymentType === PaymentType.ALIPAY && (
                                         <div className="w-[100%] mt-[30px] flex item-center">
                                             {/* <img src="/images/qr-code.png" alt="qr-code" width={290} height={290} /> */}
                                         </div>

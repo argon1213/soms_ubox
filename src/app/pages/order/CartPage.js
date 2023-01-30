@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { PlusOutlined } from "@ant-design/icons";
 import { Button, Input } from "antd";
 import { promoCodeValidate } from "../../store/apis/ordering";
+import { StepType } from "../../constants/step-type";
 
 export default function CartPage(props) {
 
@@ -13,7 +14,7 @@ export default function CartPage(props) {
     const [validateStatus, setValidateStatus] = useState(false);
 
     const onPromoHandler = () => {
-        if (step !== 5) {
+        if (step !== StepType.SUCCESS) {
             setPromoStatus(true);
         }
     }
@@ -35,7 +36,7 @@ export default function CartPage(props) {
         <div className="cart-container">
             <div className="content">
                 <div className="mb-[29px]">
-                    {props.step === 5 ? (
+                    {props.step === StepType.SUCCESS ? (
                         <span className="text-header text-black">{t("cart.no-order-summary")}</span>
                     ) : (
                         <span className="text-header text-black">{t("cart.no-upfront")}</span>

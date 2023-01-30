@@ -7,6 +7,7 @@ import { Grid } from "@mui/material";
 import Sign from "../../components/auth";
 import { getStoragePeriodItem } from "../../store/apis/ordering";
 import dayjs from 'dayjs';
+import { StepType } from "../../constants/step-type";
 
 export default function Home() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -44,7 +45,7 @@ export default function Home() {
   // Fetch the price following the storage period.
   const getStoragePeriodPrice = (month, initProducts, initMaterials) => {
 
-    if(stuffInfo.tentativeDate) {
+    if (stuffInfo.tentativeDate) {
       let __tentativeDate = dayjs(stuffInfo.deliveryDate).add(month, 'month').format("YYYY-MM-DD");
       setStuffInfo({
         ...stuffInfo,
@@ -54,136 +55,136 @@ export default function Home() {
 
     getStoragePeriodItem(month)
       .then(res => {
-          let __newPrice = res.data;
-          let __products;
-          let __materials;
+        let __newPrice = res.data;
+        let __products;
+        let __materials;
 
-          materials.length > 0 ? __materials = materials : __materials = initMaterials;
-          products.length > 0 ? __products = products : __products = initProducts;
+        materials.length > 0 ? __materials = materials : __materials = initMaterials;
+        products.length > 0 ? __products = products : __products = initProducts;
 
-          // Update the price
-          __materials.forEach((item, index) => {
-              Object.keys(__newPrice).forEach((key) => {
-                  if(parseInt(key) === item.id) {
-                      __materials[index].price = __newPrice[key];
-                  }
-              })
+        // Update the price
+        __materials.forEach((item, index) => {
+          Object.keys(__newPrice).forEach((key) => {
+            if (parseInt(key) === item.id) {
+              __materials[index].price = __newPrice[key];
+            }
+          })
+        });
+
+        __products.forEach((item, index) => {
+          Object.keys(__newPrice).forEach((key) => {
+            if (parseInt(key) === item.id) {
+              __products[index].price = __newPrice[key];
+            }
+          })
+        });
+
+        if (cartInfo.promotions.length > 0) {
+          let __items = cartInfo.promotions;
+          __materials.forEach((material, index) => {
+            __items.forEach((item) => {
+              if (item.item_id === material.id) {
+                if (__materials[index].price > item.price) {
+                  __materials[index].price = item.price;
+                }
+              }
+            })
           });
 
-          __products.forEach((item, index) => {
-              Object.keys(__newPrice).forEach((key) => {
-                  if(parseInt(key) === item.id) {
-                      __products[index].price = __newPrice[key];
-                  }
-              })
+          __products.forEach((product, index) => {
+            __items.forEach((item) => {
+              if (item.item_id === product.id) {
+                if (__products[index].price > item.price) {
+                  __products[index].price = item.price;
+                }
+              }
+            })
           });
+        }
 
-          if(cartInfo.promotions.length > 0) {
-              let __items = cartInfo.promotions;
-              __materials.forEach((material, index) => {
-                  __items.forEach((item) => {
-                      if(item.item_id === material.id) {
-                          if(__materials[index].price > item.price) {
-                              __materials[index].price = item.price;
-                          }
-                      }
-                  })
-              });
+        setProducts(__products);
+        setMaterials(__materials);
 
-              __products.forEach((product, index) => {
-                  __items.forEach((item) => {
-                      if(item.item_id === product.id) {
-                          if(__products[index].price > item.price) {
-                              __products[index].price = item.price;
-                          }
-                      }
-                  })
-              });
-          }
-         
-          setProducts(__products);
-          setMaterials(__materials);
+        let __cartInfo = cartInfo;
+        __cartInfo.stores.forEach((item, index) => {
+          item && __products.forEach((product) => {
+            if (product.id === item.id) {
+              __cartInfo.stores[index].price = product.price;
+            }
+          })
+        });
 
-          let __cartInfo = cartInfo;
-          __cartInfo.stores.forEach((item, index) => {
-              item && __products.forEach((product) => {
-                  if(product.id === item.id) {
-                      __cartInfo.stores[index].price = product.price;
-                  }
-              })
-          });
+        __cartInfo.materials.forEach((item, index) => {
+          item && __materials.forEach((material) => {
+            if (material.id === item.id) {
+              __cartInfo.materials[index].price = material.price;
+            }
+          })
+        });
 
-          __cartInfo.materials.forEach((item, index) => {
-              item && __materials.forEach((material) => {
-                  if(material.id === item.id) {
-                      __cartInfo.materials[index].price = material.price;
-                  }
-              })
-          });
-
-          onRefreshCartHandler({category: "storage_month"}, month, __cartInfo);
+        onRefreshCartHandler({ category: "storage_month" }, month, __cartInfo);
       });
   }
 
   const setPromotionPrice = (promotions, promotion_id) => {
-      let __items = promotions;
-      let __materials = materials;
-      let __products = products;
+    let __items = promotions;
+    let __materials = materials;
+    let __products = products;
 
-      __materials.forEach((material, index) => {
-          __items.forEach((item) => {
-              if(item.item_id === material.id) {
-                  if(__materials[index].price > item.price) {
-                    __materials[index].price = item.price;
-                  }
-              }
-          })
-      });
+    __materials.forEach((material, index) => {
+      __items.forEach((item) => {
+        if (item.item_id === material.id) {
+          if (__materials[index].price > item.price) {
+            __materials[index].price = item.price;
+          }
+        }
+      })
+    });
 
-      __products.forEach((product, index) => {
-          __items.forEach((item) => {
-              if(item.item_id === product.id) {
-                  if(__products[index].price > item.price) {
-                    __products[index].price = item.price;
-                  }
-              }
-          })
-      });
+    __products.forEach((product, index) => {
+      __items.forEach((item) => {
+        if (item.item_id === product.id) {
+          if (__products[index].price > item.price) {
+            __products[index].price = item.price;
+          }
+        }
+      })
+    });
 
-      setProducts(__products);
-      setMaterials(__materials);
+    setProducts(__products);
+    setMaterials(__materials);
 
-      let __cartInfo = cartInfo;
-      __cartInfo.stores.forEach((item, index) => {
-          item && __products.forEach((product) => {
-              if(product.id === item.id) {
-                  __cartInfo.stores[index].price = product.price;
-              }
-          })
-      });
+    let __cartInfo = cartInfo;
+    __cartInfo.stores.forEach((item, index) => {
+      item && __products.forEach((product) => {
+        if (product.id === item.id) {
+          __cartInfo.stores[index].price = product.price;
+        }
+      })
+    });
 
-      __cartInfo.materials.forEach((item, index) => {
-          item && __materials.forEach((material) => {
-              if(material.id === item.id) {
-                  __cartInfo.materials[index].price = material.price;
-              }
-          })
-      });
+    __cartInfo.materials.forEach((item, index) => {
+      item && __materials.forEach((material) => {
+        if (material.id === item.id) {
+          __cartInfo.materials[index].price = material.price;
+        }
+      })
+    });
 
-      __cartInfo = {
-        ...__cartInfo,
-        promotions: promotions,
-        promotion_id: promotion_id,
-      };
+    __cartInfo = {
+      ...__cartInfo,
+      promotions: promotions,
+      promotion_id: promotion_id,
+    };
 
-      onRefreshCartHandler({category: "storage_month"}, cartInfo.storage_month, __cartInfo);
+    onRefreshCartHandler({ category: "storage_month" }, cartInfo.storage_month, __cartInfo);
 
   }
 
 
   const onChangeStep = (step) => {
-    if ((loggedIn === 0) && step > 3)
-      setCurrentStep(4);
+    if ((loggedIn === 0) && step > StepType.ACCOUNT)
+      setCurrentStep(StepType.PAYMENT);
     else
       setCurrentStep(step);
   }
@@ -196,9 +197,9 @@ export default function Home() {
   }
 
   const onCloseModal = (event) => {
-    setCurrentStep(3);
+    setCurrentStep(StepType.ACCOUNT);
   }
-  
+
   // Add the new product and material or update the storage period.
   const onRefreshCartHandler = (item, value, newCartInfo) => {
     let __stores_total = 0;
@@ -207,10 +208,10 @@ export default function Home() {
     let __materials = cartInfo.materials;
     let __storage_month = cartInfo.storage_month;
     if (item.category === 'box') {
-      __stores[item.id] = {...item, count: value};
+      __stores[item.id] = { ...item, count: value };
     }
     if (item.category === 'bag') {
-      __materials[item.id] = {...item, count: value};
+      __materials[item.id] = { ...item, count: value };
     }
     if (item.category === 'storage_month') {
       __storage_month = value;
@@ -225,56 +226,56 @@ export default function Home() {
     });
 
     let __cartInfo = cartInfo;
-    if(newCartInfo) {
+    if (newCartInfo) {
       __cartInfo = newCartInfo;
     }
     __stores_total = Math.round(__stores_total * 100) / 100;
     __material_total = Math.round(__material_total * 100) / 100;
     let __total = Math.round(__stores_total * __storage_month * 100) / 100 + __material_total;
 
-    __cartInfo = {...__cartInfo, payment_type: 3, storage_month: __storage_month, stores: __stores, stores_total: __stores_total, materials: __materials, materials_total: __material_total, total: __total};
+    __cartInfo = { ...__cartInfo, payment_type: 3, storage_month: __storage_month, stores: __stores, stores_total: __stores_total, materials: __materials, materials_total: __material_total, total: __total };
     setCartInfo(__cartInfo);
   }
 
-  const onStepperPrevActionHandler = async () =>{
+  const onStepperPrevActionHandler = async () => {
     const carts_data = cartInfo;
     if (carts_data === undefined || carts_data == null)
-      return 0; // step=1
+      return StepType.STOREITEM; // step=1
     const carts_info = cartInfo;
     if (carts_info.stores_total === 0)
-      return 0; // step=1
+      return StepType.STOREITEM; // step=1
     const stuff_data = stuffInfo;
     if (stuff_data === undefined || stuff_data == null)
-      return 2; // step=3    
+      return StepType.STUFF; // step=3    
     const stuff_info = stuffInfo;
     if (stuff_info.name === "" || stuff_info.contact === "" || stuff_info.email === "" || stuff_info.address === "")
-      return 2; // step=3    
-    if (stuff_info.name && stuff_info.contact && stuff_info.email && stuff_info.address ) {
+      return StepType.STUFF; // step=3    
+    if (stuff_info.name && stuff_info.contact && stuff_info.email && stuff_info.address) {
       let __email = stuff_info.email;
       let __reEmail = /\S+@\S+\.\S+/;
       let __resultEmail = __email.match(__reEmail);
-      if(__resultEmail == null) {
-          return 2;
+      if (__resultEmail == null) {
+        return StepType.STUFF;
       }
       let __contact = stuff_info.contact;
       let __re = /[^0-9]+/g;
       let __result = __contact.match(__re);
       let __length = __contact.length;
-      if(__result == null && __length <= 11 && __length >= 8) {
+      if (__result == null && __length <= 11 && __length >= 8) {
       } else {
-          return 2;
+        return StepType.STUFF;
       }
-    } else return 2; // step=3 
+    } else return StepType.STUFF; // step=3 
     const account_data = accountInfo;
     if (account_data === undefined || account_data == null)
-      return 3; // step=4  
-    if (account_data.isStudent === undefined) return 3;
+      return StepType.ACCOUNT; // step=4  
+    if (account_data.isStudent === undefined) return StepType.ACCOUNT;
     const account_info = accountInfo;
     if (account_info.isStudent === 1 && (account_info.university.id === undefined || account_info.university.id == null))
-      return 3; // step=4  
+      return StepType.ACCOUNT; // step=4  
     if (account_info.isStudent === 1 && account_info.studentID === "")
-      return 3; // step=4  
-    return 4;
+      return StepType.ACCOUNT; // step=4  
+    return StepType.PAYMENT;
   }
 
   return (
@@ -285,7 +286,7 @@ export default function Home() {
       <main className="main main-content mx-auto">
         <Grid container spacing={4}>
           <Grid item xs={12} sm={12} md={8}>
-            <ContentPage step={currentStep} logged={loggedIn} 
+            <ContentPage step={currentStep} logged={loggedIn}
               stores={cartInfo.stores}
               cartMaterials={cartInfo.materials}
               storage_month={cartInfo.storage_month}
@@ -301,7 +302,7 @@ export default function Home() {
               setAccountInfo={setAccountInfo}
               order={order}
               setOrder={setOrder}
-              stepChange={onChangeStep} 
+              stepChange={onChangeStep}
               onRefreshCart={onRefreshCartHandler}
               getStoragePeriodPrice={getStoragePeriodPrice}
             />
@@ -310,17 +311,17 @@ export default function Home() {
             <CartPage carts={cartInfo} setCartInfo={setCartInfo} setPromotionPrice={setPromotionPrice} step={currentStep} />
           </Grid>
         </Grid>
-      {(currentStep === 4 && loggedIn === 0) && (
-        <div className="cmodal">
-          <div className="cmodal-background" onClick={onCloseModal}>
-          </div>
-          <div className="w-[100%] h-[100%] flex item-center item-vcenter">
-            <div className="cmodal-content flex item-center my-auto">
-              <Sign onReturnFunc={onReturnFunc} stuffInfo={stuffInfo} accountInfo={accountInfo} />
+        {(currentStep === StepType.PAYMENT && loggedIn === 0) && (
+          <div className="cmodal">
+            <div className="cmodal-background" onClick={onCloseModal}>
+            </div>
+            <div className="w-[100%] h-[100%] flex item-center item-vcenter">
+              <div className="cmodal-content flex item-center my-auto">
+                <Sign onReturnFunc={onReturnFunc} stuffInfo={stuffInfo} accountInfo={accountInfo} />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
       </main>
     </div>
   )
